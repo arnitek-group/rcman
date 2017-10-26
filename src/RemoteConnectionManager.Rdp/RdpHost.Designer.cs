@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-
+﻿
 namespace RemoteConnectionManager.Rdp
 {
     partial class RdpHost
@@ -31,37 +30,34 @@ namespace RemoteConnectionManager.Rdp
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RdpHost));
-            this.axMsRdpClient = new AxMSTSCLib.AxMsRdpClient9NotSafeForScripting();
-            ((System.ComponentModel.ISupportInitialize)(this.axMsRdpClient)).BeginInit();
+            this.AxMsRdpClient = new AxMSTSCLib.AxMsRdpClient9NotSafeForScripting();
+            ((System.ComponentModel.ISupportInitialize)(this.AxMsRdpClient)).BeginInit();
             this.SuspendLayout();
             // 
-            // axMsRdpClient
+            // AxMsRdpClient
             // 
-            this.axMsRdpClient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axMsRdpClient.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
-            this.axMsRdpClient.Enabled = true;
-            this.axMsRdpClient.Location = new System.Drawing.Point(0, 0);
-            this.axMsRdpClient.Name = "axMsRdpClient";
-            this.axMsRdpClient.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMsRdpClient.OcxState")));
-            this.axMsRdpClient.Size = new System.Drawing.Size(640, 480);
-            this.axMsRdpClient.TabIndex = 0;
+            this.AxMsRdpClient.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AxMsRdpClient.Enabled = true;
+            this.AxMsRdpClient.Location = new System.Drawing.Point(0, 0);
+            this.AxMsRdpClient.Name = "AxMsRdpClient";
+            this.AxMsRdpClient.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("AxMsRdpClient.OcxState")));
+            this.AxMsRdpClient.Size = new System.Drawing.Size(640, 480);
+            this.AxMsRdpClient.TabIndex = 0;
             // 
             // RdpHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
-            this.Controls.Add(this.axMsRdpClient);
+            this.Controls.Add(this.AxMsRdpClient);
             this.Name = "RdpHost";
             this.Size = new System.Drawing.Size(640, 480);
-            ((System.ComponentModel.ISupportInitialize)(this.axMsRdpClient)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AxMsRdpClient)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        
-        private AxMSTSCLib.AxMsRdpClient9NotSafeForScripting axMsRdpClient;
+
+        public AxMSTSCLib.AxMsRdpClient9NotSafeForScripting AxMsRdpClient;
     }
 }

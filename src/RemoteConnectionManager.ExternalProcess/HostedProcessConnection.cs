@@ -56,7 +56,11 @@ namespace RemoteConnectionManager.ExternalProcess
             _hostPanel = new Forms.Panel();
             _hostPanel.Dock = DockStyle.Fill;
             _hostPanel.BorderStyle = BorderStyle.None;
-            _hostPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
+            _hostPanel.Anchor =
+                AnchorStyles.Top |
+                AnchorStyles.Right |
+                AnchorStyles.Bottom |
+                AnchorStyles.Left;
 
             var psi = new ProcessStartInfo();
             psi.FileName = GetFileName();
@@ -96,7 +100,7 @@ namespace RemoteConnectionManager.ExternalProcess
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // TODO: Properly size the process.
-            MoveWindow(_process.MainWindowHandle, 0, 0, _hostPanel.Width, _hostPanel.Height, true);
+            MoveWindow(_process.MainWindowHandle, 0, 0, (int)e.NewSize.Width, (int)e.NewSize.Height, true);
         }
 
         private void DestroyHostedProcess()
@@ -133,7 +137,7 @@ namespace RemoteConnectionManager.ExternalProcess
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool MoveWindow(IntPtr hwnd, int x, int y, int cx, int cy, bool repaint);
 
-        private const int GWL_STYLE = (-16);
+        private const int GWL_STYLE = -16;
         private const int WS_VISIBLE = 0x10000000;
         private const int WS_MAXIMIZE = 0x01000000;
 
