@@ -7,6 +7,7 @@
         xmlns:converters="clr-namespace:RemoteConnectionManager.Converters"
         xmlns:dr="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:xs="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid>
@@ -17,7 +18,13 @@
         </Grid.ColumnDefinitions>
 
         <dr:TabablzControl Grid.Column="0" FixedHeaderCount="2">
-            <TabItem Header="{x:Static prop:Resources.Servers}">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <icons:PackIconMaterial Kind="MonitorMultiple" />
+                        <TextBlock Text="{x:Static prop:Resources.Servers}" />
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -26,13 +33,20 @@
                     </Grid.RowDefinitions>
                     <ListBox Grid.Row="0" ItemsSource="{Binding Settings.ConnectionSettings, Source={StaticResource Locator}}"
                              SelectionMode="Single"
-                             SelectedItem="{Binding SelectedConnectionSettings, Mode=TwoWay}"
-                             DisplayMemberPath="DisplayName">
+                             SelectedItem="{Binding SelectedConnectionSettings, Mode=TwoWay}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBox_DoubleClick" />
                             </Style>
                         </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconMaterial Kind="{Binding Protocol, Converter={StaticResource ProtocolToIconConverter}}" />
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <Button Grid.Row="1" Content="{x:Static prop:Resources.New}"
                             Command="{Binding NewConnectionSettingsCommand}" />
@@ -57,9 +71,6 @@
                             <xs:EditorTemplateDefinition TargetProperties="Credentials">
                                 <xs:EditorTemplateDefinition.EditingTemplate>
                                     <DataTemplate>
-                                        <DataTemplate.Resources>
-                                            <converters:PropertyGridCredentialsConverter x:Key="PropertyGridCredentialsConverter" />
-                                        </DataTemplate.Resources>
                                         <ComboBox SelectedItem="{Binding Value, Mode=TwoWay, Converter={StaticResource PropertyGridCredentialsConverter}}"
                                                   DisplayMemberPath="DisplayName">
                                             <ComboBox.ItemsSource>
@@ -76,7 +87,13 @@
                     </xs:PropertyGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="{x:Static prop:Resources.Credentials}">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <icons:PackIconMaterial Kind="Security" />
+                        <TextBlock Text="{x:Static prop:Resources.Credentials}" />
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -85,8 +102,15 @@
                     </Grid.RowDefinitions>
                     <ListBox Grid.Row="0" ItemsSource="{Binding Settings.Credentials, Source={StaticResource Locator}}"
                              SelectionMode="Single"
-                             SelectedItem="{Binding SelectedCredentials, Mode=TwoWay}"
-                             DisplayMemberPath="DisplayName">
+                             SelectedItem="{Binding SelectedCredentials, Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <icons:PackIconMaterial Kind="Key" />
+                                    <TextBlock Text="{Binding DisplayName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <Button Grid.Row="1" Content="{x:Static prop:Resources.New}"
                             Command="{Binding NewCredentialsCommand}" />
@@ -110,22 +134,29 @@
             </TabItem>
         </dr:TabablzControl>
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,26,0,0" />
 
         <dr:TabablzControl Grid.Column="2"
                            ItemsSource="{Binding Connections}"
-                           SelectedItem="{Binding SelectedConnection, Mode=TwoWay}"
-                           HeaderMemberPath="ConnectionSettings.DisplayName">
-            <TabControl.ContentTemplate>
+                           SelectedItem="{Binding SelectedConnection, Mode=TwoWay}">
+            <dr:TabablzControl.HeaderItemTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding UI}" />
+                    <StackPanel Orientation="Horizontal">
+                        <icons:PackIconMaterial Kind="{Binding ConnectionSettings.Protocol, Converter={StaticResource ProtocolToIconConverter}}" />
+                        <TextBlock Text="{Binding ConnectionSettings.DisplayName}" />
+                    </StackPanel>
                 </DataTemplate>
-            </TabControl.ContentTemplate>
+            </dr:TabablzControl.HeaderItemTemplate>
             <TabControl.ItemContainerStyle>
                 <Style TargetType="dr:DragablzItem" BasedOn="{StaticResource TrapezoidDragableTabItemStyle}">
                     <EventSetter Event="MouseDown" Handler="TabItem_MouseDown" />
                 </Style>
             </TabControl.ItemContainerStyle>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding UI}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </dr:TabablzControl>
     </Grid>
 </Window>
