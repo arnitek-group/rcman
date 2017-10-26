@@ -54,7 +54,7 @@
                                      SelectedObjectTypeName="{x:Static prop:Resources.ConnectionSettings}"
                                      SelectedObjectName="{Binding SelectedConnectionSettings.DisplayName}"
                                      ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False"
-                                     AutoGenerateProperties="False">
+                                     AutoGenerateProperties="False" NameColumnWidth="100">
                         <xs:PropertyGrid.PropertyDefinitions>
                             <xs:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
                                                    DisplayName="{x:Static prop:Resources.DisplayName}" />
@@ -118,7 +118,7 @@
                                      SelectedObjectTypeName="{x:Static prop:Resources.Credentials}"
                                      SelectedObjectName="{Binding SelectedCredentials.DisplayName}"
                                      ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False"
-                                     AutoGenerateProperties="False">
+                                     AutoGenerateProperties="False" NameColumnWidth="100">
                         <xs:PropertyGrid.PropertyDefinitions>
                             <xs:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
                                                    DisplayName="{x:Static prop:Resources.DisplayName}" />
