@@ -1,0 +1,131 @@
+﻿<Window x:Class="RemoteConnectionManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
+        xmlns:converters="clr-namespace:RemoteConnectionManager.Converters"
+        xmlns:dr="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:xs="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <dr:TabablzControl Grid.Column="0" FixedHeaderCount="2">
+            <TabItem Header="{x:Static prop:Resources.Servers}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Row="0" ItemsSource="{Binding ConnectionSettings}"
+                             SelectionMode="Single"
+                             SelectedItem="{Binding SelectedConnectionSettings, Mode=TwoWay}"
+                             DisplayMemberPath="DisplayName">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <EventSetter Event="MouseDoubleClick" Handler="ListBox_DoubleClick" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                    <Button Grid.Row="1" Content="{x:Static prop:Resources.New}"
+                            Command="{Binding NewConnectionSettingsCommand}" />
+                    <xs:PropertyGrid Grid.Row="2" SelectedObject="{Binding SelectedConnectionSettings}"
+                                     SelectedObjectTypeName="{x:Static prop:Resources.ConnectionSettings}"
+                                     SelectedObjectName="{Binding SelectedConnectionSettings.DisplayName}"
+                                     ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False"
+                                     AutoGenerateProperties="False">
+                        <xs:PropertyGrid.PropertyDefinitions>
+                            <xs:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
+                                                   DisplayName="{x:Static prop:Resources.DisplayName}" />
+                            <xs:PropertyDefinition DisplayOrder="2" TargetProperties="Protocol"
+                                                   DisplayName="{x:Static prop:Resources.Protocol}" />
+                            <xs:PropertyDefinition DisplayOrder="3" TargetProperties="Server"
+                                                   DisplayName="{x:Static prop:Resources.Server}" />
+                            <xs:PropertyDefinition DisplayOrder="4" TargetProperties="Port"
+                                                   DisplayName="{x:Static prop:Resources.Port}" />
+                            <xs:PropertyDefinition DisplayOrder="5" TargetProperties="Credentials"
+                                                   DisplayName="{x:Static prop:Resources.Credentials}" />
+                        </xs:PropertyGrid.PropertyDefinitions>
+                        <xs:PropertyGrid.EditorDefinitions>
+                            <xs:EditorTemplateDefinition TargetProperties="Credentials">
+                                <xs:EditorTemplateDefinition.EditingTemplate>
+                                    <DataTemplate>
+                                        <DataTemplate.Resources>
+                                            <converters:PropertyGridCredentialsConverter x:Key="PropertyGridCredentialsConverter" />
+                                        </DataTemplate.Resources>
+                                        <ComboBox SelectedItem="{Binding Value, Mode=TwoWay, Converter={StaticResource PropertyGridCredentialsConverter}}"
+                                                  DisplayMemberPath="DisplayName">
+                                            <ComboBox.ItemsSource>
+                                                <CompositeCollection>
+                                                    <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
+                                                    <CollectionContainer Collection="{Binding Main.Credentials, Source={StaticResource Locator}}" />
+                                                </CompositeCollection>
+                                            </ComboBox.ItemsSource>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </xs:EditorTemplateDefinition.EditingTemplate>
+                            </xs:EditorTemplateDefinition>
+                        </xs:PropertyGrid.EditorDefinitions>
+                    </xs:PropertyGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static prop:Resources.Credentials}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Row="0" ItemsSource="{Binding Credentials}"
+                             SelectionMode="Single"
+                             SelectedItem="{Binding SelectedCredentials, Mode=TwoWay}"
+                             DisplayMemberPath="DisplayName">
+                    </ListBox>
+                    <Button Grid.Row="1" Content="{x:Static prop:Resources.New}"
+                            Command="{Binding NewCredentialsCommand}" />
+                    <xs:PropertyGrid Grid.Row="2" SelectedObject="{Binding SelectedCredentials}"
+                                     SelectedObjectTypeName="{x:Static prop:Resources.Credentials}"
+                                     SelectedObjectName="{Binding SelectedCredentials.DisplayName}"
+                                     ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False"
+                                     AutoGenerateProperties="False">
+                        <xs:PropertyGrid.PropertyDefinitions>
+                            <xs:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
+                                                   DisplayName="{x:Static prop:Resources.DisplayName}" />
+                            <xs:PropertyDefinition DisplayOrder="2" TargetProperties="Domain"
+                                                   DisplayName="{x:Static prop:Resources.Domain}" />
+                            <xs:PropertyDefinition DisplayOrder="3" TargetProperties="Username"
+                                                   DisplayName="{x:Static prop:Resources.Username}" />
+                            <xs:PropertyDefinition DisplayOrder="4" TargetProperties="Password"
+                                                   DisplayName="{x:Static prop:Resources.Password}" />
+                        </xs:PropertyGrid.PropertyDefinitions>
+                    </xs:PropertyGrid>
+                </Grid>
+            </TabItem>
+        </dr:TabablzControl>
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+
+        <dr:TabablzControl Grid.Column="2"
+                           ItemsSource="{Binding Connections}"
+                           SelectedItem="{Binding SelectedConnection, Mode=TwoWay}"
+                           HeaderMemberPath="ConnectionSettings.DisplayName">
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding UI}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="dr:DragablzItem" BasedOn="{StaticResource TrapezoidDragableTabItemStyle}">
+                    <EventSetter Event="MouseDown" Handler="TabItem_MouseDown" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </dr:TabablzControl>
+    </Grid>
+</Window>
