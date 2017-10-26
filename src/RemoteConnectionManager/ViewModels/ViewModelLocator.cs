@@ -20,9 +20,6 @@ namespace RemoteConnectionManager.ViewModels
             // Register view models.
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
-
-            // Trick to create the settings view model observer.
-            var settings = Settings;
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();

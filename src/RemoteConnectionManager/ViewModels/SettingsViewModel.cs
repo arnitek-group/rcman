@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using RemoteConnectionManager.Core;
@@ -12,11 +13,11 @@ namespace RemoteConnectionManager.ViewModels
     public class SettingsViewModel : ViewModelBase
     {
         private const string SettingsFile = "settings.json";
-        private readonly MainViewModel _mainViewModel;
 
-        public SettingsViewModel(MainViewModel mainViewModel)
+        public SettingsViewModel()
         {
-            _mainViewModel = mainViewModel;
+            Credentials = new ObservableCollection<Credentials>();
+            ConnectionSettings = new ObservableCollection<ConnectionSettings>();
 
             if (!File.Exists(SettingsFile))
             {
@@ -30,19 +31,22 @@ namespace RemoteConnectionManager.ViewModels
                     foreach (var credentials in settings.Credentials)
                     {
                         credentials.PropertyChanged += Object_PropertyChanged;
-                        _mainViewModel.Credentials.Add(credentials);
+                        Credentials.Add(credentials);
                     }
                     foreach (var connectionSettings in settings.ConnectionSettings)
                     {
                         connectionSettings.PropertyChanged += Object_PropertyChanged;
-                        _mainViewModel.ConnectionSettings.Add(connectionSettings);
+                        ConnectionSettings.Add(connectionSettings);
                     }
                 }
             }
 
-            _mainViewModel.Credentials.CollectionChanged += CollectionChanged;
-            _mainViewModel.ConnectionSettings.CollectionChanged += CollectionChanged;
+            Credentials.CollectionChanged += CollectionChanged;
+            ConnectionSettings.CollectionChanged += CollectionChanged;
         }
+
+        public ObservableCollection<Credentials> Credentials { get; }
+        public ObservableCollection<ConnectionSettings> ConnectionSettings { get; }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -72,8 +76,8 @@ namespace RemoteConnectionManager.ViewModels
         {
             var settings = new Settings
             {
-                Credentials = _mainViewModel.Credentials.ToArray(),
-                ConnectionSettings = _mainViewModel.ConnectionSettings.ToArray()
+                Credentials = Credentials.ToArray(),
+                ConnectionSettings = ConnectionSettings.ToArray()
             };
             var settingsText = JsonConvert.SerializeObject(
                 settings, Formatting.Indented,

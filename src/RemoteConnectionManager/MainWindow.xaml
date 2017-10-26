@@ -11,7 +11,7 @@
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="{StaticResource SidePanelWidth}" />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -22,9 +22,9 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="150" />
+                        <RowDefinition Height="{StaticResource PropertyGridHeight}" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Row="0" ItemsSource="{Binding ConnectionSettings}"
+                    <ListBox Grid.Row="0" ItemsSource="{Binding Settings.ConnectionSettings, Source={StaticResource Locator}}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedConnectionSettings, Mode=TwoWay}"
                              DisplayMemberPath="DisplayName">
@@ -65,7 +65,7 @@
                                             <ComboBox.ItemsSource>
                                                 <CompositeCollection>
                                                     <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
-                                                    <CollectionContainer Collection="{Binding Main.Credentials, Source={StaticResource Locator}}" />
+                                                    <CollectionContainer Collection="{Binding Settings.Credentials, Source={StaticResource Locator}}" />
                                                 </CompositeCollection>
                                             </ComboBox.ItemsSource>
                                         </ComboBox>
@@ -81,9 +81,9 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="150" />
+                        <RowDefinition Height="{StaticResource PropertyGridHeight}" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Row="0" ItemsSource="{Binding Credentials}"
+                    <ListBox Grid.Row="0" ItemsSource="{Binding Settings.Credentials, Source={StaticResource Locator}}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedCredentials, Mode=TwoWay}"
                              DisplayMemberPath="DisplayName">

@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Properties;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -12,16 +11,16 @@ namespace RemoteConnectionManager.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly SettingsViewModel _settingsViewModel;
         private readonly IConnectionFactory[] _connectionFactories;
 
-        public MainViewModel(IConnectionFactory[] connectionFactories)
+        public MainViewModel(SettingsViewModel settingsViewModel, IConnectionFactory[] connectionFactories)
         {
+            _settingsViewModel = settingsViewModel;
             _connectionFactories = connectionFactories;
 
-            Credentials = new ObservableCollection<Credentials>();
-            ConnectionSettings = new ObservableCollection<ConnectionSettings>();
             Connections = new ObservableCollection<IConnection>();
-
+            
             NewConnectionSettingsCommand = new RelayCommand(ExecuteNewConnectionSettingsCommand);
             NewCredentialsCommand = new RelayCommand(ExecuteNewCredentialsCommand);
 
@@ -39,8 +38,6 @@ namespace RemoteConnectionManager.ViewModels
             return true;
         }
 
-        public ObservableCollection<Credentials> Credentials { get; }
-        public ObservableCollection<ConnectionSettings> ConnectionSettings { get; }
         public ObservableCollection<IConnection> Connections { get; }
 
         #region Selection
@@ -98,7 +95,7 @@ namespace RemoteConnectionManager.ViewModels
             {
                 DisplayName = Resources.New
             };
-            ConnectionSettings.Add(connectionSettings);
+            _settingsViewModel.ConnectionSettings.Add(connectionSettings);
             SelectedConnectionSettings = connectionSettings;
         }
 
@@ -109,7 +106,7 @@ namespace RemoteConnectionManager.ViewModels
             {
                 DisplayName = Resources.New
             };
-            Credentials.Add(credentials);
+            _settingsViewModel.Credentials.Add(credentials);
             SelectedCredentials = credentials;
         }
 
