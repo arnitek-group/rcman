@@ -1,4 +1,5 @@
 ﻿using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Rdp.Properties;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,6 @@ namespace RemoteConnectionManager.Rdp
         public ConnectionSettings ConnectionSettings { get; }
         public FrameworkElement UI { get; private set; }
 
-        // TODO: Implement!
         public event EventHandler Terminated;
 
         private RdpHost _hostRdp;
@@ -46,10 +46,13 @@ namespace RemoteConnectionManager.Rdp
                 }
 
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
-                _hostRdp.AxMsRdpClient.Connect();
+                _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
+                _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
+                _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
 
                 _hostGrid = new Grid();
                 _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostRdp });
+                _hostGrid.SizeChanged += Host_SizeChanged_Initial;
                 _hostGrid.SizeChanged += Host_SizeChanged;
 
                 UI = _hostGrid;
@@ -64,6 +67,7 @@ namespace RemoteConnectionManager.Rdp
             {
                 if (_hostGrid != null)
                 {
+                    _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
                     _hostGrid.SizeChanged -= Host_SizeChanged;
                     _hostGrid.Dispatcher.Invoke(() => _hostGrid.Children.Clear());
                     _hostGrid = null;
@@ -71,6 +75,7 @@ namespace RemoteConnectionManager.Rdp
 
                 if (_hostRdp != null)
                 {
+                    _hostRdp.AxMsRdpClient.OnDisconnected -= AxMsRdpClient_OnDisconnected;
                     if (_hostRdp.AxMsRdpClient.Connected == 1)
                     {
                         _hostRdp.AxMsRdpClient.Disconnect();
@@ -84,9 +89,24 @@ namespace RemoteConnectionManager.Rdp
             }
         }
 
+        private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
+        {
+            _hostRdp.AxMsRdpClient.DesktopWidth = _hostRdp.Width;
+            _hostRdp.AxMsRdpClient.DesktopHeight = _hostRdp.Height;
+            _hostRdp.AxMsRdpClient.Connect();
+
+            _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
+        }
+
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateSessionDisplaySettings();
+        }
+
+        private void AxMsRdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        {
+            Disconnect();
+            Terminated?.Invoke(this, new EventArgs());
         }
 
         private void UpdateSessionDisplaySettings()
