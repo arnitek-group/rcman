@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
-        xmlns:converters="clr-namespace:RemoteConnectionManager.Converters"
         xmlns:dr="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:xs="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"

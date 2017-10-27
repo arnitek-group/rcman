@@ -41,11 +41,11 @@ namespace RemoteConnectionManager.Rdp
                     if (!string.IsNullOrEmpty(credentials.Username) && !string.IsNullOrEmpty(credentials.Password))
                     {
                         _hostRdp.AxMsRdpClient.UserName = credentials.Username;
-                        _hostRdp.AxMsRdpClient.AdvancedSettings9.ClearTextPassword = credentials.Password;
+                        _hostRdp.AxMsRdpClient.AdvancedSettings2.ClearTextPassword = credentials.Password;
                     }
                 }
 
-                _hostRdp.AxMsRdpClient.AdvancedSettings9.SmartSizing = true;
+                _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
                 _hostRdp.AxMsRdpClient.Connect();
 
                 _hostGrid = new Grid();
@@ -86,10 +86,13 @@ namespace RemoteConnectionManager.Rdp
 
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            _hostRdp.Width = (int)e.NewSize.Width;
-            _hostRdp.Height = (int)e.NewSize.Height;
-            _hostRdp.AxMsRdpClient.Width = (int)e.NewSize.Width;
-            _hostRdp.AxMsRdpClient.Height = (int)e.NewSize.Height;
+            if (_hostRdp.AxMsRdpClient.Connected == 1)
+            {
+                _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
+                    (uint)_hostRdp.Width, (uint)_hostRdp.Height,
+                    (uint)_hostRdp.Width, (uint)_hostRdp.Height,
+                    0, 1, 1);
+            }
         }
     }
 }
