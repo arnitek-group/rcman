@@ -4,6 +4,8 @@ using RemoteConnectionManager.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace RemoteConnectionManager
 {
@@ -12,6 +14,11 @@ namespace RemoteConnectionManager
         public MainWindow()
         {
             InitializeComponent();
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+            Title = Properties.Resources.Application + " v" + fileVersionInfo.FileVersion;
         }
 
         private void ListBox_DoubleClick(object sender, MouseButtonEventArgs e)

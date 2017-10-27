@@ -61,6 +61,15 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remote Connection Manager.
+        /// </summary>
+        public static string Application {
+            get {
+                return ResourceManager.GetString("Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to -Clear-.
         /// </summary>
         public static string Clear {
