@@ -110,7 +110,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <icons:PackIconMaterial Kind="Key" />
+                                    <icons:PackIconMaterial Kind="ServerSecurity" />
                                     <TextBlock Text="{Binding DisplayName}" />
                                 </StackPanel>
                             </DataTemplate>
