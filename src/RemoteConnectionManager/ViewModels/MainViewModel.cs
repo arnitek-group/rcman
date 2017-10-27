@@ -144,11 +144,11 @@ namespace RemoteConnectionManager.ViewModels
                 connection = _connectionFactories
                     .First(x => x.CanConnect(connectionSettings))
                     .CreateConnection(connectionSettings);
-                connection.Disconnected += ConnectionDisconnected;
                 Connections.Add(connection);
             }
             if (!connection.IsConnected)
             {
+                connection.Disconnected += ConnectionDisconnected;
                 connection.Connect();
             }
             SelectedConnection = connection;

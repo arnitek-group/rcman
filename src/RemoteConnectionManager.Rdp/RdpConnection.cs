@@ -28,8 +28,12 @@ namespace RemoteConnectionManager.Rdp
         {
             if (!IsConnected)
             {
-                _hostRdp = new RdpHost();
-                _hostRdp.AxMsRdpClient.Server = ConnectionSettings.Server;
+                if (_hostRdp == null)
+                {
+                    _hostRdp = new RdpHost();
+                    _hostRdp.AxMsRdpClient.Server = ConnectionSettings.Server;
+                    _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
+                }
 
                 var credentials = ConnectionSettings.Credentials;
                 if (credentials != null)
@@ -54,12 +58,18 @@ namespace RemoteConnectionManager.Rdp
                 // Connection settings.
                 _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
                 _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
-                _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
 
-                _hostGrid = new Grid();
-                _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostRdp });
-                _hostGrid.SizeChanged += Host_SizeChanged_Initial;
-                _hostGrid.SizeChanged += Host_SizeChanged;
+                if (_hostGrid == null)
+                {
+                    _hostGrid = new Grid();
+                    _hostGrid.Children.Add(new WindowsFormsHost {Child = _hostRdp});
+                    _hostGrid.SizeChanged += Host_SizeChanged_Initial;
+                    _hostGrid.SizeChanged += Host_SizeChanged;
+                }
+                else
+                {
+                    PrepareSessionDisplaSettingsAndConnect();
+                }
 
                 UI = _hostGrid;
 
@@ -105,10 +115,7 @@ namespace RemoteConnectionManager.Rdp
 
         private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
         {
-            _hostRdp.AxMsRdpClient.DesktopWidth = _hostRdp.Width;
-            _hostRdp.AxMsRdpClient.DesktopHeight = _hostRdp.Height;
-            _hostRdp.AxMsRdpClient.Connect();
-
+            PrepareSessionDisplaSettingsAndConnect();
             _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
         }
 
@@ -130,9 +137,6 @@ namespace RemoteConnectionManager.Rdp
                     reason = DisconnectReason.KickedOut;
                     break;
                 case Reason_ServerNotFound:
-                case Reason_HostNotFound:
-                case Reason_InvalidIp:
-                case Reason_BadIp:
                     reason = DisconnectReason.ServerNotFound;
                     break;
                 case Reason_TimedOut:
@@ -140,6 +144,13 @@ namespace RemoteConnectionManager.Rdp
                     break;
             }
             Disconnected?.Invoke(this, reason);
+        }
+
+        private void PrepareSessionDisplaSettingsAndConnect()
+        {
+            _hostRdp.AxMsRdpClient.DesktopWidth = _hostRdp.Width;
+            _hostRdp.AxMsRdpClient.DesktopHeight = _hostRdp.Height;
+            _hostRdp.AxMsRdpClient.Connect();
         }
 
         private void UpdateSessionDisplaySettings()
@@ -158,8 +169,5 @@ namespace RemoteConnectionManager.Rdp
         private const int Reason_ServerDisconnect = 0x3;
         private const int Reason_ServerNotFound = 0x104;
         private const int Reason_TimedOut = 0x108;
-        private const int Reason_HostNotFound = 0x208;
-        private const int Reason_InvalidIp = 0x308;
-        private const int Reason_BadIp = 0x804;
     }
 }
