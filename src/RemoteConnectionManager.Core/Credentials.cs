@@ -1,6 +1,7 @@
-﻿namespace RemoteConnectionManager.Core
+﻿
+namespace RemoteConnectionManager.Core
 {
-    public class Credentials: Model
+    public class Credentials : Model
     {
         private string _domain;
         public string Domain
@@ -15,7 +16,6 @@
                 }
             }
         }
-
 
         private string _username;
         public string Username
@@ -57,6 +57,16 @@
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        public void SetPassword(string plainText)
+        {
+            Password = Security.EncryptText(plainText);
+        }
+
+        public string GetPassword()
+        {
+            return Security.DecryptText(_password);
         }
     }
 }

@@ -80,7 +80,7 @@
                                             <ComboBox.ItemsSource>
                                                 <CompositeCollection>
                                                     <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
-                                                    <CollectionContainer Collection="{Binding Settings.Credentials, Source={StaticResource Locator}}" />
+                                                    <CollectionContainer Collection="{Binding Main.Credentials, Source={StaticResource Locator}}" />
                                                 </CompositeCollection>
                                             </ComboBox.ItemsSource>
                                         </ComboBox>
@@ -104,7 +104,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="{StaticResource PropertyGridHeight}" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Row="0" ItemsSource="{Binding Settings.Credentials, Source={StaticResource Locator}}"
+                    <ListBox Grid.Row="0" ItemsSource="{Binding Main.Credentials, Source={StaticResource Locator}}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedCredentials, Mode=TwoWay}">
                         <ListBox.ItemTemplate>
@@ -137,6 +137,17 @@
                                                    DisplayName="{x:Static prop:Resources.Password}"
                                                    Description="{x:Static prop:Resources.PasswordDescription}" />
                         </xs:PropertyGrid.PropertyDefinitions>
+                        <xs:PropertyGrid.EditorDefinitions>
+                            <xs:EditorTemplateDefinition TargetProperties="Password">
+                                <xs:EditorTemplateDefinition.EditingTemplate>
+                                    <DataTemplate>
+                                        <PasswordBox DataContext="{Binding Value}"
+                                                     DataContextChanged="PasswordBox_DataContextChanged"
+                                                     PasswordChanged="PasswordBox_PasswordChanged" />
+                                    </DataTemplate>
+                                </xs:EditorTemplateDefinition.EditingTemplate>
+                            </xs:EditorTemplateDefinition>
+                        </xs:PropertyGrid.EditorDefinitions>
                     </xs:PropertyGrid>
                 </Grid>
             </TabItem>

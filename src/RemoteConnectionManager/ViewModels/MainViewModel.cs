@@ -19,6 +19,8 @@ namespace RemoteConnectionManager.ViewModels
             _settingsViewModel = settingsViewModel;
             _connectionFactories = connectionFactories;
 
+            var credentialsVms = _settingsViewModel.Credentials.Select(x => new CredentialsViewModel(x));
+            Credentials = new ObservableCollection<CredentialsViewModel>(credentialsVms);
             Connections = new ObservableCollection<IConnection>();
             
             NewConnectionSettingsCommand = new RelayCommand(ExecuteNewConnectionSettingsCommand);
@@ -38,12 +40,13 @@ namespace RemoteConnectionManager.ViewModels
             return true;
         }
 
+        public ObservableCollection<CredentialsViewModel> Credentials { get; }
         public ObservableCollection<IConnection> Connections { get; }
 
         #region Selection
 
-        private Credentials _selectedCredentials;
-        public Credentials SelectedCredentials
+        private CredentialsViewModel _selectedCredentials;
+        public CredentialsViewModel SelectedCredentials
         {
             get { return _selectedCredentials; }
             set
@@ -119,7 +122,10 @@ namespace RemoteConnectionManager.ViewModels
                 DisplayName = Resources.New
             };
             _settingsViewModel.Credentials.Add(credentials);
-            SelectedCredentials = credentials;
+
+            var credentialsVm = new CredentialsViewModel(credentials);
+            Credentials.Add(credentialsVm);
+            SelectedCredentials = credentialsVm;
         }
 
         public RelayCommand<ConnectionSettings> ConnectCommand { get; }

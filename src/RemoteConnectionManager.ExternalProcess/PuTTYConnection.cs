@@ -25,7 +25,7 @@ namespace RemoteConnectionManager.ExternalProcess
                 command += " -l " + credentials.Username; 
                 if (!string.IsNullOrEmpty(credentials.Password))
                 {
-                    command += " -pw " + credentials.Password;
+                    command += " -pw " + credentials.GetPassword();
                 }
             }
             if (!string.IsNullOrEmpty(ConnectionSettings.Port))

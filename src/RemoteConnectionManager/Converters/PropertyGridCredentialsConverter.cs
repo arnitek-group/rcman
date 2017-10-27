@@ -1,9 +1,11 @@
-﻿using RemoteConnectionManager.Core;
-using RemoteConnectionManager.Properties;
+﻿using RemoteConnectionManager.Properties;
+using RemoteConnectionManager.ViewModels;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace RemoteConnectionManager.Converters
 {
@@ -13,17 +15,19 @@ namespace RemoteConnectionManager.Converters
         {
             if (value == null)
             {
-                return new ComboBoxItem() { Content = Resources.Clear };
+                return new ComboBoxItem { Content = Resources.Clear };
             }
 
-            return value;
+            return SimpleIoc.Default.GetInstance<ViewModelLocator>()
+                .Main.Credentials
+                .Single(x => x.Credentials == value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Credentials)
+            if (value is CredentialsViewModel model)
             {
-                return value;
+                return model.Credentials;
             }
 
             return null;

@@ -18,6 +18,7 @@ namespace RemoteConnectionManager.ViewModels
                 new PuTTYConnectionFactory()
             });
             // Register view models.
+            SimpleIoc.Default.Register<ViewModelLocator>(() => this);
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
         }

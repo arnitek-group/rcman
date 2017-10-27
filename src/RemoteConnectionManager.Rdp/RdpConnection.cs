@@ -41,7 +41,7 @@ namespace RemoteConnectionManager.Rdp
                     if (!string.IsNullOrEmpty(credentials.Username) && !string.IsNullOrEmpty(credentials.Password))
                     {
                         _hostRdp.AxMsRdpClient.UserName = credentials.Username;
-                        _hostRdp.AxMsRdpClient.AdvancedSettings2.ClearTextPassword = credentials.Password;
+                        _hostRdp.AxMsRdpClient.AdvancedSettings2.ClearTextPassword = credentials.GetPassword();
                     }
                 }
 
