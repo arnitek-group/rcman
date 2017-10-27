@@ -137,7 +137,7 @@ namespace RemoteConnectionManager.ViewModels
                 connection = _connectionFactories
                     .First(x => x.CanConnect(connectionSettings))
                     .CreateConnection(connectionSettings);
-                connection.Terminated += Connection_Terminated;
+                connection.Disconnected += ConnectionDisconnected;
                 Connections.Add(connection);
                 connection.Connect();
             }
@@ -147,12 +147,13 @@ namespace RemoteConnectionManager.ViewModels
         public RelayCommand<IConnection> DisconnectCommand { get; }
         public void ExecuteDisconnectCommand(IConnection connection)
         {
-            connection.Terminated -= Connection_Terminated;
+            // TODO: Properly address disconnect reason.
+            connection.Disconnected -= ConnectionDisconnected;
             connection.Disconnect();
             Connections.Remove(connection);
         }
 
-        private void Connection_Terminated(object sender, EventArgs e)
+        private void ConnectionDisconnected(object sender, DisconnectReason e)
         {
             Application.Current.Dispatcher.Invoke(() => ExecuteDisconnectCommand((IConnection)sender));
         }

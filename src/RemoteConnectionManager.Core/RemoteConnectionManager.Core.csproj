@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ConnectionSettings.cs" />
     <Compile Include="Credentials.cs" />
+    <Compile Include="DisconnectReason.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="IConnectionFactory.cs" />
     <Compile Include="Model.cs" />

@@ -19,7 +19,7 @@ namespace RemoteConnectionManager.Rdp
         public ConnectionSettings ConnectionSettings { get; }
         public FrameworkElement UI { get; private set; }
 
-        public event EventHandler Terminated;
+        public event EventHandler<DisconnectReason> Disconnected;
 
         private RdpHost _hostRdp;
         private Grid _hostGrid;
@@ -105,8 +105,27 @@ namespace RemoteConnectionManager.Rdp
 
         private void AxMsRdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
-            Disconnect();
-            Terminated?.Invoke(this, new EventArgs());
+            // TODO: Properly address disconnect reason.
+            var reason = DisconnectReason.ConnectionTerminated;
+            switch (e.discReason)
+            {
+                case Reason_ClientDisconnect:
+                case Reason_ServerDisconnect:
+                    reason = DisconnectReason.ConnectionEnded;
+                    break;
+                case Reason_DisconnectedByUser:
+                    reason = DisconnectReason.KickedOut;
+                    break;
+                case Reason_BadIp:
+                case Reason_InvalidIp:
+                case Reason_HostNotFound:
+                    reason = DisconnectReason.ServerNotFound;
+                    break;
+                case Reason_TimedOut:
+                    reason = DisconnectReason.ConnectionTimedOut;
+                    break;
+            }
+            Disconnected?.Invoke(this, reason);
         }
 
         private void UpdateSessionDisplaySettings()
@@ -119,5 +138,13 @@ namespace RemoteConnectionManager.Rdp
                     0, 1, 1);
             }
         }
+
+        private const int Reason_ClientDisconnect = 0x1;
+        private const int Reason_DisconnectedByUser = 0x2;
+        private const int Reason_ServerDisconnect = 0x3;
+        private const int Reason_TimedOut = 0x108;
+        private const int Reason_HostNotFound = 0x208;
+        private const int Reason_InvalidIp = 0x308;
+        private const int Reason_BadIp = 0x804;
     }
 }

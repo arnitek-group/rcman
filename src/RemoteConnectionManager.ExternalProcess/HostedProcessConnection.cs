@@ -40,7 +40,7 @@ namespace RemoteConnectionManager.ExternalProcess
             }
         }
 
-        public event EventHandler Terminated;
+        public event EventHandler<DisconnectReason> Disconnected;
 
         #region Process
 
@@ -88,13 +88,13 @@ namespace RemoteConnectionManager.ExternalProcess
         private void Process_Exited(object sender, EventArgs e)
         {
             Disconnect();
-            Terminated?.Invoke(this, e);
+            Disconnected?.Invoke(this, DisconnectReason.ConnectionEnded);
         }
 
         private void Process_Disposed(object sender, EventArgs e)
         {
             Disconnect();
-            Terminated?.Invoke(this, e);
+            Disconnected?.Invoke(this, DisconnectReason.ConnectionEnded);
         }
 
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -11,6 +11,6 @@ namespace RemoteConnectionManager.Core
         bool IsConnected { get; }
         FrameworkElement UI { get; }
 
-        event EventHandler Terminated;
+        event EventHandler<DisconnectReason> Disconnected;
     }
 }
