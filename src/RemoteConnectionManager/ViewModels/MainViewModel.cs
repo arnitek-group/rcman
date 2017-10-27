@@ -66,6 +66,12 @@ namespace RemoteConnectionManager.ViewModels
                 {
                     _selectedConnectionSettings = value;
                     RaisePropertyChanged();
+
+                    var connection = Connections.FirstOrDefault(x => x.ConnectionSettings == _selectedConnectionSettings);
+                    if (connection != null)
+                    {
+                        SelectedConnection = connection;
+                    }
                 }
             }
         }
@@ -80,6 +86,12 @@ namespace RemoteConnectionManager.ViewModels
                 {
                     _selectedConnection = value;
                     RaisePropertyChanged();
+
+                    var connectionSettings = _settingsViewModel.ConnectionSettings.FirstOrDefault(x => x == _selectedConnection.ConnectionSettings);
+                    if (connectionSettings != null)
+                    {
+                        SelectedConnectionSettings = connectionSettings;
+                    }
                 }
             }
         }

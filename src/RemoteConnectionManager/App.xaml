@@ -14,7 +14,7 @@
             <converters:PropertyGridCredentialsConverter x:Key="PropertyGridCredentialsConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
-            <GridLength x:Key="PropertyGridHeight">170</GridLength>
+            <GridLength x:Key="PropertyGridHeight">250</GridLength>
 
             <Style TargetType="dr:TabablzControl">
                 <Setter Property="BorderThickness" Value="0" />

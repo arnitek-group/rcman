@@ -52,19 +52,24 @@
                     <xs:PropertyGrid Grid.Row="2" SelectedObject="{Binding SelectedConnectionSettings}"
                                      SelectedObjectTypeName="{x:Static prop:Resources.ConnectionSettings}"
                                      SelectedObjectName="{Binding SelectedConnectionSettings.DisplayName}"
-                                     ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False"
+                                     ShowSearchBox="False" ShowSortOptions="False"
                                      AutoGenerateProperties="False" NameColumnWidth="100">
                         <xs:PropertyGrid.PropertyDefinitions>
                             <xs:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
-                                                   DisplayName="{x:Static prop:Resources.DisplayName}" />
+                                                   DisplayName="{x:Static prop:Resources.DisplayName}"
+                                                   Description="{x:Static prop:Resources.DisplayNameDescription}" />
                             <xs:PropertyDefinition DisplayOrder="2" TargetProperties="Protocol"
-                                                   DisplayName="{x:Static prop:Resources.Protocol}" />
+                                                   DisplayName="{x:Static prop:Resources.Protocol}"
+                                                   Description="{x:Static prop:Resources.ProtocolDescription}" />
                             <xs:PropertyDefinition DisplayOrder="3" TargetProperties="Server"
-                                                   DisplayName="{x:Static prop:Resources.Server}" />
+                                                   DisplayName="{x:Static prop:Resources.Server}"
+                                                   Description="{x:Static prop:Resources.PortDescription}" />
                             <xs:PropertyDefinition DisplayOrder="4" TargetProperties="Port"
-                                                   DisplayName="{x:Static prop:Resources.Port}" />
+                                                   DisplayName="{x:Static prop:Resources.Port}"
+                                                   Description="{x:Static prop:Resources.PortDescription}" />
                             <xs:PropertyDefinition DisplayOrder="5" TargetProperties="Credentials"
-                                                   DisplayName="{x:Static prop:Resources.Credentials}" />
+                                                   DisplayName="{x:Static prop:Resources.Credentials}"
+                                                   Description="{x:Static prop:Resources.CredentialsDescription}" />
                         </xs:PropertyGrid.PropertyDefinitions>
                         <xs:PropertyGrid.EditorDefinitions>
                             <xs:EditorTemplateDefinition TargetProperties="Credentials">
@@ -116,17 +121,21 @@
                     <xs:PropertyGrid Grid.Row="2" SelectedObject="{Binding SelectedCredentials}"
                                      SelectedObjectTypeName="{x:Static prop:Resources.Credentials}"
                                      SelectedObjectName="{Binding SelectedCredentials.DisplayName}"
-                                     ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False"
+                                     ShowSearchBox="False" ShowSortOptions="False"
                                      AutoGenerateProperties="False" NameColumnWidth="100">
                         <xs:PropertyGrid.PropertyDefinitions>
                             <xs:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
-                                                   DisplayName="{x:Static prop:Resources.DisplayName}" />
+                                                   DisplayName="{x:Static prop:Resources.DisplayName}"
+                                                   Description="{x:Static prop:Resources.DisplayNameDescription}" />
                             <xs:PropertyDefinition DisplayOrder="2" TargetProperties="Domain"
-                                                   DisplayName="{x:Static prop:Resources.Domain}" />
+                                                   DisplayName="{x:Static prop:Resources.Domain}"
+                                                   Description="{x:Static prop:Resources.DomainDescription}" />
                             <xs:PropertyDefinition DisplayOrder="3" TargetProperties="Username"
-                                                   DisplayName="{x:Static prop:Resources.Username}" />
+                                                   DisplayName="{x:Static prop:Resources.Username}"
+                                                   Description="{x:Static prop:Resources.UsernameDescription}" />
                             <xs:PropertyDefinition DisplayOrder="4" TargetProperties="Password"
-                                                   DisplayName="{x:Static prop:Resources.Password}" />
+                                                   DisplayName="{x:Static prop:Resources.Password}"
+                                                   Description="{x:Static prop:Resources.PasswordDescription}" />
                         </xs:PropertyGrid.PropertyDefinitions>
                     </xs:PropertyGrid>
                 </Grid>
@@ -153,7 +162,7 @@
             </TabControl.ItemContainerStyle>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="DarkGray" BorderThickness="1">
+                    <Border BorderBrush="DarkGray" BorderThickness="1" Padding="1">
                         <ContentControl Content="{Binding UI}" />
                     </Border>
                 </DataTemplate>

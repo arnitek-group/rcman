@@ -88,6 +88,15 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The logon credentials that will be used. You can click on the Credentials tab and create a new set of credentials..
+        /// </summary>
+        public static string CredentialsDescription {
+            get {
+                return ResourceManager.GetString("CredentialsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display Name.
         /// </summary>
         public static string DisplayName {
@@ -97,11 +106,29 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name of the connection..
+        /// </summary>
+        public static string DisplayNameDescription {
+            get {
+                return ResourceManager.GetString("DisplayNameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domain.
         /// </summary>
         public static string Domain {
             get {
                 return ResourceManager.GetString("Domain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The logon domain..
+        /// </summary>
+        public static string DomainDescription {
+            get {
+                return ResourceManager.GetString("DomainDescription", resourceCulture);
             }
         }
         
@@ -124,11 +151,29 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The logon password..
+        /// </summary>
+        public static string PasswordDescription {
+            get {
+                return ResourceManager.GetString("PasswordDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port.
         /// </summary>
         public static string Port {
             get {
                 return ResourceManager.GetString("Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The remove connection port..
+        /// </summary>
+        public static string PortDescription {
+            get {
+                return ResourceManager.GetString("PortDescription", resourceCulture);
             }
         }
         
@@ -142,11 +187,29 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The remote connection protocol..
+        /// </summary>
+        public static string ProtocolDescription {
+            get {
+                return ResourceManager.GetString("ProtocolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server.
         /// </summary>
         public static string Server {
             get {
                 return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IP or hostame of the remote server..
+        /// </summary>
+        public static string ServerDescription {
+            get {
+                return ResourceManager.GetString("ServerDescription", resourceCulture);
             }
         }
         
@@ -165,6 +228,15 @@ namespace RemoteConnectionManager.Properties {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The logon username..
+        /// </summary>
+        public static string UsernameDescription {
+            get {
+                return ResourceManager.GetString("UsernameDescription", resourceCulture);
             }
         }
     }

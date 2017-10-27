@@ -126,11 +126,20 @@
   <data name="Credentials" xml:space="preserve">
     <value>Credentials</value>
   </data>
+  <data name="CredentialsDescription" xml:space="preserve">
+    <value>The logon credentials that will be used. You can click on the Credentials tab and create a new set of credentials.</value>
+  </data>
   <data name="DisplayName" xml:space="preserve">
     <value>Display Name</value>
   </data>
+  <data name="DisplayNameDescription" xml:space="preserve">
+    <value>The name of the connection.</value>
+  </data>
   <data name="Domain" xml:space="preserve">
     <value>Domain</value>
+  </data>
+  <data name="DomainDescription" xml:space="preserve">
+    <value>The logon domain.</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>New</value>
@@ -138,19 +147,34 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="PasswordDescription" xml:space="preserve">
+    <value>The logon password.</value>
+  </data>
   <data name="Port" xml:space="preserve">
     <value>Port</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>The remove connection port.</value>
   </data>
   <data name="Protocol" xml:space="preserve">
     <value>Protocol</value>
   </data>
+  <data name="ProtocolDescription" xml:space="preserve">
+    <value>The remote connection protocol.</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>Server</value>
+  </data>
+  <data name="ServerDescription" xml:space="preserve">
+    <value>The IP or hostame of the remote server.</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Servers</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="UsernameDescription" xml:space="preserve">
+    <value>The logon username.</value>
   </data>
 </root>
