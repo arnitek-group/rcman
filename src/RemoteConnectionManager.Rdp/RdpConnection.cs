@@ -86,6 +86,11 @@ namespace RemoteConnectionManager.Rdp
 
         private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            UpdateSessionDisplaySettings();
+        }
+
+        private void UpdateSessionDisplaySettings()
+        {
             if (_hostRdp.AxMsRdpClient.Connected == 1)
             {
                 _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(

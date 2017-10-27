@@ -153,7 +153,9 @@
             </TabControl.ItemContainerStyle>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding UI}" />
+                    <Border BorderBrush="DarkGray" BorderThickness="1">
+                        <ContentControl Content="{Binding UI}" />
+                    </Border>
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </dr:TabablzControl>
