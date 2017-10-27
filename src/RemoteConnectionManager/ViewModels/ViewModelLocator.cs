@@ -25,5 +25,7 @@ namespace RemoteConnectionManager.ViewModels
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+
+        public static ViewModelLocator Locator => ServiceLocator.Current.GetInstance<ViewModelLocator>();
     }
 }

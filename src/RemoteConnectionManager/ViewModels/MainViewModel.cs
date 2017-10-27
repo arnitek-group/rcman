@@ -2,7 +2,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Properties;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -70,10 +69,14 @@ namespace RemoteConnectionManager.ViewModels
                     _selectedConnectionSettings = value;
                     RaisePropertyChanged();
 
-                    var connection = Connections.FirstOrDefault(x => x.ConnectionSettings == _selectedConnectionSettings);
-                    if (connection != null)
+                    if (_selectedConnectionSettings != null)
                     {
-                        SelectedConnection = connection;
+                        var connection = Connections
+                            .FirstOrDefault(x => x.ConnectionSettings == _selectedConnectionSettings);
+                        if (connection != null)
+                        {
+                            SelectedConnection = connection;
+                        }
                     }
                 }
             }
@@ -90,10 +93,14 @@ namespace RemoteConnectionManager.ViewModels
                     _selectedConnection = value;
                     RaisePropertyChanged();
 
-                    var connectionSettings = _settingsViewModel.ConnectionSettings.FirstOrDefault(x => x == _selectedConnection.ConnectionSettings);
-                    if (connectionSettings != null)
+                    if (_selectedConnection != null)
                     {
-                        SelectedConnectionSettings = connectionSettings;
+                        var connectionSettings = _settingsViewModel.ConnectionSettings
+                            .FirstOrDefault(x => x == _selectedConnection.ConnectionSettings);
+                        if (connectionSettings != null)
+                        {
+                            SelectedConnectionSettings = connectionSettings;
+                        }
                     }
                 }
             }
@@ -139,6 +146,9 @@ namespace RemoteConnectionManager.ViewModels
                     .CreateConnection(connectionSettings);
                 connection.Disconnected += ConnectionDisconnected;
                 Connections.Add(connection);
+            }
+            if (!connection.IsConnected)
+            {
                 connection.Connect();
             }
             SelectedConnection = connection;
@@ -147,15 +157,26 @@ namespace RemoteConnectionManager.ViewModels
         public RelayCommand<IConnection> DisconnectCommand { get; }
         public void ExecuteDisconnectCommand(IConnection connection)
         {
-            // TODO: Properly address disconnect reason.
-            connection.Disconnected -= ConnectionDisconnected;
-            connection.Disconnect();
-            Connections.Remove(connection);
+            Disconnect(connection, DisconnectReason.ConnectionEnded);
         }
 
         private void ConnectionDisconnected(object sender, DisconnectReason e)
         {
-            Application.Current.Dispatcher.Invoke(() => ExecuteDisconnectCommand((IConnection)sender));
+            Application.Current.Dispatcher.Invoke(() => Disconnect((IConnection)sender, e));
+        }
+
+        private void Disconnect(IConnection connection, DisconnectReason reason)
+        {
+            connection.Disconnected -= ConnectionDisconnected;
+            connection.Disconnect();
+
+            if (reason == DisconnectReason.ConnectionEnded)
+            {
+                // The user initiated the disconnect so we
+                // can remove the connection.
+                Connections.Remove(connection);
+                connection.Destroy();
+            }
         }
 
         #endregion

@@ -8,6 +8,7 @@ namespace RemoteConnectionManager.Core
         ConnectionSettings ConnectionSettings { get; }
         void Connect();
         void Disconnect();
+        void Destroy();
         bool IsConnected { get; }
         FrameworkElement UI { get; }
 

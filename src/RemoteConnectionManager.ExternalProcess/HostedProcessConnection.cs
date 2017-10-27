@@ -40,6 +40,9 @@ namespace RemoteConnectionManager.ExternalProcess
             }
         }
 
+        public void Destroy()
+        { }
+
         public event EventHandler<DisconnectReason> Disconnected;
 
         #region Process

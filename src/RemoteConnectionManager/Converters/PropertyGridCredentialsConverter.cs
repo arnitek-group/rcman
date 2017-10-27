@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
-using GalaSoft.MvvmLight.Ioc;
 
 namespace RemoteConnectionManager.Converters
 {
@@ -18,9 +17,8 @@ namespace RemoteConnectionManager.Converters
                 return new ComboBoxItem { Content = Resources.Clear };
             }
 
-            return SimpleIoc.Default.GetInstance<ViewModelLocator>()
-                .Main.Credentials
-                .Single(x => x.Credentials == value);
+            return ViewModelLocator.Locator
+                .Main.Credentials.Single(x => x.Credentials == value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

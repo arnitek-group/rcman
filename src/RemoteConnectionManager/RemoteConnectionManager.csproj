@@ -114,12 +114,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConnectionSettingsControl.xaml.cs">
+      <DependentUpon>ConnectionSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
     <Compile Include="Converters\ProtocolToIconConverter.cs" />
+    <Compile Include="CredentialsControl.xaml.cs">
+      <DependentUpon>CredentialsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Page Include="ConnectionSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CredentialsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

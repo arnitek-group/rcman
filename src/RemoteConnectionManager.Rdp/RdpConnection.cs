@@ -46,6 +46,12 @@ namespace RemoteConnectionManager.Rdp
                 }
 
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
+                // Keyboard redirection settings.
+                // https://msdn.microsoft.com/en-us/library/aa381095(v=vs.85).aspx
+                // https://msdn.microsoft.com/en-us/library/aa381299(v=vs.85).aspx
+                _hostRdp.AxMsRdpClient.AdvancedSettings2.EnableWindowsKey = 1;
+                _hostRdp.AxMsRdpClient.SecuredSettings2.KeyboardHookMode = 1;
+                // Connection settings.
                 _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
                 _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
                 _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
@@ -65,28 +71,36 @@ namespace RemoteConnectionManager.Rdp
         {
             if (IsConnected)
             {
-                if (_hostGrid != null)
+                if (_hostRdp.AxMsRdpClient.Connected == 1)
                 {
-                    _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
-                    _hostGrid.SizeChanged -= Host_SizeChanged;
-                    _hostGrid.Dispatcher.Invoke(() => _hostGrid.Children.Clear());
-                    _hostGrid = null;
+                    _hostRdp.AxMsRdpClient.Disconnect();
                 }
-
-                if (_hostRdp != null)
-                {
-                    _hostRdp.AxMsRdpClient.OnDisconnected -= AxMsRdpClient_OnDisconnected;
-                    if (_hostRdp.AxMsRdpClient.Connected == 1)
-                    {
-                        _hostRdp.AxMsRdpClient.Disconnect();
-                    }
-                    _hostRdp.Invoke((MethodInvoker)delegate { _hostRdp.Dispose(); });
-                    _hostRdp = null;
-                }
-
-                UI = null;
                 IsConnected = false;
             }
+        }
+
+        public void Destroy()
+        {
+            if (_hostGrid != null)
+            {
+                _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
+                _hostGrid.SizeChanged -= Host_SizeChanged;
+                _hostGrid.Dispatcher.Invoke(() => _hostGrid.Children.Clear());
+                _hostGrid = null;
+            }
+
+            if (_hostRdp != null)
+            {
+                _hostRdp.AxMsRdpClient.OnDisconnected -= AxMsRdpClient_OnDisconnected;
+                if (_hostRdp.AxMsRdpClient.Connected == 1)
+                {
+                    _hostRdp.AxMsRdpClient.Disconnect();
+                }
+                _hostRdp.Invoke((MethodInvoker)delegate { _hostRdp.Dispose(); });
+                _hostRdp = null;
+            }
+
+            UI = null;
         }
 
         private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
@@ -105,7 +119,6 @@ namespace RemoteConnectionManager.Rdp
 
         private void AxMsRdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
-            // TODO: Properly address disconnect reason.
             var reason = DisconnectReason.ConnectionTerminated;
             switch (e.discReason)
             {
@@ -116,9 +129,10 @@ namespace RemoteConnectionManager.Rdp
                 case Reason_DisconnectedByUser:
                     reason = DisconnectReason.KickedOut;
                     break;
-                case Reason_BadIp:
-                case Reason_InvalidIp:
+                case Reason_ServerNotFound:
                 case Reason_HostNotFound:
+                case Reason_InvalidIp:
+                case Reason_BadIp:
                     reason = DisconnectReason.ServerNotFound;
                     break;
                 case Reason_TimedOut:
@@ -142,6 +156,7 @@ namespace RemoteConnectionManager.Rdp
         private const int Reason_ClientDisconnect = 0x1;
         private const int Reason_DisconnectedByUser = 0x2;
         private const int Reason_ServerDisconnect = 0x3;
+        private const int Reason_ServerNotFound = 0x104;
         private const int Reason_TimedOut = 0x108;
         private const int Reason_HostNotFound = 0x208;
         private const int Reason_InvalidIp = 0x308;
