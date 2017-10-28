@@ -14,13 +14,13 @@ namespace RemoteConnectionManager
         private void PasswordBox_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var passwordBox = (PasswordBox)sender;
-            passwordBox.Password = ViewModelLocator.Locator.Main.SelectedCredentials.Password;
+            passwordBox.Password = ViewModelLocator.Locator.Connections.SelectedCredentials.Password;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             var passwordBox = (PasswordBox)sender;
-            ViewModelLocator.Locator.Main.SelectedCredentials.Password = passwordBox.Password;
+            ViewModelLocator.Locator.Connections.SelectedCredentials.Password = passwordBox.Password;
         }
     }
 }

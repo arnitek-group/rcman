@@ -6,8 +6,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="480"
-             DataContext="{Binding Main, Source={StaticResource Locator}}">
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="480">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -16,7 +15,7 @@
         </Grid.RowDefinitions>
         <ListBox Grid.Row="0" ItemsSource="{Binding Settings.ConnectionSettings, Source={StaticResource Locator}}"
                  SelectionMode="Single"
-                 SelectedItem="{Binding SelectedConnectionSettings, Mode=TwoWay}">
+                 SelectedItem="{Binding Connections.SelectedConnectionSettings, Mode=TwoWay, Source={StaticResource Locator}}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                     <EventSetter Event="MouseDoubleClick" Handler="ListBox_DoubleClick" />
@@ -31,11 +30,27 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="1" Content="{x:Static prop:Resources.New}"
-                Command="{Binding NewConnectionSettingsCommand}" />
-        <xctk:PropertyGrid Grid.Row="2" SelectedObject="{Binding SelectedConnectionSettings}"
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding Settings.CreateConnectionSettingsCommand, Source={StaticResource Locator}}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="PlusCircleOutline" />
+                    <TextBlock Text="{x:Static prop:Resources.Create}" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="1" Command="{Binding Settings.DeleteConnectionSettingsCommand, Source={StaticResource Locator}}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="MinusCircleOutline" />
+                    <TextBlock Text="{x:Static prop:Resources.Delete}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <xctk:PropertyGrid Grid.Row="2" SelectedObject="{Binding Connections.SelectedConnectionSettings, Source={StaticResource Locator}}"
                            SelectedObjectTypeName="{x:Static prop:Resources.ConnectionSettings}"
-                           SelectedObjectName="{Binding SelectedConnectionSettings.DisplayName}"
+                           SelectedObjectName="{Binding Connections.SelectedConnectionSettings.DisplayName, Source={StaticResource Locator}}"
                            ShowSearchBox="False" ShowSortOptions="False"
                            AutoGenerateProperties="False" NameColumnWidth="100">
             <xctk:PropertyGrid.PropertyDefinitions>
@@ -64,7 +79,7 @@
                                 <ComboBox.ItemsSource>
                                     <CompositeCollection>
                                         <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
-                                        <CollectionContainer Collection="{Binding Main.Credentials, Source={StaticResource Locator}}" />
+                                        <CollectionContainer Collection="{Binding Settings.Credentials, Source={StaticResource Locator}}" />
                                     </CompositeCollection>
                                 </ComboBox.ItemsSource>
                             </ComboBox>

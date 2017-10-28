@@ -122,8 +122,9 @@
     <Compile Include="CredentialsControl.xaml.cs">
       <DependentUpon>CredentialsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\CredentialsViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Page Include="ConnectionSettingsControl.xaml">

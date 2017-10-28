@@ -7,8 +7,7 @@
         xmlns:dr="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:rcman="clr-namespace:RemoteConnectionManager"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{StaticResource SidePanelWidth}" />
@@ -40,8 +39,8 @@
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,26,0,0" />
 
         <dr:TabablzControl Grid.Column="2"
-                           ItemsSource="{Binding Connections}"
-                           SelectedItem="{Binding SelectedConnection, Mode=TwoWay}">
+                           ItemsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
+                           SelectedItem="{Binding Connections.SelectedConnection, Mode=TwoWay, Source={StaticResource Locator}}">
             <dr:TabablzControl.HeaderItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

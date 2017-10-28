@@ -126,11 +126,17 @@
   <data name="ConnectionSettings" xml:space="preserve">
     <value>Connection Settings</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Credentials</value>
   </data>
   <data name="CredentialsDescription" xml:space="preserve">
     <value>The logon credentials that will be used. You can click on the Credentials tab and create a new set of credentials.</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
     <value>Display Name</value>

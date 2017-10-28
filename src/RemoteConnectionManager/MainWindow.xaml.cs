@@ -28,14 +28,14 @@ namespace RemoteConnectionManager
             }
 
             var connection = (IConnection)((FrameworkElement)sender).DataContext;
-            ViewModelLocator.Locator.Main.ExecuteDisconnectCommand(connection);
+            ViewModelLocator.Locator.Connections.ExecuteDisconnectCommand(connection);
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
 
-            if (!ViewModelLocator.Locator.Main.OnClosing())
+            if (!ViewModelLocator.Locator.Connections.OnClosing())
             {
                 e.Cancel = true;
             }

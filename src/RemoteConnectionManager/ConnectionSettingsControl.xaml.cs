@@ -15,8 +15,8 @@ namespace RemoteConnectionManager
 
         private void ListBox_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var connectionSettings = (ConnectionSettings)((FrameworkElement)sender).DataContext;
-            ViewModelLocator.Locator.Main.ExecuteConnectCommand(connectionSettings);
+            var connectionSettings = (ConnectionSettingsViewModel)((FrameworkElement)sender).DataContext;
+            ViewModelLocator.Locator.Connections.ExecuteConnectCommand(connectionSettings.ConnectionSettings);
         }
     }
 }

@@ -19,13 +19,16 @@ namespace RemoteConnectionManager.ViewModels
             });
             // Register view models.
             SimpleIoc.Default.Register<ViewModelLocator>(() => this);
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConnectionsViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+
+            Connections = ServiceLocator.Current.GetInstance<ConnectionsViewModel>();
+            Settings = ServiceLocator.Current.GetInstance<SettingsViewModel>();
+            Locator = ServiceLocator.Current.GetInstance<ViewModelLocator>();
         }
 
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-        public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
-
-        public static ViewModelLocator Locator => ServiceLocator.Current.GetInstance<ViewModelLocator>();
+        public ConnectionsViewModel Connections { get; }
+        public SettingsViewModel Settings { get; }
+        public static ViewModelLocator Locator { get; private set; }
     }
 }

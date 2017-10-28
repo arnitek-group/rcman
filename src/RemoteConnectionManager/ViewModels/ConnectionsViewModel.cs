@@ -1,29 +1,21 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
-using RemoteConnectionManager.Properties;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
 namespace RemoteConnectionManager.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class ConnectionsViewModel : ViewModelBase
     {
-        private readonly SettingsViewModel _settingsViewModel;
         private readonly IConnectionFactory[] _connectionFactories;
 
-        public MainViewModel(SettingsViewModel settingsViewModel, IConnectionFactory[] connectionFactories)
+        public ConnectionsViewModel(IConnectionFactory[] connectionFactories)
         {
-            _settingsViewModel = settingsViewModel;
             _connectionFactories = connectionFactories;
 
-            var credentialsVms = _settingsViewModel.Credentials.Select(x => new CredentialsViewModel(x));
-            Credentials = new ObservableCollection<CredentialsViewModel>(credentialsVms);
             Connections = new ObservableCollection<IConnection>();
-            
-            NewConnectionSettingsCommand = new RelayCommand(ExecuteNewConnectionSettingsCommand);
-            NewCredentialsCommand = new RelayCommand(ExecuteNewCredentialsCommand);
 
             ConnectCommand = new RelayCommand<ConnectionSettings>(ExecuteConnectCommand);
             DisconnectCommand = new RelayCommand<IConnection>(ExecuteDisconnectCommand);
@@ -38,12 +30,9 @@ namespace RemoteConnectionManager.ViewModels
 
             return true;
         }
-
-        public ObservableCollection<CredentialsViewModel> Credentials { get; }
+        
         public ObservableCollection<IConnection> Connections { get; }
-
-        #region Selection
-
+        
         private CredentialsViewModel _selectedCredentials;
         public CredentialsViewModel SelectedCredentials
         {
@@ -55,11 +44,12 @@ namespace RemoteConnectionManager.ViewModels
                     _selectedCredentials = value;
                     RaisePropertyChanged();
                 }
+                ViewModelLocator.Locator.Settings.DeleteCredentialsCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private ConnectionSettings _selectedConnectionSettings;
-        public ConnectionSettings SelectedConnectionSettings
+        private ConnectionSettingsViewModel _selectedConnectionSettings;
+        public ConnectionSettingsViewModel SelectedConnectionSettings
         {
             get { return _selectedConnectionSettings; }
             set
@@ -72,13 +62,14 @@ namespace RemoteConnectionManager.ViewModels
                     if (_selectedConnectionSettings != null)
                     {
                         var connection = Connections
-                            .FirstOrDefault(x => x.ConnectionSettings == _selectedConnectionSettings);
+                            .FirstOrDefault(x => x.ConnectionSettings == _selectedConnectionSettings.ConnectionSettings);
                         if (connection != null)
                         {
                             SelectedConnection = connection;
                         }
                     }
                 }
+                ViewModelLocator.Locator.Settings.DeleteConnectionSettingsCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -95,46 +86,17 @@ namespace RemoteConnectionManager.ViewModels
 
                     if (_selectedConnection != null)
                     {
-                        var connectionSettings = _settingsViewModel.ConnectionSettings
-                            .FirstOrDefault(x => x == _selectedConnection.ConnectionSettings);
-                        if (connectionSettings != null)
+                        var csvm = ViewModelLocator.Locator.Settings.ConnectionSettings
+                            .FirstOrDefault(x => x.ConnectionSettings == _selectedConnection.ConnectionSettings);
+                        if (csvm != null)
                         {
-                            SelectedConnectionSettings = connectionSettings;
+                            SelectedConnectionSettings = csvm;
                         }
                     }
                 }
             }
         }
-
-        #endregion
-
-        #region Commands
-
-        public RelayCommand NewConnectionSettingsCommand { get; }
-        public void ExecuteNewConnectionSettingsCommand()
-        {
-            var connectionSettings = new ConnectionSettings
-            {
-                DisplayName = Resources.New
-            };
-            _settingsViewModel.ConnectionSettings.Add(connectionSettings);
-            SelectedConnectionSettings = connectionSettings;
-        }
-
-        public RelayCommand NewCredentialsCommand { get; }
-        public void ExecuteNewCredentialsCommand()
-        {
-            var credentials = new Credentials
-            {
-                DisplayName = Resources.New
-            };
-            _settingsViewModel.Credentials.Add(credentials);
-
-            var credentialsVm = new CredentialsViewModel(credentials);
-            Credentials.Add(credentialsVm);
-            SelectedCredentials = credentialsVm;
-        }
-
+        
         public RelayCommand<ConnectionSettings> ConnectCommand { get; }
         public void ExecuteConnectCommand(ConnectionSettings connectionSettings)
         {
@@ -178,7 +140,5 @@ namespace RemoteConnectionManager.ViewModels
                 connection.Destroy();
             }
         }
-
-        #endregion
     }
 }

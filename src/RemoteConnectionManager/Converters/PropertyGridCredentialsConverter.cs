@@ -18,14 +18,14 @@ namespace RemoteConnectionManager.Converters
             }
 
             return ViewModelLocator.Locator
-                .Main.Credentials.Single(x => x.Credentials == value);
+                .Settings.Credentials.Single(x => x == value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is CredentialsViewModel model)
             {
-                return model.Credentials;
+                return model;
             }
 
             return null;
