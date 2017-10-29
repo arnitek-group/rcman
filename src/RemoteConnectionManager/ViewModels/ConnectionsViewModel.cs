@@ -39,7 +39,7 @@ namespace RemoteConnectionManager.ViewModels
 
             foreach (var connection in Connections)
             {
-                Disconnect(connection, DisconnectReason.ConnectionEnded);
+                Disconnect(connection, DisconnectReason.ApplicationExit);
             }
 
             return true;
@@ -146,12 +146,16 @@ namespace RemoteConnectionManager.ViewModels
             connection.Disconnected -= ConnectionDisconnected;
             connection.Disconnect();
 
+            // The user initiated the disconnect so we
+            // can remove the connection.
+            if (reason == DisconnectReason.ApplicationExit ||
+                reason == DisconnectReason.ConnectionEnded)
+            {
+                connection.Destroy();
+            }
             if (reason == DisconnectReason.ConnectionEnded)
             {
-                // The user initiated the disconnect so we
-                // can remove the connection.
                 Connections.Remove(connection);
-                connection.Destroy();
             }
         }
     }
