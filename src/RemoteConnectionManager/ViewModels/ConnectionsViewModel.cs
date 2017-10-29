@@ -1,11 +1,11 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Properties;
+using RemoteConnectionManager.Services;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using RemoteConnectionManager.Properties;
-using RemoteConnectionManager.Services;
 
 namespace RemoteConnectionManager.ViewModels
 {
@@ -39,7 +39,7 @@ namespace RemoteConnectionManager.ViewModels
 
             foreach (var connection in Connections)
             {
-                connection.Disconnect();
+                Disconnect(connection, DisconnectReason.ConnectionEnded);
             }
 
             return true;
