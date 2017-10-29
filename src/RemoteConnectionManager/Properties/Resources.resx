@@ -123,6 +123,12 @@
   <data name="Clear" xml:space="preserve">
     <value>-Clear-</value>
   </data>
+  <data name="ConfirmClose" xml:space="preserve">
+    <value>Are you sure you want to close all exisitng connections and exit the application?</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to permanently delete {0}?</value>
+  </data>
   <data name="ConnectionSettings" xml:space="preserve">
     <value>Connection Settings</value>
   </data>

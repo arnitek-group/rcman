@@ -1,48 +1,45 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Properties;
+using RemoteConnectionManager.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 
 namespace RemoteConnectionManager.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private const string SettingsFile = "settings.json";
+        private readonly ISettingsService _settingsService;
+        private readonly IDialogService _dialogService;
 
-        public SettingsViewModel()
+        public SettingsViewModel(
+            ISettingsService settingsService,
+            IDialogService dialogService)
         {
+            _settingsService = settingsService;
+            _dialogService = dialogService;
+
             Credentials = new ObservableCollection<CredentialsViewModel>();
             ConnectionSettings = new ObservableCollection<ConnectionSettingsViewModel>();
 
             Credentials.CollectionChanged += CollectionChanged;
             ConnectionSettings.CollectionChanged += CollectionChanged;
 
-            if (!File.Exists(SettingsFile))
+            var settings = _settingsService.LoadSettings();
+            if (settings != null)
             {
-                File.CreateText(SettingsFile);
-            }
-            else
-            {
-                var settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsFile));
-                if (settings != null)
+                foreach (var credentials in settings.Credentials)
                 {
-                    foreach (var credentials in settings.Credentials)
-                    {
-                        Credentials.Add(new CredentialsViewModel(credentials));
-                    }
-                    foreach (var connectionSettings in settings.ConnectionSettings)
-                    {
-                        var csvm = new ConnectionSettingsViewModel(connectionSettings);
-                        csvm.Credentials = Credentials.FirstOrDefault(x => x.Credentials == connectionSettings.Credentials);
-                        ConnectionSettings.Add(csvm);
-                    }
+                    Credentials.Add(new CredentialsViewModel(credentials));
+                }
+                foreach (var connectionSettings in settings.ConnectionSettings)
+                {
+                    var csvm = new ConnectionSettingsViewModel(connectionSettings);
+                    csvm.Credentials = Credentials.FirstOrDefault(x => x.Credentials == connectionSettings.Credentials);
+                    ConnectionSettings.Add(csvm);
                 }
             }
 
@@ -78,8 +75,15 @@ namespace RemoteConnectionManager.ViewModels
         }
         public void ExecuteDeleteConnectionSettingsCommand()
         {
-            IsSaveSuspended = true;
             var connectionSettings = ViewModelLocator.Locator.Connections.SelectedConnectionSettings;
+
+            var text = string.Format(Resources.ConfirmDelete, connectionSettings.DisplayName);
+            if (!_dialogService.ShowConfirmationDialog(text))
+            {
+                return;
+            }
+
+            _isSaveSuspended = true;
             var connection = ViewModelLocator.Locator.Connections.Connections
                 .FirstOrDefault(x => x.ConnectionSettings == connectionSettings.ConnectionSettings);
             if (connection != null)
@@ -89,14 +93,14 @@ namespace RemoteConnectionManager.ViewModels
                 ViewModelLocator.Locator.Connections.Connections.Remove(connection);
             }
             ViewModelLocator.Locator.Connections.SelectedConnectionSettings = null;
-            IsSaveSuspended = false;
+            _isSaveSuspended = false;
             ConnectionSettings.Remove(connectionSettings);
         }
 
         public RelayCommand CreateCredentialsCommand { get; }
         public void ExecuteCreateCredentialsCommand()
         {
-            var cvm = new CredentialsViewModel( new Credentials
+            var cvm = new CredentialsViewModel(new Credentials
             {
                 DisplayName = Resources.New
             });
@@ -111,15 +115,22 @@ namespace RemoteConnectionManager.ViewModels
         }
         public void ExecuteDeleteCredentialsCommand()
         {
-            IsSaveSuspended = true;
             var credentials = ViewModelLocator.Locator.Connections.SelectedCredentials;
+
+            var text = string.Format(Resources.ConfirmDelete, credentials.DisplayName);
+            if (!_dialogService.ShowConfirmationDialog(text))
+            {
+                return;
+            }
+
+            _isSaveSuspended = true;
             var connectionSettings = ConnectionSettings.Where(x => x.Credentials == credentials);
             foreach (var csvm in connectionSettings)
             {
                 csvm.Credentials = null;
             }
             ViewModelLocator.Locator.Connections.SelectedCredentials = null;
-            IsSaveSuspended = false;
+            _isSaveSuspended = false;
             Credentials.Remove(credentials);
         }
 
@@ -147,35 +158,20 @@ namespace RemoteConnectionManager.ViewModels
             SaveSettings();
         }
 
-        private bool IsSaveSuspended = false;
+        private bool _isSaveSuspended;
 
         private void SaveSettings()
         {
-            if (IsSaveSuspended)
+            if (_isSaveSuspended)
             {
                 return;
             }
 
-            var settings = new Settings
+            _settingsService.SaveSettings(new Services.Settings
             {
                 Credentials = Credentials.Select(x => x.Credentials).ToArray(),
                 ConnectionSettings = ConnectionSettings.Select(x => x.ConnectionSettings).ToArray()
-            };
-            var settingsText = JsonConvert.SerializeObject(
-                settings, Formatting.Indented,
-                new JsonSerializerSettings
-                {
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                    Converters = new[] { new StringEnumConverter() }
-                }
-            );
-            File.WriteAllText(SettingsFile, settingsText);
+            });
         }
-    }
-
-    public class Settings
-    {
-        public Credentials[] Credentials { get; set; }
-        public ConnectionSettings[] ConnectionSettings { get; set; }
     }
 }

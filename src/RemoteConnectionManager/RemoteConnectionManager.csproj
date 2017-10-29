@@ -122,9 +122,14 @@
     <Compile Include="CredentialsControl.xaml.cs">
       <DependentUpon>CredentialsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\MessageBoxDialogService.cs" />
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
+    <Compile Include="Services\JsonSettingsService.cs" />
     <Compile Include="ViewModels\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
+    <Compile Include="Services\Settings.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Page Include="ConnectionSettingsControl.xaml">

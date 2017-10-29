@@ -3,6 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using RemoteConnectionManager.Core;
 using RemoteConnectionManager.ExternalProcess;
 using RemoteConnectionManager.Rdp;
+using RemoteConnectionManager.Services;
 
 namespace RemoteConnectionManager.ViewModels
 {
@@ -17,6 +18,9 @@ namespace RemoteConnectionManager.ViewModels
                 new RdpConnectionFactory(),
                 new PuTTYConnectionFactory()
             });
+            // Register services.
+            SimpleIoc.Default.Register<ISettingsService, JsonSettingsService>();
+            SimpleIoc.Default.Register<IDialogService, MessageBoxDialogService>();
             // Register view models.
             SimpleIoc.Default.Register<ViewModelLocator>(() => this);
             SimpleIoc.Default.Register<ConnectionsViewModel>();

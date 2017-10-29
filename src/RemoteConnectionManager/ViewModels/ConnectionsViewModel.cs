@@ -4,16 +4,22 @@ using RemoteConnectionManager.Core;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using RemoteConnectionManager.Properties;
+using RemoteConnectionManager.Services;
 
 namespace RemoteConnectionManager.ViewModels
 {
     public class ConnectionsViewModel : ViewModelBase
     {
         private readonly IConnectionFactory[] _connectionFactories;
+        private readonly IDialogService _dialogService;
 
-        public ConnectionsViewModel(IConnectionFactory[] connectionFactories)
+        public ConnectionsViewModel(
+            IConnectionFactory[] connectionFactories,
+            IDialogService dialogService)
         {
             _connectionFactories = connectionFactories;
+            _dialogService = dialogService;
 
             Connections = new ObservableCollection<IConnection>();
 
@@ -23,6 +29,14 @@ namespace RemoteConnectionManager.ViewModels
 
         public bool OnClosing()
         {
+            if (Connections.Count > 0)
+            {
+                if (!_dialogService.ShowConfirmationDialog(Resources.ConfirmClose))
+                {
+                    return false;
+                }
+            }
+
             foreach (var connection in Connections)
             {
                 connection.Disconnect();
