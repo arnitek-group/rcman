@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.IconPacks;
-using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Core;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -14,9 +13,9 @@ namespace RemoteConnectionManager.Converters
             switch (protocol)
             {
                 case Protocol.Rdp:
-                    return PackIconMaterialKind.Monitor;
+                    return "Resources/RemoteDesktop_16x.png";
                 case Protocol.Ssh:
-                    return PackIconMaterialKind.Console;
+                    return "Resources/Console_16x.png";
                 default:
                     return null;
             }

@@ -120,6 +120,9 @@
   <data name="Application" xml:space="preserve">
     <value>Remote Connection Manager</value>
   </data>
+  <data name="AutoHide" xml:space="preserve">
+    <value>Auto Hide</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>-Clear-</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>The remove connection port.</value>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Properties</value>
   </data>
   <data name="Protocol" xml:space="preserve">
     <value>Protocol</value>

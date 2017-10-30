@@ -7,19 +7,19 @@ namespace RemoteConnectionManager.ViewModels
     {
         public CredentialsViewModel(Credentials credentials)
         {
-            Credentials = credentials;
+            CredentialsM = credentials;
         }
-
-        public Credentials Credentials { get; }
+        
+        public Credentials CredentialsM { get; }
 
         public string Domain
         {
-            get { return Credentials.Domain; }
+            get { return CredentialsM.Domain; }
             set
             {
-                if (Credentials.Domain != value)
+                if (CredentialsM.Domain != value)
                 {
-                    Credentials.Domain = value;
+                    CredentialsM.Domain = value;
                     RaisePropertyChanged();
                 }
             }
@@ -27,12 +27,12 @@ namespace RemoteConnectionManager.ViewModels
 
         public string Username
         {
-            get { return Credentials.Username; }
+            get { return CredentialsM.Username; }
             set
             {
-                if (Credentials.Username != value)
+                if (CredentialsM.Username != value)
                 {
-                    Credentials.Username = value;
+                    CredentialsM.Username = value;
                     RaisePropertyChanged();
                 }
             }
@@ -40,12 +40,12 @@ namespace RemoteConnectionManager.ViewModels
         
         public string Password
         {
-            get { return Credentials.Password; }
+            get { return CredentialsM.Password; }
             set
             {
-                if (Credentials.Password != value)
+                if (CredentialsM.Password != value)
                 {
-                    Credentials.SetPassword(value);
+                    CredentialsM.SetPassword(value);
                     RaisePropertyChanged();
                 }
             }
@@ -53,12 +53,12 @@ namespace RemoteConnectionManager.ViewModels
         
         public string DisplayName
         {
-            get { return Credentials.DisplayName; }
+            get { return CredentialsM.DisplayName; }
             set
             {
-                if (Credentials.DisplayName != value)
+                if (CredentialsM.DisplayName != value)
                 {
-                    Credentials.DisplayName = value;
+                    CredentialsM.DisplayName = value;
                     RaisePropertyChanged();
                 }
             }

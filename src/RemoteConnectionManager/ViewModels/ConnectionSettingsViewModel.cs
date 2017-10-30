@@ -73,7 +73,7 @@ namespace RemoteConnectionManager.ViewModels
                 if (_credentials != value)
                 {
                     _credentials = value;
-                    ConnectionSettings.Credentials = _credentials?.Credentials;
+                    ConnectionSettings.Credentials = _credentials?.CredentialsM;
                     RaisePropertyChanged();
                 }
             }

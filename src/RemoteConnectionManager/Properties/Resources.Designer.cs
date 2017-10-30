@@ -70,6 +70,15 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Hide.
+        /// </summary>
+        public static string AutoHide {
+            get {
+                return ResourceManager.GetString("AutoHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to -Clear-.
         /// </summary>
         public static string Clear {
@@ -219,6 +228,15 @@ namespace RemoteConnectionManager.Properties {
         public static string PortDescription {
             get {
                 return ResourceManager.GetString("PortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string Properties {
+            get {
+                return ResourceManager.GetString("Properties", resourceCulture);
             }
         }
         

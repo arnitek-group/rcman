@@ -2,33 +2,28 @@
 using RemoteConnectionManager.ViewModels;
 using System;
 using System.Globalization;
-using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace RemoteConnectionManager.Converters
 {
-    public class PropertyGridCredentialsConverter : IValueConverter
+    class ObjectTypeNameConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            if (value is ConnectionSettingsViewModel)
             {
-                return new ComboBoxItem { Content = Resources.Clear };
+                return Resources.ConnectionSettings;
             }
-
-            return ViewModelLocator.Locator
-                .Settings.Credentials.FirstOrDefault(x => x == value);
+            if (value is CredentialsViewModel)
+            {
+                return Resources.Credentials;
+            }
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is CredentialsViewModel model)
-            {
-                return model;
-            }
-
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

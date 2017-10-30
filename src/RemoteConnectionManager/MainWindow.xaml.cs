@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Input;
+using Xceed.Wpf.AvalonDock;
 
 namespace RemoteConnectionManager
 {
@@ -20,14 +20,9 @@ namespace RemoteConnectionManager
             Title = Properties.Resources.Application + " v" + fileVersionInfo.FileVersion;
         }
 
-        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
+        private void DockingManager_OnDocumentClosed(object sender, DocumentClosedEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Middle || e.MiddleButton != MouseButtonState.Pressed)
-            {
-                return;
-            }
-
-            var connection = (IConnection)((FrameworkElement)sender).DataContext;
+            var connection = (IConnection)e.Document.Content;
             ViewModelLocator.Locator.Connections.ExecuteDisconnectCommand(connection);
         }
 

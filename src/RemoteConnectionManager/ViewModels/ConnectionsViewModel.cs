@@ -47,70 +47,6 @@ namespace RemoteConnectionManager.ViewModels
         
         public ObservableCollection<IConnection> Connections { get; }
         
-        private CredentialsViewModel _selectedCredentials;
-        public CredentialsViewModel SelectedCredentials
-        {
-            get { return _selectedCredentials; }
-            set
-            {
-                if (_selectedCredentials != value)
-                {
-                    _selectedCredentials = value;
-                    RaisePropertyChanged();
-                }
-                ViewModelLocator.Locator.Settings.DeleteCredentialsCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        private ConnectionSettingsViewModel _selectedConnectionSettings;
-        public ConnectionSettingsViewModel SelectedConnectionSettings
-        {
-            get { return _selectedConnectionSettings; }
-            set
-            {
-                if (_selectedConnectionSettings != value)
-                {
-                    _selectedConnectionSettings = value;
-                    RaisePropertyChanged();
-
-                    if (_selectedConnectionSettings != null)
-                    {
-                        var connection = Connections
-                            .FirstOrDefault(x => x.ConnectionSettings == _selectedConnectionSettings.ConnectionSettings);
-                        if (connection != null)
-                        {
-                            SelectedConnection = connection;
-                        }
-                    }
-                }
-                ViewModelLocator.Locator.Settings.DeleteConnectionSettingsCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        private IConnection _selectedConnection;
-        public IConnection SelectedConnection
-        {
-            get { return _selectedConnection; }
-            set
-            {
-                if (_selectedConnection != value)
-                {
-                    _selectedConnection = value;
-                    RaisePropertyChanged();
-
-                    if (_selectedConnection != null)
-                    {
-                        var csvm = ViewModelLocator.Locator.Settings.ConnectionSettings
-                            .FirstOrDefault(x => x.ConnectionSettings == _selectedConnection.ConnectionSettings);
-                        if (csvm != null)
-                        {
-                            SelectedConnectionSettings = csvm;
-                        }
-                    }
-                }
-            }
-        }
-        
         public RelayCommand<ConnectionSettings> ConnectCommand { get; }
         public void ExecuteConnectCommand(ConnectionSettings connectionSettings)
         {
@@ -127,7 +63,7 @@ namespace RemoteConnectionManager.ViewModels
                 connection.Disconnected += ConnectionDisconnected;
                 connection.Connect();
             }
-            SelectedConnection = connection;
+            ViewModelLocator.Locator.Selection.SelectedConnection = connection;
         }
 
         public RelayCommand<IConnection> DisconnectCommand { get; }

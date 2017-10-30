@@ -53,12 +53,13 @@ namespace RemoteConnectionManager.Rdp
                 // Keyboard redirection settings.
                 // https://msdn.microsoft.com/en-us/library/aa381095(v=vs.85).aspx
                 // https://msdn.microsoft.com/en-us/library/aa381299(v=vs.85).aspx
-                _hostRdp.AxMsRdpClient.AdvancedSettings2.EnableWindowsKey = 1;
                 _hostRdp.AxMsRdpClient.SecuredSettings2.KeyboardHookMode = 1;
+                _hostRdp.AxMsRdpClient.AdvancedSettings2.EnableWindowsKey = 1;
+                _hostRdp.AxMsRdpClient.AdvancedSettings7.EnableCredSspSupport = true;
                 // Connection settings.
                 _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
                 _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
-
+                
                 if (_hostGrid == null)
                 {
                     _hostGrid = new Grid();
@@ -127,6 +128,8 @@ namespace RemoteConnectionManager.Rdp
         private void AxMsRdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             var reason = DisconnectReason.ConnectionTerminated;
+            // https://social.technet.microsoft.com/wiki/contents/articles/37870.rds-remote-desktop-client-disconnect-codes-and-reasons.aspx
+            // https://msdn.microsoft.com/en-us/library/aa382170%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
             switch (e.discReason)
             {
                 case Reason_ClientDisconnect:

@@ -38,7 +38,7 @@ namespace RemoteConnectionManager.ViewModels
                 foreach (var connectionSettings in settings.ConnectionSettings)
                 {
                     var csvm = new ConnectionSettingsViewModel(connectionSettings);
-                    csvm.Credentials = Credentials.FirstOrDefault(x => x.Credentials == connectionSettings.Credentials);
+                    csvm.Credentials = Credentials.FirstOrDefault(x => x.CredentialsM == connectionSettings.Credentials);
                     ConnectionSettings.Add(csvm);
                 }
             }
@@ -65,17 +65,23 @@ namespace RemoteConnectionManager.ViewModels
                 DisplayName = Resources.New
             });
             ConnectionSettings.Add(csvm);
-            ViewModelLocator.Locator.Connections.SelectedConnectionSettings = csvm;
+            ViewModelLocator.Locator
+                .Selection
+                .SelectedConnectionSettings = csvm;
         }
 
         public RelayCommand DeleteConnectionSettingsCommand { get; }
         public bool CanExecuteDeleteConnectionSettingsCommand()
         {
-            return ViewModelLocator.Locator.Connections.SelectedConnectionSettings != null;
+            return ViewModelLocator.Locator
+                .Selection
+                .SelectedConnectionSettings != null;
         }
         public void ExecuteDeleteConnectionSettingsCommand()
         {
-            var connectionSettings = ViewModelLocator.Locator.Connections.SelectedConnectionSettings;
+            var connectionSettings = ViewModelLocator.Locator
+                .Selection
+                .SelectedConnectionSettings;
 
             var text = string.Format(Resources.ConfirmDelete, connectionSettings.DisplayName);
             if (!_dialogService.ShowConfirmationDialog(text))
@@ -92,7 +98,9 @@ namespace RemoteConnectionManager.ViewModels
                 connection.Destroy();
                 ViewModelLocator.Locator.Connections.Connections.Remove(connection);
             }
-            ViewModelLocator.Locator.Connections.SelectedConnectionSettings = null;
+            ViewModelLocator.Locator
+                .Selection
+                .SelectedConnectionSettings = null;
             _isSaveSuspended = false;
             ConnectionSettings.Remove(connectionSettings);
         }
@@ -105,17 +113,23 @@ namespace RemoteConnectionManager.ViewModels
                 DisplayName = Resources.New
             });
             Credentials.Add(cvm);
-            ViewModelLocator.Locator.Connections.SelectedCredentials = cvm;
+            ViewModelLocator.Locator
+                .Selection
+                .SelectedCredentials = cvm;
         }
 
         public RelayCommand DeleteCredentialsCommand { get; }
         public bool CanExecuteDeleteCredentialsCommand()
         {
-            return ViewModelLocator.Locator.Connections.SelectedCredentials != null;
+            return ViewModelLocator.Locator
+                .Selection
+                .SelectedCredentials != null;
         }
         public void ExecuteDeleteCredentialsCommand()
         {
-            var credentials = ViewModelLocator.Locator.Connections.SelectedCredentials;
+            var credentials = ViewModelLocator.Locator
+                .Selection
+                .SelectedCredentials;
 
             var text = string.Format(Resources.ConfirmDelete, credentials.DisplayName);
             if (!_dialogService.ShowConfirmationDialog(text))
@@ -129,7 +143,9 @@ namespace RemoteConnectionManager.ViewModels
             {
                 csvm.Credentials = null;
             }
-            ViewModelLocator.Locator.Connections.SelectedCredentials = null;
+            ViewModelLocator.Locator
+                .Selection
+                .SelectedCredentials = null;
             _isSaveSuspended = false;
             Credentials.Remove(credentials);
         }
@@ -169,7 +185,7 @@ namespace RemoteConnectionManager.ViewModels
 
             _settingsService.SaveSettings(new Services.Settings
             {
-                Credentials = Credentials.Select(x => x.Credentials).ToArray(),
+                Credentials = Credentials.Select(x => x.CredentialsM).ToArray(),
                 ConnectionSettings = ConnectionSettings.Select(x => x.ConnectionSettings).ToArray()
             });
         }
