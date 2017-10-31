@@ -59,11 +59,11 @@ namespace RemoteConnectionManager.Rdp
                 // Connection settings.
                 _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
                 _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
-                
+
                 if (_hostGrid == null)
                 {
                     _hostGrid = new Grid();
-                    _hostGrid.Children.Add(new WindowsFormsHost {Child = _hostRdp});
+                    _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostRdp });
                     _hostGrid.SizeChanged += Host_SizeChanged_Initial;
                     _hostGrid.SizeChanged += Host_SizeChanged;
                 }
@@ -103,7 +103,7 @@ namespace RemoteConnectionManager.Rdp
             if (_hostRdp != null)
             {
                 _hostRdp.AxMsRdpClient.OnDisconnected -= AxMsRdpClient_OnDisconnected;
-                if (_hostRdp.AxMsRdpClient.Connected == 1)
+                if (_hostRdp.AxMsRdpClient.Connected == 1 && IsConnected)
                 {
                     _hostRdp.AxMsRdpClient.Disconnect();
                 }
