@@ -3,7 +3,7 @@ namespace RemoteConnectionManager.Core
 {
     public interface IConnectionFactory
     {
-        bool CanConnect(ConnectionSettings connectionSettings);
+        Protocol[] Protocols { get; }
         IConnection CreateConnection(ConnectionSettings connectionSettings);
     }
 }

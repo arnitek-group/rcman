@@ -43,6 +43,21 @@
             </xctk:PropertyGrid.PropertyDefinitions>
 
             <xctk:PropertyGrid.EditorDefinitions>
+                <xctk:EditorTemplateDefinition TargetProperties="Protocol">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Connections.Protocols, Source={StaticResource Locator}}"
+                                      SelectedItem="{Binding Value, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource ProtocolToUpperCaseConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+                
                 <xctk:EditorTemplateDefinition TargetProperties="Credentials">
                     <xctk:EditorTemplateDefinition.EditingTemplate>
                         <DataTemplate>
@@ -61,6 +76,7 @@
                         </DataTemplate>
                     </xctk:EditorTemplateDefinition.EditingTemplate>
                 </xctk:EditorTemplateDefinition>
+                
                 <xctk:EditorTemplateDefinition TargetProperties="Password">
                     <xctk:EditorTemplateDefinition.EditingTemplate>
                         <DataTemplate>

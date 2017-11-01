@@ -116,6 +116,7 @@
     <Compile Include="Converters\CredentialsFilterConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
+    <Compile Include="Converters\ProtocolToUpperCaseConverter.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="PropertiesControl.xaml.cs">

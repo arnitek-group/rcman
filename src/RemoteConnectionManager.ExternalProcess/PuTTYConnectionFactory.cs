@@ -1,14 +1,10 @@
 ﻿using RemoteConnectionManager.Core;
-using System;
 
 namespace RemoteConnectionManager.ExternalProcess
 {
     public class PuTTYConnectionFactory : IConnectionFactory
     {
-        public bool CanConnect(ConnectionSettings connectionSettings)
-        {
-            return connectionSettings.Protocol == Protocol.Ssh;
-        }
+        public Protocol[] Protocols => new[] { Protocol.Ssh };
 
         public IConnection CreateConnection(ConnectionSettings connectionSettings)
         {

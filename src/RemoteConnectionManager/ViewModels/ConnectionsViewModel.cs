@@ -21,11 +21,18 @@ namespace RemoteConnectionManager.ViewModels
             _connectionFactories = connectionFactories;
             _dialogService = dialogService;
 
+            Protocols = _connectionFactories
+                .SelectMany(x => x.Protocols)
+                .Distinct()
+                .ToArray();
+
             Connections = new ObservableCollection<IConnection>();
 
             ConnectCommand = new RelayCommand<ConnectionSettings>(ExecuteConnectCommand);
             DisconnectCommand = new RelayCommand<IConnection>(ExecuteDisconnectCommand);
         }
+
+        public Protocol[] Protocols { get; }
 
         public bool OnClosing()
         {
@@ -54,7 +61,7 @@ namespace RemoteConnectionManager.ViewModels
             if (connection == null)
             {
                 connection = _connectionFactories
-                    .First(x => x.CanConnect(connectionSettings))
+                    .First(x => x.Protocols.Contains(connectionSettings.Protocol))
                     .CreateConnection(connectionSettings);
                 Connections.Add(connection);
             }
