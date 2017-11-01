@@ -6,7 +6,7 @@ namespace RemoteConnectionManager.Services
 {
     public class JsonSettingsService : ISettingsService
     {
-        private const string SettingsFile = "settings.json";
+        private const string SettingsFile = "connections.json";
 
         public Settings LoadSettings()
         {
@@ -25,7 +25,8 @@ namespace RemoteConnectionManager.Services
                 new JsonSerializerSettings
                 {
                     PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                    Converters = new[] { new StringEnumConverter() }
+                    Converters = new[] { new StringEnumConverter() },
+                    NullValueHandling = NullValueHandling.Ignore
                 }
             );
             File.WriteAllText(SettingsFile, settingsText);

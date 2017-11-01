@@ -1,10 +1,9 @@
-﻿using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Models;
 
 namespace RemoteConnectionManager.Services
 {
     public class Settings
     {
-        public Credentials[] Credentials { get; set; }
-        public ConnectionSettings[] ConnectionSettings { get; set; }
+        public CategoryItem[] Items { get; set; }
     }
 }

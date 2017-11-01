@@ -8,11 +8,14 @@
         <ResourceDictionary>
             <vm:ViewModelLocator x:Key="Locator" />
 
-            <converters:ProtocolToIconConverter x:Key="ProtocolToIconConverter" />
+            <converters:CategoryItemToImageConverter x:Key="CategoryItemToImageConverter" />
             <converters:PropertyGridCredentialsConverter x:Key="PropertyGridCredentialsConverter" />
             <converters:ObjectTypeNameConverter x:Key="ObjectTypeNameConverter" />
+            <converters:CrazyDisplayNameConverter x:Key="CrazyDisplayNameConverter" />
+            <converters:CredentialsFilterConverter x:Key="CredentialsFilterConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
+            <GridLength x:Key="PropertiesHeight">250</GridLength>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

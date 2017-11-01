@@ -5,34 +5,34 @@ namespace RemoteConnectionManager.ViewModels
 {
     public class ConnectionSettingsViewModel: ViewModelBase
     {
-        public ConnectionSettingsViewModel(ConnectionSettings connectionSettings)
+        public ConnectionSettingsViewModel(CategoryItemViewModel parent)
         {
-            ConnectionSettings = connectionSettings;
+            Parent = parent;
         }
 
-        public ConnectionSettings ConnectionSettings { get; }
-        
+        public CategoryItemViewModel Parent { get; }
+
         public string DisplayName
         {
-            get { return ConnectionSettings.DisplayName; }
+            get { return Parent.DisplayName; }
             set
             {
-                if (ConnectionSettings.DisplayName != value)
+                if (Parent.DisplayName != value)
                 {
-                    ConnectionSettings.DisplayName = value;
+                    Parent.DisplayName = value;
                     RaisePropertyChanged();
                 }
             }
         }
-        
+
         public Protocol Protocol
         {
-            get { return ConnectionSettings.Protocol; }
+            get { return Parent.CategoryItem.ConnectionSettings.Protocol; }
             set
             {
-                if (ConnectionSettings.Protocol != value)
+                if (Parent.CategoryItem.ConnectionSettings.Protocol != value)
                 {
-                    ConnectionSettings.Protocol = value;
+                    Parent.CategoryItem.ConnectionSettings.Protocol = value;
                     RaisePropertyChanged();
                 }
             }
@@ -40,12 +40,12 @@ namespace RemoteConnectionManager.ViewModels
         
         public string Server
         {
-            get { return ConnectionSettings.Server; }
+            get { return Parent.CategoryItem.ConnectionSettings.Server; }
             set
             {
-                if (ConnectionSettings.Server != value)
+                if (Parent.CategoryItem.ConnectionSettings.Server != value)
                 {
-                    ConnectionSettings.Server = value;
+                    Parent.CategoryItem.ConnectionSettings.Server = value;
                     RaisePropertyChanged();
                 }
             }
@@ -53,27 +53,28 @@ namespace RemoteConnectionManager.ViewModels
         
         public string Port
         {
-            get { return ConnectionSettings.Port; }
+            get { return Parent.CategoryItem.ConnectionSettings.Port; }
             set
             {
-                if (ConnectionSettings.Port != value)
+                if (Parent.CategoryItem.ConnectionSettings.Port != value)
                 {
-                    ConnectionSettings.Port = value;
+                    Parent.CategoryItem.ConnectionSettings.Port = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        private CredentialsViewModel _credentials;
+        private CredentialsViewModel _credentialsViewModel;
         public CredentialsViewModel Credentials
         {
-            get { return _credentials; }
+            get { return _credentialsViewModel; }
             set
             {
-                if (_credentials != value)
+                if (_credentialsViewModel != value)
                 {
-                    _credentials = value;
-                    ConnectionSettings.Credentials = _credentials?.CredentialsM;
+                    _credentialsViewModel = value;
+                    Parent.CategoryItem.ConnectionSettings.Credentials = 
+                        _credentialsViewModel?.Parent.CategoryItem.Credentials;
                     RaisePropertyChanged();
                 }
             }

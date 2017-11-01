@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock;
 
 namespace RemoteConnectionManager
@@ -34,6 +35,18 @@ namespace RemoteConnectionManager
             {
                 e.Cancel = true;
             }
+        }
+    }
+
+    public class ItemTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate ConnectionTemplate { get; set; }
+
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+            return item is DataTemplate template
+                ? template
+                : ConnectionTemplate;
         }
     }
 }

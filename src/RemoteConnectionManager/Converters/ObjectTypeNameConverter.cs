@@ -10,11 +10,16 @@ namespace RemoteConnectionManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ConnectionSettingsViewModel)
+            var civm = value as CategoryItemViewModel;
+            if (civm == null)
+            {
+                return null;
+            }
+            if (civm.CategoryItem.ConnectionSettings != null)
             {
                 return Resources.ConnectionSettings;
             }
-            if (value is CredentialsViewModel)
+            if (civm.CategoryItem.Credentials != null)
             {
                 return Resources.Credentials;
             }

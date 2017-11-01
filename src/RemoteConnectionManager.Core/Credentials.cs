@@ -6,11 +6,12 @@ namespace RemoteConnectionManager.Core
         public string Domain { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string DisplayName { get; set; }
 
         public void SetPassword(string plainText)
         {
-            Password = Security.EncryptText(plainText);
+            Password = string.IsNullOrEmpty(plainText) 
+                ? null 
+                : Security.EncryptText(plainText);
         }
 
         public string GetPassword()

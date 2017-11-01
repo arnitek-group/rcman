@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -108,16 +108,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConnectionSettingsControl.xaml.cs">
-      <DependentUpon>ConnectionSettingsControl.xaml</DependentUpon>
+    <Compile Include="CategoryItemsControl.xaml.cs">
+      <DependentUpon>CategoryItemsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\CategoryItemToImageConverter.cs" />
+    <Compile Include="Converters\CrazyDisplayNameConverter.cs" />
+    <Compile Include="Converters\CredentialsFilterConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
-    <Compile Include="Converters\ProtocolToIconConverter.cs" />
-    <Compile Include="CredentialsControl.xaml.cs">
-      <DependentUpon>CredentialsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dock\ItemTemplateSelector.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
@@ -125,18 +125,14 @@
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
+    <Compile Include="ViewModels\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\ConnectionSettingsViewModel.cs" />
-    <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="Services\Settings.cs" />
-    <Compile Include="ViewModels\SelectionViewModel.cs" />
+    <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Page Include="ConnectionSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CredentialsControl.xaml">
+    <Page Include="CategoryItemsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +170,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -209,21 +206,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Login_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\WebServer_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Property_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Console_16x.png" />
     <Resource Include="Resources\RemoteDesktop_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Add_16x.png" />
-    <Resource Include="Resources\Remove_16x.png" />
+    <Resource Include="Resources\User_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NewFile_16x.png" />
+    <Resource Include="Resources\VSO_RecycleBin_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

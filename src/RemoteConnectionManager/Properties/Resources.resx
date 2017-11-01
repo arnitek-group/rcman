@@ -132,11 +132,11 @@
   <data name="ConfirmDelete" xml:space="preserve">
     <value>Are you sure you want to permanently delete {0}?</value>
   </data>
+  <data name="Connections" xml:space="preserve">
+    <value>Connections</value>
+  </data>
   <data name="ConnectionSettings" xml:space="preserve">
     <value>Connection Settings</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>Create</value>
   </data>
   <data name="Credentials" xml:space="preserve">
     <value>Credentials</value>
@@ -197,5 +197,8 @@
   </data>
   <data name="UsernameDescription" xml:space="preserve">
     <value>The logon username.</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
   </data>
 </root>

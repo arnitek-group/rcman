@@ -1,24 +1,24 @@
-﻿using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Models;
 using System;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace RemoteConnectionManager.Converters
 {
-    public class ProtocolToIconConverter: IValueConverter
+    public class CategoryItemToImageConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var protocol = (Protocol) value;
-            switch (protocol)
+            var categoryItem = (CategoryItem) value;
+            if (categoryItem.ConnectionSettings != null)
             {
-                case Protocol.Rdp:
-                    return "Resources/RemoteDesktop_16x.png";
-                case Protocol.Ssh:
-                    return "Resources/Console_16x.png";
-                default:
-                    return null;
+                return "Resources/RemoteDesktop_16x.png";
             }
+            if (categoryItem.Credentials != null)
+            {
+                return "Resources/User_16x.png";
+            }
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

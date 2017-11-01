@@ -6,11 +6,10 @@
         xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
         xmlns:rcman="clr-namespace:RemoteConnectionManager"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:dock="clr-namespace:RemoteConnectionManager.Dock"
-        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
-    
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+        WindowState="Maximized">
+
     <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
-                         ActiveContent="{Binding Selection.SelectedPane, Mode=TwoWay, Source={StaticResource Locator}}"
                          DocumentClosed="DockingManager_OnDocumentClosed">
 
         <xcad:DockingManager.Theme>
@@ -19,33 +18,38 @@
 
         <xcad:DockingManager.AnchorableContextMenu>
             <ContextMenu>
-                <MenuItem Header="{x:Static prop:Resources.AutoHide}" Command="{Binding Path=AutoHideCommand}"/>
+                <MenuItem Header="{x:Static prop:Resources.AutoHide}"
+                          Command="{Binding Path=AutoHideCommand}"/>
             </ContextMenu>
         </xcad:DockingManager.AnchorableContextMenu>
 
         <xcad:DockingManager.DocumentHeaderTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{Binding Content.ConnectionSettings.Protocol, Converter={StaticResource ProtocolToIconConverter}}" />
-                    <TextBlock Text="{Binding Content.ConnectionSettings.DisplayName}" />
+                    <Image Source="Resources/RemoteDesktop_16x.png" />
+                    <TextBlock x:Name="TextBlock_DisplayName"  Text="{
+                        Binding ElementName=TextBlock_DisplayName,
+                        Converter={StaticResource CrazyDisplayNameConverter}}" />
                 </StackPanel>
             </DataTemplate>
         </xcad:DockingManager.DocumentHeaderTemplate>
 
         <xcad:DockingManager.DocumentPaneMenuItemHeaderTemplate>
             <DataTemplate>
-                <TextBlock Text="{Binding Content.ConnectionSettings.DisplayName}" />
+                <TextBlock x:Name="TextBlock_DisplayName" Text="{
+                        Binding ElementName=TextBlock_DisplayName,
+                        Converter={StaticResource CrazyDisplayNameConverter}}" />
             </DataTemplate>
         </xcad:DockingManager.DocumentPaneMenuItemHeaderTemplate>
 
         <xcad:DockingManager.LayoutItemTemplateSelector>
-            <dock:ItemTemplateSelector>
-                <dock:ItemTemplateSelector.ConnectionTemplate>
+            <rcman:ItemTemplateSelector>
+                <rcman:ItemTemplateSelector.ConnectionTemplate>
                     <DataTemplate>
                         <ContentControl Content="{Binding Content.UI}" />
                     </DataTemplate>
-                </dock:ItemTemplateSelector.ConnectionTemplate>
-            </dock:ItemTemplateSelector>
+                </rcman:ItemTemplateSelector.ConnectionTemplate>
+            </rcman:ItemTemplateSelector>
         </xcad:DockingManager.LayoutItemTemplateSelector>
 
         <xcad:LayoutRoot>
@@ -53,27 +57,18 @@
                 <xcad:LayoutAnchorablePaneGroup Orientation="Vertical"
                                                 DockWidth="{StaticResource SidePanelWidth}">
                     <xcad:LayoutAnchorablePane>
-                        <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Servers}"
-                                               IconSource="Resources/WebServer_16x.png"
-                                               CanHide="False" CanClose="False" CanFloat="False">
+                        <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Connections}"
+                                               CanHide="False" CanClose="False"
+                                               CanFloat="False">
                             <DataTemplate>
-                                <rcman:ConnectionSettingsControl />
-                            </DataTemplate>
-                        </xcad:LayoutAnchorable>
-                        <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Credentials}"
-                                               IconSource="Resources/Login_16x.png"
-                                               CanHide="False" CanClose="False" CanFloat="False">
-                            <DataTemplate>
-                                <rcman:CredentialsControl />
-                            </DataTemplate>
-                        </xcad:LayoutAnchorable>
-                    </xcad:LayoutAnchorablePane>
-                    <xcad:LayoutAnchorablePane>
-                        <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Properties}"
-                                               IconSource="Resources/Property_16x.png"
-                                               CanHide="False" CanClose="False" CanFloat="False">
-                            <DataTemplate>
-                                <rcman:PropertiesControl />
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="{StaticResource PropertiesHeight}" />
+                                    </Grid.RowDefinitions>
+                                    <rcman:CategoryItemsControl Grid.Row="0" />
+                                    <rcman:PropertiesControl Grid.Row="1" />
+                                </Grid>
                             </DataTemplate>
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
@@ -84,4 +79,10 @@
 
     </xcad:DockingManager>
 </Window>
+
+
+
+
+
+
 

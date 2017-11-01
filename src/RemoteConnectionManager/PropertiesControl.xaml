@@ -6,63 +6,71 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
              mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="480">
-    <xctk:PropertyGrid DataContext="{Binding Selection, Source={StaticResource Locator}}"
-                       SelectedObject="{Binding SelectedObject}"
-                       SelectedObjectTypeName="{Binding SelectedObject, Converter={StaticResource ObjectTypeNameConverter}}"
-                       SelectedObjectName="{Binding SelectedObject.DisplayName}"
-                       ShowSearchBox="False" ShowSortOptions="False"
-                       AutoGenerateProperties="False" NameColumnWidth="100">
-        <xctk:PropertyGrid.PropertyDefinitions>
-            <xctk:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
-                                     DisplayName="{x:Static prop:Resources.DisplayName}"
-                                     Description="{x:Static prop:Resources.DisplayNameDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Protocol"
-                                     DisplayName="{x:Static prop:Resources.Protocol}"
-                                     Description="{x:Static prop:Resources.ProtocolDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Server"
-                                     DisplayName="{x:Static prop:Resources.Server}"
-                                     Description="{x:Static prop:Resources.PortDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Port"
-                                     DisplayName="{x:Static prop:Resources.Port}"
-                                     Description="{x:Static prop:Resources.PortDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="5" TargetProperties="Credentials"
-                                     DisplayName="{x:Static prop:Resources.Credentials}"
-                                     Description="{x:Static prop:Resources.CredentialsDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Domain"
-                                     DisplayName="{x:Static prop:Resources.Domain}"
-                                     Description="{x:Static prop:Resources.DomainDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Username"
-                                     DisplayName="{x:Static prop:Resources.Username}"
-                                     Description="{x:Static prop:Resources.UsernameDescription}" />
-            <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Password"
-                                     DisplayName="{x:Static prop:Resources.Password}"
-                                     Description="{x:Static prop:Resources.PasswordDescription}" />
-        </xctk:PropertyGrid.PropertyDefinitions>
-        <xctk:PropertyGrid.EditorDefinitions>
-            <xctk:EditorTemplateDefinition TargetProperties="Credentials">
-                <xctk:EditorTemplateDefinition.EditingTemplate>
-                    <DataTemplate>
-                        <ComboBox SelectedItem="{Binding Value, Mode=TwoWay, Converter={StaticResource PropertyGridCredentialsConverter}}"
+
+    <Grid>
+        <xctk:PropertyGrid DataContext="{Binding Settings, Source={StaticResource Locator}}"
+                           SelectedObject="{Binding SelectedItem.Properties}"
+                           SelectedObjectTypeName="{Binding SelectedItem, Converter={StaticResource ObjectTypeNameConverter}}"
+                           SelectedObjectName="{Binding SelectedItem.DisplayName}"
+                           ShowSearchBox="False" ShowSortOptions="False"
+                           AutoGenerateProperties="False" NameColumnWidth="100">
+
+            <xctk:PropertyGrid.PropertyDefinitions>
+                <xctk:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
+                                         DisplayName="{x:Static prop:Resources.DisplayName}"
+                                         Description="{x:Static prop:Resources.DisplayNameDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Protocol"
+                                         DisplayName="{x:Static prop:Resources.Protocol}"
+                                         Description="{x:Static prop:Resources.ProtocolDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Server"
+                                         DisplayName="{x:Static prop:Resources.Server}"
+                                         Description="{x:Static prop:Resources.PortDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Port"
+                                         DisplayName="{x:Static prop:Resources.Port}"
+                                         Description="{x:Static prop:Resources.PortDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="5" TargetProperties="Credentials"
+                                         DisplayName="{x:Static prop:Resources.Credentials}"
+                                         Description="{x:Static prop:Resources.CredentialsDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Domain"
+                                         DisplayName="{x:Static prop:Resources.Domain}"
+                                         Description="{x:Static prop:Resources.DomainDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Username"
+                                         DisplayName="{x:Static prop:Resources.Username}"
+                                         Description="{x:Static prop:Resources.UsernameDescription}" />
+                <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Password"
+                                         DisplayName="{x:Static prop:Resources.Password}"
+                                         Description="{x:Static prop:Resources.PasswordDescription}" />
+            </xctk:PropertyGrid.PropertyDefinitions>
+
+            <xctk:PropertyGrid.EditorDefinitions>
+                <xctk:EditorTemplateDefinition TargetProperties="Credentials">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding Value, Mode=TwoWay, Converter={StaticResource PropertyGridCredentialsConverter}}"
                                       DisplayMemberPath="DisplayName">
-                            <ComboBox.ItemsSource>
-                                <CompositeCollection>
-                                    <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
-                                    <CollectionContainer Collection="{Binding Settings.Credentials, Source={StaticResource Locator}}" />
-                                </CompositeCollection>
-                            </ComboBox.ItemsSource>
-                        </ComboBox>
-                    </DataTemplate>
-                </xctk:EditorTemplateDefinition.EditingTemplate>
-            </xctk:EditorTemplateDefinition>
-            <xctk:EditorTemplateDefinition TargetProperties="Password">
-                <xctk:EditorTemplateDefinition.EditingTemplate>
-                    <DataTemplate>
-                        <PasswordBox DataContext="{Binding Value}"
-                                     DataContextChanged="PasswordBox_DataContextChanged"
-                                     PasswordChanged="PasswordBox_PasswordChanged" />
-                    </DataTemplate>
-                </xctk:EditorTemplateDefinition.EditingTemplate>
-            </xctk:EditorTemplateDefinition>
-        </xctk:PropertyGrid.EditorDefinitions>
-    </xctk:PropertyGrid>
+                                <ComboBox.ItemsSource>
+                                    <CompositeCollection>
+                                        <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
+                                        <CollectionContainer Collection="{
+                                            Binding Settings.Items, Mode=OneWay,
+                                            Source={StaticResource Locator},
+                                            Converter={StaticResource CredentialsFilterConverter}}" />
+                                    </CompositeCollection>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+                <xctk:EditorTemplateDefinition TargetProperties="Password">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <PasswordBox DataContext="{Binding Value}"
+                                         DataContextChanged="PasswordBox_DataContextChanged"
+                                         PasswordChanged="PasswordBox_PasswordChanged" />
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+            </xctk:PropertyGrid.EditorDefinitions>
+        </xctk:PropertyGrid>
+    </Grid>
 </UserControl>

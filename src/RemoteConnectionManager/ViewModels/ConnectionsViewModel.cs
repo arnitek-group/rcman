@@ -63,7 +63,6 @@ namespace RemoteConnectionManager.ViewModels
                 connection.Disconnected += ConnectionDisconnected;
                 connection.Connect();
             }
-            ViewModelLocator.Locator.Selection.SelectedConnection = connection;
         }
 
         public RelayCommand<IConnection> DisconnectCommand { get; }

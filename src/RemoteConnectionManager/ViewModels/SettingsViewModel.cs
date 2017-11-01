@@ -1,6 +1,9 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Collections.Generic;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Extensions;
+using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Properties;
 using RemoteConnectionManager.Services;
 using System.Collections.ObjectModel;
@@ -22,132 +25,117 @@ namespace RemoteConnectionManager.ViewModels
             _settingsService = settingsService;
             _dialogService = dialogService;
 
-            Credentials = new ObservableCollection<CredentialsViewModel>();
-            ConnectionSettings = new ObservableCollection<ConnectionSettingsViewModel>();
-
-            Credentials.CollectionChanged += CollectionChanged;
-            ConnectionSettings.CollectionChanged += CollectionChanged;
+            Items = new ObservableCollection<CategoryItemViewModel>();
+            Items.CollectionChanged += CollectionChanged;
 
             var settings = _settingsService.LoadSettings();
             if (settings != null)
             {
-                foreach (var credentials in settings.Credentials)
+                var items = settings.Items
+                    .Select(x => new CategoryItemViewModel(x))
+                    .ToArray();
+                var connectionSettings = items.Where(x => x.ConnectionSettings != null);
+                foreach (var item in connectionSettings)
                 {
-                    Credentials.Add(new CredentialsViewModel(credentials));
+                    var credentials = items.FirstOrDefault(x =>
+                        x != item &&
+                        x.CategoryItem.Credentials == item.CategoryItem.ConnectionSettings.Credentials);
+                    if (credentials != null)
+                    {
+                        item.ConnectionSettings.Credentials = credentials.Credentials;
+                    }
                 }
-                foreach (var connectionSettings in settings.ConnectionSettings)
-                {
-                    var csvm = new ConnectionSettingsViewModel(connectionSettings);
-                    csvm.Credentials = Credentials.FirstOrDefault(x => x.CredentialsM == connectionSettings.Credentials);
-                    ConnectionSettings.Add(csvm);
-                }
+                items.ForEach(x => Items.Add(x));
             }
 
             CreateConnectionSettingsCommand = new RelayCommand(ExecuteCreateConnectionSettingsCommand);
-            DeleteConnectionSettingsCommand = new RelayCommand(
-                ExecuteDeleteConnectionSettingsCommand,
-                CanExecuteDeleteConnectionSettingsCommand);
-
             CreateCredentialsCommand = new RelayCommand(ExecuteCreateCredentialsCommand);
-            DeleteCredentialsCommand = new RelayCommand(
-                ExecuteDeleteCredentialsCommand,
-                CanExecuteDeleteCredentialsCommand);
+            DeleteItemCommand = new RelayCommand(
+                ExecuteDeleteItemCommand,
+                CanExecuteDeleteItemCommand);
         }
 
-        public ObservableCollection<CredentialsViewModel> Credentials { get; }
-        public ObservableCollection<ConnectionSettingsViewModel> ConnectionSettings { get; }
+        public ObservableCollection<CategoryItemViewModel> Items { get; }
+
+        public CategoryItemViewModel SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (_selectedItem != value)
+                {
+                    _selectedItem = value;
+                    RaisePropertyChanged();
+                }
+                DeleteItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         public RelayCommand CreateConnectionSettingsCommand { get; }
         public void ExecuteCreateConnectionSettingsCommand()
         {
-            var csvm = new ConnectionSettingsViewModel(new ConnectionSettings
+            var civm = new CategoryItemViewModel(new CategoryItem
             {
-                DisplayName = Resources.New
+                DisplayName = Resources.New + " " + Resources.ConnectionSettings,
+                ConnectionSettings = new ConnectionSettings()
             });
-            ConnectionSettings.Add(csvm);
-            ViewModelLocator.Locator
-                .Selection
-                .SelectedConnectionSettings = csvm;
-        }
+            Items.Add(civm);
 
-        public RelayCommand DeleteConnectionSettingsCommand { get; }
-        public bool CanExecuteDeleteConnectionSettingsCommand()
-        {
-            return ViewModelLocator.Locator
-                .Selection
-                .SelectedConnectionSettings != null;
-        }
-        public void ExecuteDeleteConnectionSettingsCommand()
-        {
-            var connectionSettings = ViewModelLocator.Locator
-                .Selection
-                .SelectedConnectionSettings;
-
-            var text = string.Format(Resources.ConfirmDelete, connectionSettings.DisplayName);
-            if (!_dialogService.ShowConfirmationDialog(text))
-            {
-                return;
-            }
-
-            _isSaveSuspended = true;
-            var connection = ViewModelLocator.Locator.Connections.Connections
-                .FirstOrDefault(x => x.ConnectionSettings == connectionSettings.ConnectionSettings);
-            if (connection != null)
-            {
-                connection.Disconnect();
-                connection.Destroy();
-                ViewModelLocator.Locator.Connections.Connections.Remove(connection);
-            }
-            ViewModelLocator.Locator
-                .Selection
-                .SelectedConnectionSettings = null;
-            _isSaveSuspended = false;
-            ConnectionSettings.Remove(connectionSettings);
+            SelectedItem = civm;
         }
 
         public RelayCommand CreateCredentialsCommand { get; }
         public void ExecuteCreateCredentialsCommand()
         {
-            var cvm = new CredentialsViewModel(new Credentials
+            var civm = new CategoryItemViewModel(new CategoryItem
             {
-                DisplayName = Resources.New
+                DisplayName = Resources.New + " " + Resources.Credentials,
+                Credentials = new Credentials()
             });
-            Credentials.Add(cvm);
-            ViewModelLocator.Locator
-                .Selection
-                .SelectedCredentials = cvm;
+            Items.Add(civm);
+
+            SelectedItem = civm;
         }
 
-        public RelayCommand DeleteCredentialsCommand { get; }
-        public bool CanExecuteDeleteCredentialsCommand()
+        public RelayCommand DeleteItemCommand { get; }
+        public bool CanExecuteDeleteItemCommand()
         {
-            return ViewModelLocator.Locator
-                .Selection
-                .SelectedCredentials != null;
+            return SelectedItem != null;
         }
-        public void ExecuteDeleteCredentialsCommand()
+        public void ExecuteDeleteItemCommand()
         {
-            var credentials = ViewModelLocator.Locator
-                .Selection
-                .SelectedCredentials;
-
-            var text = string.Format(Resources.ConfirmDelete, credentials.DisplayName);
+            var civm = SelectedItem;
+            var text = string.Format(Resources.ConfirmDelete, civm.DisplayName);
             if (!_dialogService.ShowConfirmationDialog(text))
             {
                 return;
             }
 
             _isSaveSuspended = true;
-            var connectionSettings = ConnectionSettings.Where(x => x.Credentials == credentials);
-            foreach (var csvm in connectionSettings)
+            if (civm.CategoryItem.ConnectionSettings != null)
             {
-                csvm.Credentials = null;
+                var connectionSettings = civm.CategoryItem.ConnectionSettings;
+                var connection = ViewModelLocator.Locator
+                    .Connections.Connections
+                    .FirstOrDefault(x => x.ConnectionSettings == connectionSettings);
+                if (connection != null)
+                {
+                    connection.Disconnect();
+                    connection.Destroy();
+                    ViewModelLocator.Locator.Connections.Connections.Remove(connection);
+                }
             }
-            ViewModelLocator.Locator
-                .Selection
-                .SelectedCredentials = null;
+            if (civm.CategoryItem.Credentials != null)
+            {
+                var credentials = civm.CategoryItem.Credentials;
+                Items
+                    .Where(x => x.CategoryItem.ConnectionSettings?.Credentials == credentials)
+                    .ForEach(x => x.ConnectionSettings.Credentials = null);
+            }
             _isSaveSuspended = false;
-            Credentials.Remove(credentials);
+
+            SelectedItem = null;
+            Items.Remove(civm);
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -156,14 +144,18 @@ namespace RemoteConnectionManager.ViewModels
             {
                 foreach (var newItem in e.NewItems)
                 {
-                    ((INotifyPropertyChanged)newItem).PropertyChanged += Object_PropertyChanged;
+                    var civm = (CategoryItemViewModel) newItem;
+                    civm.PropertyChanged += Object_PropertyChanged;
+                    civm.Properties.PropertyChanged += Object_PropertyChanged;
                 }
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 foreach (var oldItem in e.OldItems)
                 {
-                    ((INotifyPropertyChanged)oldItem).PropertyChanged -= Object_PropertyChanged;
+                    var civm = (CategoryItemViewModel)oldItem;
+                    civm.PropertyChanged -= Object_PropertyChanged;
+                    civm.Properties.PropertyChanged -= Object_PropertyChanged;
                 }
             }
             SaveSettings();
@@ -171,10 +163,21 @@ namespace RemoteConnectionManager.ViewModels
 
         private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            SaveSettings();
+            if (e.PropertyName == "IsSelected")
+            {
+                if (sender is CategoryItemViewModel civm && civm.IsSelected)
+                {
+                    SelectedItem = civm;
+                }
+            }
+            else
+            {
+                SaveSettings();
+            }
         }
 
         private bool _isSaveSuspended;
+        private CategoryItemViewModel _selectedItem;
 
         private void SaveSettings()
         {
@@ -185,8 +188,7 @@ namespace RemoteConnectionManager.ViewModels
 
             _settingsService.SaveSettings(new Services.Settings
             {
-                Credentials = Credentials.Select(x => x.CredentialsM).ToArray(),
-                ConnectionSettings = ConnectionSettings.Select(x => x.ConnectionSettings).ToArray()
+                Items = Items.Select(x => x.CategoryItem).ToArray()
             });
         }
     }

@@ -1,25 +1,37 @@
 ﻿using GalaSoft.MvvmLight;
-using RemoteConnectionManager.Core;
 
 namespace RemoteConnectionManager.ViewModels
 {
     public class CredentialsViewModel: ViewModelBase
     {
-        public CredentialsViewModel(Credentials credentials)
+        public CredentialsViewModel(CategoryItemViewModel parent)
         {
-            CredentialsM = credentials;
+            Parent = parent;
         }
-        
-        public Credentials CredentialsM { get; }
+
+        public CategoryItemViewModel Parent { get; }
+
+        public string DisplayName
+        {
+            get { return Parent.DisplayName; }
+            set
+            {
+                if (Parent.DisplayName != value)
+                {
+                    Parent.DisplayName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public string Domain
         {
-            get { return CredentialsM.Domain; }
+            get { return Parent.CategoryItem.Credentials.Domain; }
             set
             {
-                if (CredentialsM.Domain != value)
+                if (Parent.CategoryItem.Credentials.Domain != value)
                 {
-                    CredentialsM.Domain = value;
+                    Parent.CategoryItem.Credentials.Domain = value;
                     RaisePropertyChanged();
                 }
             }
@@ -27,12 +39,12 @@ namespace RemoteConnectionManager.ViewModels
 
         public string Username
         {
-            get { return CredentialsM.Username; }
+            get { return Parent.CategoryItem.Credentials.Username; }
             set
             {
-                if (CredentialsM.Username != value)
+                if (Parent.CategoryItem.Credentials.Username != value)
                 {
-                    CredentialsM.Username = value;
+                    Parent.CategoryItem.Credentials.Username = value;
                     RaisePropertyChanged();
                 }
             }
@@ -40,25 +52,12 @@ namespace RemoteConnectionManager.ViewModels
         
         public string Password
         {
-            get { return CredentialsM.Password; }
+            get { return Parent.CategoryItem.Credentials.Password; }
             set
             {
-                if (CredentialsM.Password != value)
+                if (Parent.CategoryItem.Credentials.Password != value)
                 {
-                    CredentialsM.SetPassword(value);
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        
-        public string DisplayName
-        {
-            get { return CredentialsM.DisplayName; }
-            set
-            {
-                if (CredentialsM.DisplayName != value)
-                {
-                    CredentialsM.DisplayName = value;
+                    Parent.CategoryItem.Credentials.SetPassword(value);
                     RaisePropertyChanged();
                 }
             }
