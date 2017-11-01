@@ -16,9 +16,9 @@ namespace RemoteConnectionManager
             InitializeComponent();
 
             var assembly = Assembly.GetExecutingAssembly();
-            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var vi = FileVersionInfo.GetVersionInfo(assembly.Location);
 
-            Title = Properties.Resources.Application + " v" + fileVersionInfo.FileVersion;
+            Title = $"{Properties.Resources.Application} v{vi.ProductMajorPart}.{vi.ProductMinorPart}.{vi.ProductBuildPart}";
         }
 
         private void DockingManager_OnDocumentClosed(object sender, DocumentClosedEventArgs e)
