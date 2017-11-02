@@ -71,7 +71,7 @@ namespace RemoteConnectionManager.Rdp
                     Observable
                         .FromEventPattern<SizeChangedEventArgs>(_hostGrid, "SizeChanged")
                         .Throttle(TimeSpan.FromSeconds(1))
-                        .Subscribe(x => _hostGrid.Dispatcher.Invoke(UpdateSessionDisplaySettings));
+                        .Subscribe(x => _hostGrid?.Dispatcher.Invoke(UpdateSessionDisplaySettings));
                 }
                 else
                 {

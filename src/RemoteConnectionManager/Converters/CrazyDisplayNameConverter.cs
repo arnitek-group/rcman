@@ -1,4 +1,5 @@
 ﻿using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Extensions;
 using RemoteConnectionManager.ViewModels;
 using System;
 using System.Globalization;
@@ -17,6 +18,7 @@ namespace RemoteConnectionManager.Converters
             var connectionSettings = ((IConnection)((LayoutDocument)textBlock.DataContext).Content).ConnectionSettings;
             var civm = ViewModelLocator.Locator
                 .Settings.Items
+                .GetFlatList(x => x.Items, x => x.ConnectionSettings != null)
                 .Single(x => x.CategoryItem.ConnectionSettings == connectionSettings);
 
             var binding = new Binding("DisplayName");

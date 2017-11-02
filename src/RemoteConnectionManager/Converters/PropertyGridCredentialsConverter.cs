@@ -1,4 +1,5 @@
-﻿using RemoteConnectionManager.Properties;
+﻿using RemoteConnectionManager.Extensions;
+using RemoteConnectionManager.Properties;
 using RemoteConnectionManager.ViewModels;
 using RemoteConnectionManager.ViewModels.Properties;
 using System;
@@ -20,7 +21,7 @@ namespace RemoteConnectionManager.Converters
 
             return ViewModelLocator.Locator
                 .Settings.Items
-                .Where(x => x.Credentials != null)
+                .GetFlatList(x => x.Items, x => x.Credentials != null)
                 .Select(x => x.Credentials)
                 .FirstOrDefault(x => x == value);
         }
