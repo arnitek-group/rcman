@@ -115,7 +115,7 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection Settings.
+        ///   Looks up a localized string similar to Connection.
         /// </summary>
         public static string ConnectionSettings {
             get {
