@@ -66,8 +66,7 @@
             </MenuItem>
         </Menu>
 
-        <controls:CategoryTreeView Grid.Row="1"
-                  ItemsSource="{Binding Items}">
+        <controls:CategoryTreeView Grid.Row="1" ItemsSource="{Binding Items}" >
 
             <controls:CategoryTreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
