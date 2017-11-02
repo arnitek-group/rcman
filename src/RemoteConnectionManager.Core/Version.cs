@@ -2,6 +2,6 @@
 {
     public static class AssemblyInfo
     {
-        public const string Version = "0.1.2.0";
+        public const string Version = "0.1.3.0";
     }
 }
