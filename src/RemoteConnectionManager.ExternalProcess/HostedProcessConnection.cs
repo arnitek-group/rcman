@@ -111,7 +111,7 @@ namespace RemoteConnectionManager.ExternalProcess
             if (Mouse.LeftButton == MouseButtonState.Released)
             {
                 _hostPanel.Visible = true;
-                // TODO: Improve resizing.s
+                // TODO: Improve resizing.
                 MoveWindow(_process.MainWindowHandle, 0, 0, _hostPanel.Width, _hostPanel.Height, true);
             }
             else

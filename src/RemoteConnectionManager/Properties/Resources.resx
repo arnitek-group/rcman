@@ -201,4 +201,7 @@
   <data name="Create" xml:space="preserve">
     <value>Create</value>
   </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
 </root>

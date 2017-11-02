@@ -1,4 +1,5 @@
-﻿using RemoteConnectionManager.ViewModels;
+﻿using RemoteConnectionManager.Extensions;
+using RemoteConnectionManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,7 +14,7 @@ namespace RemoteConnectionManager.Converters
         {
             var items = (IEnumerable<CategoryItemViewModel>) value;
             return items
-                .Where(x => x.Credentials != null)
+                .GetFlatList(x => x.Items, x => x.Credentials != null)
                 .Select(x => x.Credentials);
         }
 

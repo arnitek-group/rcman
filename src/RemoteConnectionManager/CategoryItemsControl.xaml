@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
+             xmlns:controls="clr-namespace:RemoteConnectionManager.Controls"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="480">
 
     <Grid DataContext="{Binding Settings, Source={StaticResource Locator}}">
@@ -42,6 +43,16 @@
                         <Image Source="Resources/User_16x.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Command="{Binding Settings.CreateCategoryCommand, Source={StaticResource Locator}}">
+                    <MenuItem.Header>
+                        <TextBlock Text="{x:Static prop:Resources.Category}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center" />
+                    </MenuItem.Header>
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Tag_16x.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Command="{Binding Settings.DeleteItemCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
@@ -55,25 +66,25 @@
             </MenuItem>
         </Menu>
 
-        <TreeView Grid.Row="1"
+        <controls:CategoryTreeView Grid.Row="1"
                   ItemsSource="{Binding Items}">
 
-            <TreeView.ItemContainerStyle>
+            <controls:CategoryTreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     <EventSetter Event="MouseDoubleClick" Handler="OnMouseDoubleClick" />
                 </Style>
-            </TreeView.ItemContainerStyle>
+            </controls:CategoryTreeView.ItemContainerStyle>
 
-            <TreeView.ItemTemplate>
-                <DataTemplate>
+            <controls:CategoryTreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Items}">
                     <StackPanel Orientation="Horizontal">
                         <Image Margin="3,2,2,2" Source="{Binding CategoryItem, Converter={StaticResource CategoryItemToImageConverter}}" />
                         <TextBlock Margin="2,2,5,2" Text="{Binding DisplayName}" />
                     </StackPanel>
-                </DataTemplate>
-            </TreeView.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </controls:CategoryTreeView.ItemTemplate>
 
-        </TreeView>
+        </controls:CategoryTreeView>
     </Grid>
 </UserControl>

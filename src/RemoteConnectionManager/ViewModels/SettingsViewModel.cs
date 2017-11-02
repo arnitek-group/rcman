@@ -5,6 +5,8 @@ using RemoteConnectionManager.Extensions;
 using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Properties;
 using RemoteConnectionManager.Services;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -23,39 +25,67 @@ namespace RemoteConnectionManager.ViewModels
         {
             _settingsService = settingsService;
             _dialogService = dialogService;
-
+            
             Items = new ObservableCollection<CategoryItemViewModel>();
             Items.CollectionChanged += CollectionChanged;
 
-            var settings = _settingsService.LoadSettings();
-            if (settings != null)
-            {
-                var items = settings.Items
-                    .Select(x => new CategoryItemViewModel(x))
-                    .ToArray();
-                var connectionSettings = items.Where(x => x.ConnectionSettings != null);
-                foreach (var item in connectionSettings)
-                {
-                    var credentials = items.FirstOrDefault(x =>
-                        x != item &&
-                        x.CategoryItem.Credentials == item.CategoryItem.ConnectionSettings.Credentials);
-                    if (credentials != null)
-                    {
-                        item.ConnectionSettings.Credentials = credentials.Credentials;
-                    }
-                }
-                items.ForEach(x => Items.Add(x));
-            }
+            LoadSettings();
 
             CreateConnectionSettingsCommand = new RelayCommand(ExecuteCreateConnectionSettingsCommand);
             CreateCredentialsCommand = new RelayCommand(ExecuteCreateCredentialsCommand);
+            CreateCategoryCommand = new RelayCommand(ExecuteCreateCategoryCommand);
             DeleteItemCommand = new RelayCommand(
                 ExecuteDeleteItemCommand,
                 CanExecuteDeleteItemCommand);
         }
 
+        private void LoadSettings()
+        {
+            SuspendSave = true;
+            var settings = _settingsService.LoadSettings();
+            if (settings != null)
+            {
+                var rootCivms = LoadSettingsRecursive(settings.Items, null);
+                rootCivms.ForEach(x => Items.Add(x));
+            }
+
+            // Map credentials.
+            var connectionSettingsList = Items.GetFlatList(x => x.Items, x => x.ConnectionSettings != null);
+            var credentialsList = Items.GetFlatList(x => x.Items, x => x.Credentials != null);
+            foreach (var connectionSettings in connectionSettingsList)
+            {
+                var credentials = credentialsList.FirstOrDefault(x =>
+                    x.CategoryItem.Credentials == connectionSettings.CategoryItem.ConnectionSettings.Credentials);
+                if (credentials != null)
+                {
+                    connectionSettings.ConnectionSettings.Credentials = credentials.Credentials;
+                }
+            }
+
+            SuspendSave = false;
+        }
+
+        private CategoryItemViewModel[] LoadSettingsRecursive(IList<CategoryItem> items, CategoryItemViewModel parent)
+        {
+            if (items == null || items.Count == 0)
+            {
+                return new CategoryItemViewModel[] { };
+            }
+
+            var civms = items.Select(x => new CategoryItemViewModel(x, parent)).ToArray();
+            foreach (var civm in civms)
+            {
+                civm.Items.CollectionChanged += CollectionChanged;
+                var children = LoadSettingsRecursive(civm.CategoryItem.Items, civm);
+                children.ForEach(x => civm.Items.Add(x));
+            }
+
+            return civms;
+        }
+        
         public ObservableCollection<CategoryItemViewModel> Items { get; }
 
+        private CategoryItemViewModel _selectedItem;
         public CategoryItemViewModel SelectedItem
         {
             get { return _selectedItem; }
@@ -77,7 +107,7 @@ namespace RemoteConnectionManager.ViewModels
             {
                 DisplayName = Resources.New + " " + Resources.ConnectionSettings,
                 ConnectionSettings = new ConnectionSettings()
-            });
+            }, null);
             Items.Add(civm);
 
             SelectedItem = civm;
@@ -90,7 +120,19 @@ namespace RemoteConnectionManager.ViewModels
             {
                 DisplayName = Resources.New + " " + Resources.Credentials,
                 Credentials = new Credentials()
-            });
+            }, null);
+            Items.Add(civm);
+
+            SelectedItem = civm;
+        }
+
+        public RelayCommand CreateCategoryCommand { get; }
+        public void ExecuteCreateCategoryCommand()
+        {
+            var civm = new CategoryItemViewModel(new CategoryItem
+            {
+                DisplayName = Resources.New + " " + Resources.Category
+            }, null);
             Items.Add(civm);
 
             SelectedItem = civm;
@@ -103,15 +145,13 @@ namespace RemoteConnectionManager.ViewModels
         }
         public void ExecuteDeleteItemCommand()
         {
-            var civm = SelectedItem;
-            var text = string.Format(Resources.ConfirmDelete, civm.DisplayName);
+            var text = string.Format(Resources.ConfirmDelete, SelectedItem.DisplayName);
             if (!_dialogService.ShowConfirmationDialog(text))
             {
                 return;
             }
 
-            _isSaveSuspended = true;
-            if (civm.CategoryItem.ConnectionSettings != null)
+            var deleteConnectionSettings = (Action<CategoryItemViewModel>)(civm =>
             {
                 var connectionSettings = civm.CategoryItem.ConnectionSettings;
                 var connection = ViewModelLocator.Locator
@@ -123,18 +163,49 @@ namespace RemoteConnectionManager.ViewModels
                     connection.Destroy();
                     ViewModelLocator.Locator.Connections.Connections.Remove(connection);
                 }
-            }
-            if (civm.CategoryItem.Credentials != null)
+            });
+            var deleteCredentials = (Action<CategoryItemViewModel>)(civm =>
             {
                 var credentials = civm.CategoryItem.Credentials;
                 Items
-                    .Where(x => x.CategoryItem.ConnectionSettings?.Credentials == credentials)
+                    .GetFlatList(x => x.Items, x => x.CategoryItem.ConnectionSettings?.Credentials == credentials)
                     .ForEach(x => x.ConnectionSettings.Credentials = null);
-            }
-            _isSaveSuspended = false;
+            });
 
+            SuspendSave = true;
+            if (SelectedItem.ConnectionSettings != null)
+            {
+                deleteConnectionSettings(SelectedItem);
+            }
+            if (SelectedItem.Credentials != null)
+            {
+                deleteCredentials(SelectedItem);
+            }
+            if (SelectedItem.ConnectionSettings == null && SelectedItem.Credentials == null)
+            {
+                SelectedItem.Items
+                    .GetFlatList(x => x.Items, x => x.ConnectionSettings != null)
+                    .ForEach(x => deleteConnectionSettings(x));
+                SelectedItem.Items
+                    .GetFlatList(x => x.Items, x => x.Credentials != null)
+                    .ForEach(x => deleteCredentials(x));
+            }
+
+            var oldSelectedItem = SelectedItem;
             SelectedItem = null;
-            Items.Remove(civm);
+
+            if (oldSelectedItem.Parent != null)
+            {
+                oldSelectedItem.Parent.CategoryItem.Items.Remove(oldSelectedItem.CategoryItem);
+                oldSelectedItem.Parent.Items.Remove(oldSelectedItem);
+            }
+            else
+            {
+                Items.Remove(oldSelectedItem);
+            }
+
+            SuspendSave = false;
+            SaveSettings();
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -143,9 +214,13 @@ namespace RemoteConnectionManager.ViewModels
             {
                 foreach (var newItem in e.NewItems)
                 {
-                    var civm = (CategoryItemViewModel) newItem;
+                    var civm = (CategoryItemViewModel)newItem;
                     civm.PropertyChanged += Object_PropertyChanged;
-                    civm.Properties.PropertyChanged += Object_PropertyChanged;
+                    if (civm.Properties != null)
+                    {
+                        civm.Properties.PropertyChanged += Object_PropertyChanged;
+                    }
+                    civm.Items.CollectionChanged += CollectionChanged;
                 }
             }
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -154,7 +229,13 @@ namespace RemoteConnectionManager.ViewModels
                 {
                     var civm = (CategoryItemViewModel)oldItem;
                     civm.PropertyChanged -= Object_PropertyChanged;
-                    civm.Properties.PropertyChanged -= Object_PropertyChanged;
+                    if (civm.Properties != null)
+                    {
+                        civm.Properties.PropertyChanged -= Object_PropertyChanged;
+                    }
+                    civm.Items.Clear();
+                    civm.Items.CollectionChanged -= CollectionChanged;
+                    civm.CategoryItem.Items.Clear();
                 }
             }
             SaveSettings();
@@ -175,12 +256,10 @@ namespace RemoteConnectionManager.ViewModels
             }
         }
 
-        private bool _isSaveSuspended;
-        private CategoryItemViewModel _selectedItem;
-
-        private void SaveSettings()
+        public bool SuspendSave { get; set; }
+        public void SaveSettings()
         {
-            if (_isSaveSuspended)
+            if (SuspendSave)
             {
                 return;
             }

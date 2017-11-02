@@ -23,6 +23,11 @@ namespace RemoteConnectionManager.Converters
             {
                 return Resources.Credentials;
             }
+            if (civm.CategoryItem.ConnectionSettings == null && civm.CategoryItem.Credentials == null)
+            {
+                return Resources.Category;
+            }
+
             return null;
         }
 

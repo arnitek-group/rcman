@@ -31,8 +31,8 @@
     <PublisherName>Nikolay Arhangelov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.1.0.0</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>0.1.0.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -131,12 +131,15 @@
     <Compile Include="CategoryItemsControl.xaml.cs">
       <DependentUpon>CategoryItemsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CategoryTreeView.cs" />
+    <Compile Include="Controls\CategoryTreeViewItem.cs" />
     <Compile Include="Converters\CategoryItemToImageConverter.cs" />
     <Compile Include="Converters\CrazyDisplayNameConverter.cs" />
     <Compile Include="Converters\CredentialsFilterConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\RecursiveExtensions.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
@@ -146,10 +149,12 @@
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
     <Compile Include="ViewModels\CategoryItemViewModel.cs" />
+    <Compile Include="ViewModels\DragDropViewModel.cs" />
     <Compile Include="ViewModels\Properties\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="ViewModels\Properties\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Properties\GenericPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Properties\ProtocolViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -240,6 +245,9 @@
   <ItemGroup>
     <Resource Include="Resources\NewFile_16x.png" />
     <Resource Include="Resources\VSO_RecycleBin_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Tag_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

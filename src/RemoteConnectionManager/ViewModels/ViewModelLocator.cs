@@ -25,14 +25,17 @@ namespace RemoteConnectionManager.ViewModels
             SimpleIoc.Default.Register<ViewModelLocator>(() => this);
             SimpleIoc.Default.Register<ConnectionsViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<DragDropViewModel>();
 
             Connections = ServiceLocator.Current.GetInstance<ConnectionsViewModel>();
             Settings = ServiceLocator.Current.GetInstance<SettingsViewModel>();
+            DragDrop = ServiceLocator.Current.GetInstance<DragDropViewModel>();
             Locator = ServiceLocator.Current.GetInstance<ViewModelLocator>();
         }
 
         public ConnectionsViewModel Connections { get; }
         public SettingsViewModel Settings { get; }
+        public DragDropViewModel DragDrop { get; }
         public static ViewModelLocator Locator { get; private set; }
     }
 }

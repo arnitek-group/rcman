@@ -7,9 +7,10 @@ namespace RemoteConnectionManager.ViewModels
 {
     public class CategoryItemViewModel: ViewModelBase
     {
-        public CategoryItemViewModel(CategoryItem categoryItem)
+        public CategoryItemViewModel(CategoryItem categoryItem, CategoryItemViewModel parent)
         {
             CategoryItem = categoryItem;
+            Parent = parent;
 
             if (CategoryItem.ConnectionSettings != null)
             {
@@ -21,11 +22,16 @@ namespace RemoteConnectionManager.ViewModels
                 Credentials =new CredentialsViewModel(this);
                 Properties = Credentials;
             }
+            else
+            {
+                Properties = new GenericPropertiesViewModel(this);
+            }
 
             Items = new ObservableCollection<CategoryItemViewModel>();
         }
 
         public CategoryItem CategoryItem { get; }
+        public CategoryItemViewModel Parent { get; set; }
 
         private bool _isSelected;
 

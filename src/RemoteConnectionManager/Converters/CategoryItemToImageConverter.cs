@@ -18,7 +18,7 @@ namespace RemoteConnectionManager.Converters
             {
                 return "Resources/User_16x.png";
             }
-            return null;
+            return "Resources/Tag_16x.png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
