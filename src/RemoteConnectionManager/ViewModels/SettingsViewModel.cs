@@ -233,9 +233,7 @@ namespace RemoteConnectionManager.ViewModels
                     {
                         civm.Properties.PropertyChanged -= Object_PropertyChanged;
                     }
-                    civm.Items.Clear();
                     civm.Items.CollectionChanged -= CollectionChanged;
-                    civm.CategoryItem.Items.Clear();
                 }
             }
             SaveConnections();
