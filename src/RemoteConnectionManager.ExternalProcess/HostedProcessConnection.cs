@@ -1,11 +1,13 @@
 ﻿using RemoteConnectionManager.Core;
 using System;
 using System.Diagnostics;
+using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Windows.Input;
 using Forms = System.Windows.Forms;
 
 namespace RemoteConnectionManager.ExternalProcess
@@ -83,7 +85,11 @@ namespace RemoteConnectionManager.ExternalProcess
 
             _hostGrid = new Grid();
             _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostPanel });
-            _hostGrid.SizeChanged += Host_SizeChanged;
+
+            Observable
+                .FromEventPattern<SizeChangedEventArgs>(_hostGrid, "SizeChanged")
+                .Throttle(TimeSpan.FromSeconds(1))
+                .Subscribe(x => _hostGrid.Dispatcher.Invoke(Host_SizeChanged));
 
             return _hostGrid;
         }
@@ -100,10 +106,18 @@ namespace RemoteConnectionManager.ExternalProcess
             Disconnected?.Invoke(this, DisconnectReason.ConnectionEnded);
         }
 
-        private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void Host_SizeChanged()
         {
-            // TODO: Properly size the process.
-            MoveWindow(_process.MainWindowHandle, 0, 0, (int)e.NewSize.Width, (int)e.NewSize.Height, true);
+            if (Mouse.LeftButton == MouseButtonState.Released)
+            {
+                _hostPanel.Visible = true;
+                // TODO: Improve resizing.s
+                MoveWindow(_process.MainWindowHandle, 0, 0, _hostPanel.Width, _hostPanel.Height, true);
+            }
+            else
+            {
+                _hostPanel.Visible = false;
+            }
         }
 
         private void DestroyHostedProcess()
@@ -119,7 +133,6 @@ namespace RemoteConnectionManager.ExternalProcess
 
             if (_hostGrid != null)
             {
-                _hostGrid.SizeChanged -= Host_SizeChanged;
                 _hostGrid.Dispatcher.Invoke(() => _hostGrid.Children.Clear());
                 _hostGrid = null;
             }

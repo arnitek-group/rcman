@@ -1,10 +1,12 @@
 ﻿using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Rdp.Properties;
 using System;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Windows.Input;
 
 namespace RemoteConnectionManager.Rdp
 {
@@ -65,7 +67,11 @@ namespace RemoteConnectionManager.Rdp
                     _hostGrid = new Grid();
                     _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostRdp });
                     _hostGrid.SizeChanged += Host_SizeChanged_Initial;
-                    _hostGrid.SizeChanged += Host_SizeChanged;
+
+                    Observable
+                        .FromEventPattern<SizeChangedEventArgs>(_hostGrid, "SizeChanged")
+                        .Throttle(TimeSpan.FromSeconds(1))
+                        .Subscribe(x => _hostGrid.Dispatcher.Invoke(UpdateSessionDisplaySettings));
                 }
                 else
                 {
@@ -95,7 +101,6 @@ namespace RemoteConnectionManager.Rdp
             if (_hostGrid != null)
             {
                 _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
-                _hostGrid.SizeChanged -= Host_SizeChanged;
                 _hostGrid.Dispatcher.Invoke(() => _hostGrid.Children.Clear());
                 _hostGrid = null;
             }
@@ -118,11 +123,6 @@ namespace RemoteConnectionManager.Rdp
         {
             PrepareSessionDisplaSettingsAndConnect();
             _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
-        }
-
-        private void Host_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateSessionDisplaySettings();
         }
 
         private void AxMsRdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
@@ -158,12 +158,25 @@ namespace RemoteConnectionManager.Rdp
 
         private void UpdateSessionDisplaySettings()
         {
-            if (_hostRdp.AxMsRdpClient.Connected == 1)
+            if (Mouse.LeftButton == MouseButtonState.Released)
             {
-                _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
-                    (uint)_hostRdp.Width, (uint)_hostRdp.Height,
-                    (uint)_hostRdp.Width, (uint)_hostRdp.Height,
-                    0, 1, 1);
+                _hostRdp.Visible = true;
+                if (_hostRdp.AxMsRdpClient.Connected == 1)
+                {
+                    try
+                    {
+                        _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
+                            (uint)_hostRdp.Width, (uint)_hostRdp.Height,
+                            (uint)_hostRdp.Width, (uint)_hostRdp.Height,
+                            0, 1, 1);
+                    }
+                    catch
+                    { }
+                }
+            }
+            else
+            {
+                _hostRdp.Visible = false;
             }
         }
 
