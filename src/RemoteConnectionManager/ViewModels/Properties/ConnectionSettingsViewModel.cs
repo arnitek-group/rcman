@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using RemoteConnectionManager.Core;
 
-namespace RemoteConnectionManager.ViewModels
+namespace RemoteConnectionManager.ViewModels.Properties
 {
     public class ConnectionSettingsViewModel: ViewModelBase
     {

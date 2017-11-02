@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 
-namespace RemoteConnectionManager.ViewModels
+namespace RemoteConnectionManager.ViewModels.Properties
 {
     public class CredentialsViewModel: ViewModelBase
     {

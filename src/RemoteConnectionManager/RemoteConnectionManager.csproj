@@ -7,7 +7,7 @@
     <ProjectGuid>{A589654C-9E29-4BEA-A010-5D6837392EF9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>RemoteConnectionManager</RootNamespace>
-    <AssemblyName>rdcman</AssemblyName>
+    <AssemblyName>rcman</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -24,7 +24,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://github.com/nikolayarhangelov/rcman.github.io/tree/master/publish/</InstallUrl>
+    <InstallUrl>https://raw.githubusercontent.com/nikolayarhangelov/rcman.github.io/master/publish/</InstallUrl>
+    <SupportUrl>https://github.com/nikolayarhangelov/rcman.github.io</SupportUrl>
+    <ProductName>Remote Connection Manager</ProductName>
+    <PublisherName>Nikolay Arhangelov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <ApplicationRevision>0</ApplicationRevision>
@@ -132,7 +135,6 @@
     <Compile Include="Converters\CredentialsFilterConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
-    <Compile Include="Converters\ProtocolToUpperCaseConverter.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
@@ -143,10 +145,11 @@
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
     <Compile Include="ViewModels\CategoryItemViewModel.cs" />
-    <Compile Include="ViewModels\ConnectionSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Properties\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="Services\Settings.cs" />
-    <Compile Include="ViewModels\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Properties\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Properties\ProtocolViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Page Include="CategoryItemsControl.xaml">

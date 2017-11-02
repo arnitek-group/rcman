@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Properties;
 using RemoteConnectionManager.Services;
+using RemoteConnectionManager.ViewModels.Properties;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -24,7 +26,7 @@ namespace RemoteConnectionManager.ViewModels
             Protocols = _connectionFactories
                 .SelectMany(x => x.Protocols)
                 .Distinct()
-                .ToArray();
+                .Select(x => new ProtocolViewModel(x));
 
             Connections = new ObservableCollection<IConnection>();
 
@@ -32,7 +34,7 @@ namespace RemoteConnectionManager.ViewModels
             DisconnectCommand = new RelayCommand<IConnection>(ExecuteDisconnectCommand);
         }
 
-        public Protocol[] Protocols { get; }
+        public IEnumerable<ProtocolViewModel> Protocols { get; }
 
         public bool OnClosing()
         {

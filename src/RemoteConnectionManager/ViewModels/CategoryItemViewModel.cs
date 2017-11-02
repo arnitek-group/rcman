@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using RemoteConnectionManager.Models;
+using RemoteConnectionManager.ViewModels.Properties;
 using System.Collections.ObjectModel;
 
 namespace RemoteConnectionManager.ViewModels

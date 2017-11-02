@@ -1,5 +1,6 @@
 ﻿using RemoteConnectionManager.Properties;
 using RemoteConnectionManager.ViewModels;
+using RemoteConnectionManager.ViewModels.Properties;
 using System;
 using System.Globalization;
 using System.Linq;

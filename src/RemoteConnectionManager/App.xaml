@@ -13,7 +13,6 @@
             <converters:ObjectTypeNameConverter x:Key="ObjectTypeNameConverter" />
             <converters:CrazyDisplayNameConverter x:Key="CrazyDisplayNameConverter" />
             <converters:CredentialsFilterConverter x:Key="CredentialsFilterConverter" />
-            <converters:ProtocolToUpperCaseConverter x:Key="ProtocolToUpperCaseConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
             <GridLength x:Key="PropertiesHeight">250</GridLength>
