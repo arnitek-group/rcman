@@ -42,7 +42,7 @@ namespace RemoteConnectionManager.ViewModels
             }
 
             ViewModelLocator.Locator.Settings.SuspendSave = false;
-            ViewModelLocator.Locator.Settings.SaveSettings();
+            ViewModelLocator.Locator.Settings.SaveConnections();
 
             ViewModelLocator.Locator.Settings.SelectedItem = dragSource;
         }

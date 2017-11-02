@@ -29,7 +29,7 @@ namespace RemoteConnectionManager.ViewModels
             Items = new ObservableCollection<CategoryItemViewModel>();
             Items.CollectionChanged += CollectionChanged;
 
-            LoadSettings();
+            LoadConnections();
 
             CreateConnectionSettingsCommand = new RelayCommand(ExecuteCreateConnectionSettingsCommand);
             CreateCredentialsCommand = new RelayCommand(ExecuteCreateCredentialsCommand);
@@ -39,13 +39,13 @@ namespace RemoteConnectionManager.ViewModels
                 CanExecuteDeleteItemCommand);
         }
 
-        private void LoadSettings()
+        private void LoadConnections()
         {
             SuspendSave = true;
-            var settings = _settingsService.LoadSettings();
-            if (settings != null)
+            var connections = _settingsService.LoadConnections();
+            if (connections != null)
             {
-                var rootCivms = LoadSettingsRecursive(settings.Items, null);
+                var rootCivms = LoadSettingsRecursive(connections.Items, null);
                 rootCivms.ForEach(x => Items.Add(x));
             }
 
@@ -205,7 +205,7 @@ namespace RemoteConnectionManager.ViewModels
             }
 
             SuspendSave = false;
-            SaveSettings();
+            SaveConnections();
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -238,7 +238,7 @@ namespace RemoteConnectionManager.ViewModels
                     civm.CategoryItem.Items.Clear();
                 }
             }
-            SaveSettings();
+            SaveConnections();
         }
 
         private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -252,19 +252,19 @@ namespace RemoteConnectionManager.ViewModels
             }
             else
             {
-                SaveSettings();
+                SaveConnections();
             }
         }
 
         public bool SuspendSave { get; set; }
-        public void SaveSettings()
+        public void SaveConnections()
         {
             if (SuspendSave)
             {
                 return;
             }
 
-            _settingsService.SaveSettings(new Services.Settings
+            _settingsService.SaveConnections(new Services.Settings
             {
                 Items = Items.Select(x => x.CategoryItem).ToArray()
             });

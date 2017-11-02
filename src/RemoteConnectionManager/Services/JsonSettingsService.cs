@@ -1,24 +1,42 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 using System.IO;
 
 namespace RemoteConnectionManager.Services
 {
     public class JsonSettingsService : ISettingsService
     {
-        private const string SettingsFile = "connections.json";
 
-        public Settings LoadSettings()
+#if DEBUG
+        private const string AppFolder = "RCManager-Debug";
+#else
+        private const string AppFolder = "RCManager";
+#endif
+        private const string ConnectionsFileName = "connections.json";
+
+        private readonly string _connectionsFilePath;
+
+        public JsonSettingsService()
         {
-            if (!File.Exists(SettingsFile))
-            {
-                File.CreateText(SettingsFile);
-                return null;
-            }
-            return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(SettingsFile));
+            _connectionsFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                AppFolder,
+                ConnectionsFileName);
         }
 
-        public void SaveSettings(Settings settings)
+        public Settings LoadConnections()
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(_connectionsFilePath));
+            if (!File.Exists(_connectionsFilePath))
+            {
+                File.CreateText(_connectionsFilePath);
+                return null;
+            }
+            return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(_connectionsFilePath));
+        }
+
+        public void SaveConnections(Settings settings)
         {
             var settingsText = JsonConvert.SerializeObject(
                 settings, Formatting.Indented,
@@ -29,7 +47,7 @@ namespace RemoteConnectionManager.Services
                     NullValueHandling = NullValueHandling.Ignore
                 }
             );
-            File.WriteAllText(SettingsFile, settingsText);
+            File.WriteAllText(_connectionsFilePath, settingsText);
         }
     }
 }
