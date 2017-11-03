@@ -19,6 +19,11 @@ namespace RemoteConnectionManager
             var vi = FileVersionInfo.GetVersionInfo(assembly.Location);
 
             Title = $"{Properties.Resources.Application} v{vi.ProductMajorPart}.{vi.ProductMinorPart}.{vi.ProductBuildPart}";
+
+            Loaded += (sender, e) =>
+            {
+                ViewModelLocator.Locator.TelemetryService.TrackPage("Application");
+            };
         }
 
         private void DockingManager_OnDocumentClosed(object sender, DocumentClosedEventArgs e)
