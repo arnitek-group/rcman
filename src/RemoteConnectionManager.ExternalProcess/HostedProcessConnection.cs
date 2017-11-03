@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using System.Windows.Input;
 using Forms = System.Windows.Forms;
 
 namespace RemoteConnectionManager.ExternalProcess
@@ -43,7 +42,8 @@ namespace RemoteConnectionManager.ExternalProcess
         }
 
         public void Destroy()
-        { }
+        {
+        }
 
         public event EventHandler<DisconnectReason> Disconnected;
 
@@ -59,13 +59,6 @@ namespace RemoteConnectionManager.ExternalProcess
         private FrameworkElement CreateHostedProcess()
         {
             _hostPanel = new Forms.Panel();
-            _hostPanel.Dock = DockStyle.Fill;
-            _hostPanel.BorderStyle = BorderStyle.None;
-            _hostPanel.Anchor =
-                AnchorStyles.Top |
-                AnchorStyles.Right |
-                AnchorStyles.Bottom |
-                AnchorStyles.Left;
 
             var psi = new ProcessStartInfo();
             psi.FileName = GetFileName();
@@ -80,15 +73,18 @@ namespace RemoteConnectionManager.ExternalProcess
             _process.WaitForInputIdle();
 
             SetParent(_process.MainWindowHandle, _hostPanel.Handle);
-            SetWindowLong(_process.MainWindowHandle, GWL_STYLE, WS_VISIBLE + WS_MAXIMIZE);
-            MoveWindow(_process.MainWindowHandle, 0, 0, _hostPanel.Width, _hostPanel.Height, true);
+            SetWindowPos(
+                _process.MainWindowHandle, IntPtr.Zero,
+                -FrameSides, -FrameTop,
+                _hostPanel.Width + 2 * FrameSides,
+                _hostPanel.Height + FrameSides + FrameTop,
+                SWP);
 
             _hostGrid = new Grid();
             _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostPanel });
 
             Observable
                 .FromEventPattern<SizeChangedEventArgs>(_hostGrid, "SizeChanged")
-                .Throttle(TimeSpan.FromSeconds(1))
                 .Subscribe(x => _hostGrid?.Dispatcher.Invoke(Host_SizeChanged));
 
             return _hostGrid;
@@ -108,16 +104,12 @@ namespace RemoteConnectionManager.ExternalProcess
 
         private void Host_SizeChanged()
         {
-            if (Mouse.LeftButton == MouseButtonState.Released)
-            {
-                _hostPanel.Visible = true;
-                // TODO: Improve resizing.
-                MoveWindow(_process.MainWindowHandle, 0, 0, _hostPanel.Width, _hostPanel.Height, true);
-            }
-            else
-            {
-                _hostPanel.Visible = false;
-            }
+            SetWindowPos(
+                _process.MainWindowHandle, IntPtr.Zero,
+                -FrameSides, -FrameTop,
+                _hostPanel.Width + 2 * FrameSides,
+                _hostPanel.Height + FrameSides + FrameTop,
+                SWP);
         }
 
         private void DestroyHostedProcess()
@@ -145,17 +137,30 @@ namespace RemoteConnectionManager.ExternalProcess
         }
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern long SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        private static extern long SetParent(
+            IntPtr hWndChild,
+            IntPtr hWndNewParent);
 
         [DllImport("user32.dll")]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        static extern int SetWindowLong(
+            IntPtr hWnd,
+            int nIndex,
+            int dwNewLong);
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool MoveWindow(IntPtr hwnd, int x, int y, int cx, int cy, bool repaint);
+        private static extern bool SetWindowPos(
+            IntPtr hWnd,
+            IntPtr hWndInsertAfter,
+            int x, int y,
+            int cx, int cy,
+            uint uFlags);
 
-        private const int GWL_STYLE = -16;
-        private const int WS_VISIBLE = 0x10000000;
-        private const int WS_MAXIMIZE = 0x01000000;
+        private const int FrameTop = 32;
+        private const int FrameSides = 8;
+        
+        private const uint SWP_NOACTIVATE = 0x0010U;
+        private const uint SWP_SHOWWINDOW = 0x0040U;
+        private const uint SWP = SWP_NOACTIVATE | SWP_SHOWWINDOW;
 
         #endregion
     }
