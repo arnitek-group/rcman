@@ -2,20 +2,28 @@
 using RemoteConnectionManager.Core;
 using System;
 using System.Collections.Generic;
+using System.Management;
 
 namespace RemoteConnectionManager.Services
 {
     public class ApplicationInsightsTelemetryService: ITelemetryService
     {
+        private readonly string _userId;
         private readonly string _sessionId;
+
         public ApplicationInsightsTelemetryService()
         {
+            var os = new ManagementObject("Win32_OperatingSystem=@");
+            var serial = (string) os["SerialNumber"];
+
+            _userId = Security.EncryptText(serial);
             _sessionId = Guid.NewGuid().ToString();
         }
 
         private TelemetryClient CreateClient()
         {
             var tc = new TelemetryClient();
+            tc.Context.User.Id = _userId;
             tc.Context.Session.Id = _sessionId;
             tc.Context.Component.Version = AssemblyInfo.Version;
 #if DEBUG

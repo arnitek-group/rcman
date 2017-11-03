@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace RemoteConnectionManager.Core
 {
-    internal static class Security
+    public static class Security
     {
         private static readonly byte[] Key = { 230, 60, 173, 137, 52, 240, 64, 112, 5, 167, 28, 240, 22, 233, 94, 8, 163, 155, 1, 79, 58, 227, 6, 78, 155, 182, 94, 97, 169, 102, 77, 28 };
         private static readonly byte[] IV = { 205, 80, 156, 11, 96, 56, 26, 98, 83, 61, 119, 210, 162, 150, 84, 19 };
