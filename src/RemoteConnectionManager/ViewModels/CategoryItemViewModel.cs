@@ -61,6 +61,19 @@ namespace RemoteConnectionManager.ViewModels
             }
         }
 
+        public bool IsExpanded
+        {
+            get { return CategoryItem.IsExpanded; }
+            set
+            {
+                if (CategoryItem.IsExpanded != value)
+                {
+                    CategoryItem.IsExpanded = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public ViewModelBase Properties { get; }
 
         public ConnectionSettingsViewModel ConnectionSettings { get; }

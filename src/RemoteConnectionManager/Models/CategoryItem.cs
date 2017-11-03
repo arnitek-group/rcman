@@ -11,6 +11,7 @@ namespace RemoteConnectionManager.Models
         }
 
         public string DisplayName { get; set; }
+        public bool IsExpanded { get; set; }  
 
         public ConnectionSettings ConnectionSettings { get; set; }
         public Credentials Credentials { get; set; }
