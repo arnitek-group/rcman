@@ -28,6 +28,8 @@ namespace RemoteConnectionManager.Services
             tc.Context.Component.Version = AssemblyInfo.Version;
 #if DEBUG
             tc.Context.Properties.Add("Configuration", "DEBUG");
+#else
+            tc.Context.Properties.Add("Configuration", "RELEASE");
 #endif
             // Hide sensitive user data.
             tc.Context.Cloud.RoleInstance = "PC";
