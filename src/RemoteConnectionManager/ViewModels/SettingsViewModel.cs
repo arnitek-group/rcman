@@ -16,13 +16,16 @@ namespace RemoteConnectionManager.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private readonly ITelemetryService _telemetryService;
         private readonly ISettingsService _settingsService;
         private readonly IDialogService _dialogService;
 
         public SettingsViewModel(
+            ITelemetryService telemetryService,
             ISettingsService settingsService,
             IDialogService dialogService)
         {
+            _telemetryService = telemetryService;
             _settingsService = settingsService;
             _dialogService = dialogService;
             
@@ -111,6 +114,13 @@ namespace RemoteConnectionManager.ViewModels
             Items.Add(civm);
 
             SelectedItem = civm;
+
+            _telemetryService.TrackEvent(
+                "Create",
+                new Dictionary<string, string>
+                {
+                    {"Type", "ConnectionSettings"}
+                });
         }
 
         public RelayCommand CreateCredentialsCommand { get; }
@@ -124,6 +134,13 @@ namespace RemoteConnectionManager.ViewModels
             Items.Add(civm);
 
             SelectedItem = civm;
+
+            _telemetryService.TrackEvent(
+                "Create",
+                new Dictionary<string, string>
+                {
+                    {"Type", "Credentials"}
+                });
         }
 
         public RelayCommand CreateCategoryCommand { get; }
@@ -136,6 +153,13 @@ namespace RemoteConnectionManager.ViewModels
             Items.Add(civm);
 
             SelectedItem = civm;
+
+            _telemetryService.TrackEvent(
+                "Create",
+                new Dictionary<string, string>
+                {
+                    {"Type", "Category"}
+                });
         }
 
         public RelayCommand DeleteItemCommand { get; }

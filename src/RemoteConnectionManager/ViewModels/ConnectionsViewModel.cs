@@ -14,13 +14,16 @@ namespace RemoteConnectionManager.ViewModels
     public class ConnectionsViewModel : ViewModelBase
     {
         private readonly IConnectionFactory[] _connectionFactories;
+        private readonly ITelemetryService _telemetryService;
         private readonly IDialogService _dialogService;
 
         public ConnectionsViewModel(
             IConnectionFactory[] connectionFactories,
+            ITelemetryService telemetryService,
             IDialogService dialogService)
         {
             _connectionFactories = connectionFactories;
+            _telemetryService = telemetryService;
             _dialogService = dialogService;
 
             Protocols = _connectionFactories
@@ -72,6 +75,13 @@ namespace RemoteConnectionManager.ViewModels
                 connection.Disconnected += ConnectionDisconnected;
                 connection.Connect();
             }
+
+            _telemetryService.TrackEvent(
+                "Connect",
+                new Dictionary<string, string>
+                {
+                    {"Protocol", connection.ConnectionSettings.Protocol.ToString().ToUpper()}
+                });
         }
 
         public RelayCommand<IConnection> DisconnectCommand { get; }
