@@ -1,4 +1,5 @@
 ﻿using Microsoft.ApplicationInsights;
+using RemoteConnectionManager.Core;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,9 @@ namespace RemoteConnectionManager.Services
         {
             var tc = new TelemetryClient();
             tc.Context.Session.Id = _sessionId;
-            tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+            tc.Context.Component.Version = AssemblyInfo.Version;
+            // Hide sensitive user data.
+            tc.Context.Cloud.RoleInstance = "PC";
             return tc;
         }
 
