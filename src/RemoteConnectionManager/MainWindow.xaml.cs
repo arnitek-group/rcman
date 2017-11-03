@@ -40,6 +40,10 @@ namespace RemoteConnectionManager
             {
                 e.Cancel = true;
             }
+            else
+            {
+                ViewModelLocator.Locator.TelemetryService.TrackPage("Exit");
+            }
         }
     }
 
