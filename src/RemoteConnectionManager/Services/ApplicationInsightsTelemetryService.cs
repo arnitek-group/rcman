@@ -18,6 +18,9 @@ namespace RemoteConnectionManager.Services
             var tc = new TelemetryClient();
             tc.Context.Session.Id = _sessionId;
             tc.Context.Component.Version = AssemblyInfo.Version;
+#if DEBUG
+            tc.Context.Properties.Add("Configuration", "DEBUG");
+#endif
             // Hide sensitive user data.
             tc.Context.Cloud.RoleInstance = "PC";
             return tc;
