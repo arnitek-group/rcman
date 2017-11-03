@@ -1,8 +1,6 @@
 # Remote Connection Manager
 Remote connection manager is a Windows application, which features remote client connectivity supporting different protocols. All this is packed using a handy dockable UI.
 
-### [Install ClickOnce Application](https://raw.githubusercontent.com/nikolayarhangelov/rcman.github.io/master/publish/rcman.application)
-
 ## Technologies and Tools
 * Windows Presentation Foundation (WPF)
 * Visual Studio 2017
