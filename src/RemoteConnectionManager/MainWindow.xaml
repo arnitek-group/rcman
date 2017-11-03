@@ -54,8 +54,7 @@
 
         <xcad:LayoutRoot>
             <xcad:LayoutPanel>
-                <xcad:LayoutAnchorablePaneGroup Orientation="Vertical"
-                                                DockWidth="{StaticResource SidePanelWidth}">
+                <xcad:LayoutAnchorablePaneGroup DockWidth="{StaticResource SidePanelWidth}">
                     <xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Connections}"
                                                CanHide="False" CanClose="False"
