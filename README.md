@@ -1,6 +1,15 @@
 # Remote Connection Manager
 Remote connection manager is a Windows application, which features remote client connectivity supporting different protocols. All this is packed using a handy dockable UI.
 
+## Features
+* SSH support via PuTTY
+* RDP
+  * Special key support like Windows, Windows+E, Ctrl+Shift+Esc
+  * Smart resizing
+* Tabbed interface with docking support powered by AvalonDock
+* Connections, Credentials and Categories are stored in a settings file
+* Password encryption
+
 ## Technologies and Tools
 * Windows Presentation Foundation (WPF)
 * Visual Studio 2017
