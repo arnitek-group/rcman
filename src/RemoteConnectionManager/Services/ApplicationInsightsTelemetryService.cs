@@ -3,6 +3,7 @@ using RemoteConnectionManager.Core;
 using System;
 using System.Collections.Generic;
 using System.Management;
+using System.Threading.Tasks;
 
 namespace RemoteConnectionManager.Services
 {
@@ -20,41 +21,50 @@ namespace RemoteConnectionManager.Services
             _sessionId = Guid.NewGuid().ToString();
         }
 
-        private TelemetryClient CreateClient()
+        private void FlushAsync(Action<TelemetryClient> track)
         {
-            var tc = new TelemetryClient();
-            tc.Context.User.Id = _userId;
-            tc.Context.Session.Id = _sessionId;
-            tc.Context.Component.Version = AssemblyInfo.Version;
+            Task.Factory.StartNew(() =>
+            {
+                var tc = new TelemetryClient();
+                tc.Context.User.Id = _userId;
+                tc.Context.Session.Id = _sessionId;
+                tc.Context.Component.Version = AssemblyInfo.Version;
 #if DEBUG
-            tc.Context.Properties.Add("Configuration", "DEBUG");
+                tc.Context.Properties.Add("Configuration", "DEBUG");
 #else
             tc.Context.Properties.Add("Configuration", "RELEASE");
 #endif
-            // Hide sensitive user data.
-            tc.Context.Cloud.RoleInstance = "PC";
-            return tc;
+                // Hide sensitive user data.
+                tc.Context.Cloud.RoleInstance = "PC";
+
+                track(tc);
+
+                tc.Flush();
+            });
         }
 
         public void TrackPage(string page)
         {
-            var tc = CreateClient();
-            tc.TrackPageView(page);
-            tc.Flush();
+            FlushAsync(tc =>
+            {
+                tc.TrackPageView(page);
+            });
         }
 
         public void TrackEvent(string @event, IDictionary<string, string> properties)
         {
-            var tc = CreateClient();
-            tc.TrackEvent(@event, properties);
-            tc.Flush();
+            FlushAsync(tc =>
+            {
+                tc.TrackEvent(@event, properties);
+            });
         }
 
         public void TrackException(Exception exc)
         {
-            var tc = CreateClient();
-            tc.TrackException(exc);
-            tc.Flush();
+            FlushAsync(tc =>
+            {
+                tc.TrackException(exc);
+            });
         }
     }
 }
