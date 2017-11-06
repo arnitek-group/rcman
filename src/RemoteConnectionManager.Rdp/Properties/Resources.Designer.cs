@@ -70,6 +70,15 @@ namespace RemoteConnectionManager.Rdp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send Ctrl+Alt+Del.
+        /// </summary>
+        internal static string CtrlAltDel {
+            get {
+                return ResourceManager.GetString("CtrlAltDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnected from.
         /// </summary>
         internal static string Disconnected {

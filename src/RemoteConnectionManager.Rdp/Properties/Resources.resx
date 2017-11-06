@@ -120,6 +120,9 @@
   <data name="Connecting" xml:space="preserve">
     <value>Connecting to</value>
   </data>
+  <data name="CtrlAltDel" xml:space="preserve">
+    <value>Send Ctrl+Alt+Del</value>
+  </data>
   <data name="Disconnected" xml:space="preserve">
     <value>Disconnected from</value>
   </data>

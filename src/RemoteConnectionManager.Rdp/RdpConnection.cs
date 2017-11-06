@@ -27,7 +27,12 @@ namespace RemoteConnectionManager.Rdp
             menuFullscreen.Icon = new Image { Source = new BitmapImage(new Uri("/RemoteConnectionManager.Rdp;component/Resources/VSO_FullScreen_16x.png", UriKind.Relative)) };
             menuFullscreen.Click += (sender, e) => ToggleFullscreen();
 
+            var menuCtrlAltDel = new System.Windows.Controls.MenuItem();
+            menuCtrlAltDel.Header = Resources.CtrlAltDel;
+            menuCtrlAltDel.Click += (sender, e) => SendCtrlAltDel();
+
             ContextMenu.Items.Add(menuFullscreen);
+            ContextMenu.Items.Add(menuCtrlAltDel);
         }
 
         public ConnectionSettings ConnectionSettings { get; }
@@ -49,6 +54,13 @@ namespace RemoteConnectionManager.Rdp
                 {
                     _hostRdp = new RdpHost();
                     _hostRdp.AxMsRdpClient.Server = ConnectionSettings.Server;
+
+                    int port;
+                    if (int.TryParse(ConnectionSettings.Port, out port))
+                    {
+                        _hostRdp.AxMsRdpClient.AdvancedSettings2.RDPPort = port;
+                    }
+
                     _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
                 }
 
@@ -67,10 +79,13 @@ namespace RemoteConnectionManager.Rdp
                 }
 
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
+                _hostRdp.AxMsRdpClient.AdvancedSettings4.ConnectionBarShowMinimizeButton = false;
+                _hostRdp.AxMsRdpClient.AdvancedSettings9.BandwidthDetection = true;
                 // Keyboard redirection settings.
                 // https://msdn.microsoft.com/en-us/library/aa381095(v=vs.85).aspx
                 // https://msdn.microsoft.com/en-us/library/aa381299(v=vs.85).aspx
                 _hostRdp.AxMsRdpClient.SecuredSettings2.KeyboardHookMode = 1;
+                _hostRdp.AxMsRdpClient.AdvancedSettings.allowBackgroundInput = 1;
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.EnableWindowsKey = 1;
                 _hostRdp.AxMsRdpClient.AdvancedSettings7.EnableCredSspSupport = true;
                 // Connection settings.
@@ -206,6 +221,7 @@ namespace RemoteConnectionManager.Rdp
 
         private void ToggleFullscreen()
         {
+            _hostRdp.AxMsRdpClient.FullScreenTitle = ConnectionSettings.Server;
             _hostRdp.AxMsRdpClient.FullScreen = !_hostRdp.AxMsRdpClient.FullScreen;
             if (_hostRdp.AxMsRdpClient.Connected == 1)
             {
@@ -235,6 +251,21 @@ namespace RemoteConnectionManager.Rdp
             }
 
             return new Size(_hostRdp.Width, _hostRdp.Height);
+        }
+
+        private void SendCtrlAltDel()
+        {
+            if (_hostRdp.AxMsRdpClient.Connected == 1)
+            {
+                // Source: https://github.com/bosima/RDManager/blob/master/RDManager/MainForm.cs
+                _hostRdp.AxMsRdpClient.Focus();
+                new MsRdpClientNonScriptableWrapper(_hostRdp.AxMsRdpClient.GetOcx()).SendKeys(
+                    new int[] { 0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d },
+                    new bool[] { false, false, false, true, true, true, }
+                );
+            }
+
+            _telemetryService.TrackEvent("CtrlAltDel", null);
         }
 
         #endregion
