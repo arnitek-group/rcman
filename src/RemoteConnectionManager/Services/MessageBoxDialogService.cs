@@ -5,6 +5,13 @@ namespace RemoteConnectionManager.Core
 {
     public class MessageBoxDialogService: IDialogService
     {
+        public void ShowWarningDialog(string text)
+        {
+            MessageBox.Show(
+                text, Resources.Application,
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
         public bool ShowConfirmationDialog(string text)
         {
             var result = MessageBox.Show(

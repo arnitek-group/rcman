@@ -205,6 +205,15 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please specify a server for this connection..
+        /// </summary>
+        public static string Error_Server {
+            get {
+                return ResourceManager.GetString("Error_Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mandatory Settings.
         /// </summary>
         public static string Mandatory {

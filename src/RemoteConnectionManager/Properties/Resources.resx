@@ -210,4 +210,7 @@
   <data name="Optional" xml:space="preserve">
     <value>Optional Settings</value>
   </data>
+  <data name="Error_Server" xml:space="preserve">
+    <value>Please specify a server for this connection.</value>
+  </data>
 </root>

@@ -63,6 +63,12 @@ namespace RemoteConnectionManager.ViewModels
         public RelayCommand<ConnectionSettings> ConnectCommand { get; }
         public void ExecuteConnectCommand(ConnectionSettings connectionSettings)
         {
+            if (string.IsNullOrEmpty(connectionSettings.Server))
+            {
+                _dialogService.ShowWarningDialog(Resources.Error_Server);
+                return;
+            }
+
             var connection = Connections.FirstOrDefault(x => x.ConnectionSettings == connectionSettings);
             if (connection == null)
             {
