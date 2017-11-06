@@ -1,5 +1,5 @@
 ﻿
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Core
 {
     public interface IDialogService
     {

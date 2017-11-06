@@ -1,8 +1,9 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Properties;
-using RemoteConnectionManager.Services;
 using RemoteConnectionManager.ViewModels.Properties;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

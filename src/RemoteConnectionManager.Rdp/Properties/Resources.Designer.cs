@@ -77,5 +77,14 @@ namespace RemoteConnectionManager.Rdp.Properties {
                 return ResourceManager.GetString("Disconnected", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Fullscreen.
+        /// </summary>
+        internal static string Fullscreen {
+            get {
+                return ResourceManager.GetString("Fullscreen", resourceCulture);
+            }
+        }
     }
 }

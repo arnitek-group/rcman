@@ -1,4 +1,5 @@
 ﻿using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Core.Connections;
 
 namespace RemoteConnectionManager.ExternalProcess
 {

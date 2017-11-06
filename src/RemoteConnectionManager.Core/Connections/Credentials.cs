@@ -1,5 +1,5 @@
 ﻿
-namespace RemoteConnectionManager.Core
+namespace RemoteConnectionManager.Core.Connections
 {
     public class Credentials
     {

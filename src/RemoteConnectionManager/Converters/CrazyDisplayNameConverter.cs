@@ -1,4 +1,4 @@
-﻿using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Extensions;
 using RemoteConnectionManager.ViewModels;
 using System;

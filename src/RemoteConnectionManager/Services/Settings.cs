@@ -1,6 +1,6 @@
 ﻿using RemoteConnectionManager.Models;
 
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Core
 {
     public class Settings
     {

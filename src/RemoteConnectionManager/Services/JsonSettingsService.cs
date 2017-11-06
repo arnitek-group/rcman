@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.IO;
 
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Core
 {
     public class JsonSettingsService : ISettingsService
     {

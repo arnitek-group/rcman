@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Core.Services
 {
     public interface ITelemetryService
     {

@@ -1,4 +1,4 @@
-﻿using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Core.Connections;
 using System;
 using System.Diagnostics;
 using System.Reactive.Linq;
@@ -18,10 +18,9 @@ namespace RemoteConnectionManager.ExternalProcess
             ConnectionSettings = connectionSettings;
         }
 
-        public bool IsConnected { get; private set; }
-        public FrameworkElement UI { get; private set; }
         public ConnectionSettings ConnectionSettings { get; }
 
+        public bool IsConnected { get; private set; }
         public void Connect()
         {
             if (!IsConnected)
@@ -44,6 +43,9 @@ namespace RemoteConnectionManager.ExternalProcess
         public void Destroy()
         {
         }
+
+        public FrameworkElement UI { get; private set; }
+        public System.Windows.Controls.ContextMenu ContextMenu => null;
 
         public event EventHandler<DisconnectReason> Disconnected;
 

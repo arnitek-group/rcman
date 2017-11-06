@@ -1,11 +1,11 @@
 ﻿using Microsoft.ApplicationInsights;
-using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Management;
 using System.Threading.Tasks;
 
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Core
 {
     public class ApplicationInsightsTelemetryService: ITelemetryService
     {
@@ -39,7 +39,9 @@ namespace RemoteConnectionManager.Services
 
                 track(tc);
 
+#if RELEASE
                 tc.Flush();
+#endif
             });
         }
 

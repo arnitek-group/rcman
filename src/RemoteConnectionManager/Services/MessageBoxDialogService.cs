@@ -1,7 +1,7 @@
 ﻿using RemoteConnectionManager.Properties;
 using System.Windows;
 
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Core
 {
     public class MessageBoxDialogService: IDialogService
     {

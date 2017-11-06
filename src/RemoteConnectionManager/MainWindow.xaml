@@ -27,6 +27,12 @@
         <xcad:DockingManager.DocumentHeaderTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">
+                    <xcad:DropDownButton DropDownContextMenu="{Binding Content.ContextMenu}"
+                                         Visibility="{Binding Content.ContextMenu, Converter={StaticResource NullToVisibilityConverter}}"
+                                         Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                                         Focusable="False" VerticalAlignment="Center">
+                        <Image Source="/Xceed.Wpf.AvalonDock.Themes.Aero;component/Images/PinMenu_Dark.png"/>
+                    </xcad:DropDownButton>
                     <Image Source="Resources/RemoteDesktop_16x.png" />
                     <TextBlock x:Name="TextBlock_DisplayName"  Text="{
                         Binding ElementName=TextBlock_DisplayName,

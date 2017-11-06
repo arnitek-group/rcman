@@ -1,9 +1,10 @@
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.ExternalProcess;
 using RemoteConnectionManager.Rdp;
-using RemoteConnectionManager.Services;
 
 namespace RemoteConnectionManager.ViewModels
 {
@@ -12,16 +13,16 @@ namespace RemoteConnectionManager.ViewModels
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            // Register factories.
-            SimpleIoc.Default.Register(() => new IConnectionFactory[]
-            {
-                new RdpConnectionFactory(),
-                new PuTTYConnectionFactory()
-            });
             // Register services.
             SimpleIoc.Default.Register<ISettingsService, JsonSettingsService>();
             SimpleIoc.Default.Register<IDialogService, MessageBoxDialogService>();
             SimpleIoc.Default.Register<ITelemetryService, ApplicationInsightsTelemetryService>();
+            // Register factories.
+            SimpleIoc.Default.Register(() => new IConnectionFactory[]
+            {
+                new RdpConnectionFactory(ServiceLocator.Current.GetInstance<ITelemetryService>()),
+                new PuTTYConnectionFactory()
+            });
             // Register view models.
             SimpleIoc.Default.Register<ViewModelLocator>(() => this);
             SimpleIoc.Default.Register<ConnectionsViewModel>();

@@ -1,10 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using RemoteConnectionManager.Core;
+using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Extensions;
 using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Properties;
-using RemoteConnectionManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -298,7 +299,7 @@ namespace RemoteConnectionManager.ViewModels
                 return;
             }
 
-            _settingsService.SaveConnections(new Services.Settings
+            _settingsService.SaveConnections(new Core.Settings
             {
                 Items = Items.Select(x => x.CategoryItem).ToArray()
             });

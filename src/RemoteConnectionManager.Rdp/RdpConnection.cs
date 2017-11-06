@@ -1,4 +1,5 @@
-﻿using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Rdp.Properties;
 using System;
 using System.Reactive.Linq;
@@ -7,25 +8,39 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace RemoteConnectionManager.Rdp
 {
     public class RdpConnection : IConnection
     {
-        public RdpConnection(ConnectionSettings connectionSettings)
+        private readonly ITelemetryService _telemetryService;
+        public RdpConnection(ITelemetryService telemetryService, ConnectionSettings connectionSettings)
         {
+            _telemetryService = telemetryService;
+
             ConnectionSettings = connectionSettings;
+            ContextMenu = new System.Windows.Controls.ContextMenu();
+
+            var menuFullscreen = new System.Windows.Controls.MenuItem();
+            menuFullscreen.Header = Resources.Fullscreen;
+            menuFullscreen.Icon = new Image { Source = new BitmapImage(new Uri("/RemoteConnectionManager.Rdp;component/Resources/VSO_FullScreen_16x.png", UriKind.Relative)) };
+            menuFullscreen.Click += (sender, e) => ToggleFullscreen();
+
+            ContextMenu.Items.Add(menuFullscreen);
         }
 
-        public bool IsConnected { get; private set; }
         public ConnectionSettings ConnectionSettings { get; }
+
         public FrameworkElement UI { get; private set; }
+        public System.Windows.Controls.ContextMenu ContextMenu { get; }
 
         public event EventHandler<DisconnectReason> Disconnected;
 
         private RdpHost _hostRdp;
         private Grid _hostGrid;
 
+        public bool IsConnected { get; private set; }
         public void Connect()
         {
             if (!IsConnected)
@@ -119,6 +134,8 @@ namespace RemoteConnectionManager.Rdp
             UI = null;
         }
 
+        #region RDP
+
         private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
         {
             PrepareSessionDisplaSettingsAndConnect();
@@ -151,8 +168,9 @@ namespace RemoteConnectionManager.Rdp
 
         private void PrepareSessionDisplaSettingsAndConnect()
         {
-            _hostRdp.AxMsRdpClient.DesktopWidth = _hostRdp.Width;
-            _hostRdp.AxMsRdpClient.DesktopHeight = _hostRdp.Height;
+            var size = GetClientSize();
+            _hostRdp.AxMsRdpClient.DesktopWidth = (int)size.Width;
+            _hostRdp.AxMsRdpClient.DesktopHeight = (int)size.Height;
             _hostRdp.AxMsRdpClient.Connect();
         }
 
@@ -160,23 +178,19 @@ namespace RemoteConnectionManager.Rdp
         {
             if (Mouse.LeftButton == MouseButtonState.Released)
             {
-                _hostRdp.Visible = true;
                 if (_hostRdp.AxMsRdpClient.Connected == 1)
                 {
                     try
                     {
+                        var size = GetClientSize();
                         _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
-                            (uint)_hostRdp.Width, (uint)_hostRdp.Height,
-                            (uint)_hostRdp.Width, (uint)_hostRdp.Height,
+                            (uint)size.Width, (uint)size.Height,
+                            (uint)size.Width, (uint)size.Height,
                             0, 1, 1);
                     }
                     catch
                     { }
                 }
-            }
-            else
-            {
-                _hostRdp.Visible = false;
             }
         }
 
@@ -185,5 +199,44 @@ namespace RemoteConnectionManager.Rdp
         private const int Reason_ServerDisconnect = 0x3;
         private const int Reason_ServerNotFound = 0x104;
         private const int Reason_TimedOut = 0x108;
+
+        #endregion RDP
+
+        #region Commands
+
+        private void ToggleFullscreen()
+        {
+            _hostRdp.AxMsRdpClient.FullScreen = !_hostRdp.AxMsRdpClient.FullScreen;
+            if (_hostRdp.AxMsRdpClient.Connected == 1)
+            {
+                try
+                {
+                    var size = GetClientSize();
+                    _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
+                        (uint)size.Width, (uint)size.Height,
+                        (uint)size.Width, (uint)size.Height,
+                        0, 1, 1);
+                }
+                catch
+                { }
+            }
+
+            _telemetryService.TrackEvent("Fullscreen", null);
+        }
+
+        private Size GetClientSize()
+        {
+            if (_hostRdp.AxMsRdpClient.FullScreen)
+            {
+                var gridLocation = _hostGrid.PointToScreen(new Point(0, 0));
+                var screen = Screen.FromPoint(new System.Drawing.Point((int)gridLocation.X, (int)gridLocation.Y));
+
+                return new Size(screen.Bounds.Width, screen.Bounds.Height);
+            }
+
+            return new Size(_hostRdp.Width, _hostRdp.Height);
+        }
+
+        #endregion
     }
 }

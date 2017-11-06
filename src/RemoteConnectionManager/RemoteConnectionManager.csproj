@@ -143,6 +143,7 @@
     <Compile Include="Converters\CategoryItemToImageConverter.cs" />
     <Compile Include="Converters\CrazyDisplayNameConverter.cs" />
     <Compile Include="Converters\CredentialsFilterConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
@@ -152,7 +153,6 @@
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\ApplicationInsightsTelemetryService.cs" />
-    <Compile Include="Services\ITelemetryService.cs" />
     <Compile Include="Services\MessageBoxDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\ISettingsService.cs" />
