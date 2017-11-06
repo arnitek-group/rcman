@@ -204,4 +204,10 @@
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="Mandatory" xml:space="preserve">
+    <value>Mandatory Settings</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional Settings</value>
+  </data>
 </root>

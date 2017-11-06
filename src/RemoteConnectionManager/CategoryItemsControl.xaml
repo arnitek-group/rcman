@@ -66,7 +66,11 @@
             </MenuItem>
         </Menu>
 
-        <controls:CategoryTreeView Grid.Row="1" ItemsSource="{Binding Items}" >
+        <controls:CategoryTreeView Grid.Row="1" ItemsSource="{Binding Items}">
+            <controls:CategoryTreeView.InputBindings>
+                <KeyBinding Command="{Binding Settings.DeleteItemCommand, Source={StaticResource Locator}}"
+                            Key="Delete" />
+            </controls:CategoryTreeView.InputBindings>
 
             <controls:CategoryTreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">

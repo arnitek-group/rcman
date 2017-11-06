@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
-             mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="480">
+             mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="250">
 
     <Grid>
         <xctk:PropertyGrid DataContext="{Binding Settings, Source={StaticResource Locator}}"
@@ -18,28 +18,36 @@
             <xctk:PropertyGrid.PropertyDefinitions>
                 <xctk:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
                                          DisplayName="{x:Static prop:Resources.DisplayName}"
-                                         Description="{x:Static prop:Resources.DisplayNameDescription}" />
+                                         Description="{x:Static prop:Resources.DisplayNameDescription}"
+                                         Category="{x:Static prop:Resources.Mandatory}" />
                 <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Protocol"
                                          DisplayName="{x:Static prop:Resources.Protocol}"
-                                         Description="{x:Static prop:Resources.ProtocolDescription}" />
+                                         Description="{x:Static prop:Resources.ProtocolDescription}"
+                                         Category="{x:Static prop:Resources.Mandatory}" />
                 <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Server"
                                          DisplayName="{x:Static prop:Resources.Server}"
-                                         Description="{x:Static prop:Resources.PortDescription}" />
+                                         Description="{x:Static prop:Resources.PortDescription}"
+                                         Category="{x:Static prop:Resources.Mandatory}" />
                 <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Port"
                                          DisplayName="{x:Static prop:Resources.Port}"
-                                         Description="{x:Static prop:Resources.PortDescription}" />
+                                         Description="{x:Static prop:Resources.PortDescription}"
+                                         Category="{x:Static prop:Resources.Optional}" />
                 <xctk:PropertyDefinition DisplayOrder="5" TargetProperties="Credentials"
                                          DisplayName="{x:Static prop:Resources.Credentials}"
-                                         Description="{x:Static prop:Resources.CredentialsDescription}" />
+                                         Description="{x:Static prop:Resources.CredentialsDescription}"
+                                         Category="{x:Static prop:Resources.Optional}" />
                 <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Domain"
                                          DisplayName="{x:Static prop:Resources.Domain}"
-                                         Description="{x:Static prop:Resources.DomainDescription}" />
+                                         Description="{x:Static prop:Resources.DomainDescription}"
+                                         Category="{x:Static prop:Resources.Mandatory}" />
                 <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Username"
                                          DisplayName="{x:Static prop:Resources.Username}"
-                                         Description="{x:Static prop:Resources.UsernameDescription}" />
+                                         Description="{x:Static prop:Resources.UsernameDescription}"
+                                         Category="{x:Static prop:Resources.Mandatory}" />
                 <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Password"
                                          DisplayName="{x:Static prop:Resources.Password}"
-                                         Description="{x:Static prop:Resources.PasswordDescription}" />
+                                         Description="{x:Static prop:Resources.PasswordDescription}"
+                                         Category="{x:Static prop:Resources.Mandatory}" />
             </xctk:PropertyGrid.PropertyDefinitions>
 
             <xctk:PropertyGrid.EditorDefinitions>

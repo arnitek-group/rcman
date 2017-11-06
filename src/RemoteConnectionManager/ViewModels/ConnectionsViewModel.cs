@@ -74,14 +74,16 @@ namespace RemoteConnectionManager.ViewModels
             {
                 connection.Disconnected += ConnectionDisconnected;
                 connection.Connect();
+
+                _telemetryService.TrackEvent(
+                    "Connect",
+                    new Dictionary<string, string>
+                    {
+                        {"Protocol", connection.ConnectionSettings.Protocol.ToString().ToUpper()}
+                    });
             }
 
-            _telemetryService.TrackEvent(
-                "Connect",
-                new Dictionary<string, string>
-                {
-                    {"Protocol", connection.ConnectionSettings.Protocol.ToString().ToUpper()}
-                });
+            ViewModelLocator.Locator.Dock.ActiveContent = connection;
         }
 
         public RelayCommand<IConnection> DisconnectCommand { get; }

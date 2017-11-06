@@ -158,6 +158,7 @@
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
     <Compile Include="ViewModels\CategoryItemViewModel.cs" />
+    <Compile Include="ViewModels\DockViewModel.cs" />
     <Compile Include="ViewModels\DragDropViewModel.cs" />
     <Compile Include="ViewModels\Properties\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />

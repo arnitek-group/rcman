@@ -96,8 +96,20 @@ namespace RemoteConnectionManager.ViewModels
             {
                 if (_selectedItem != value)
                 {
+                    if (_selectedItem != null)
+                    {
+                        // Clear the selection from the old item.
+                        _selectedItem.IsSelected = false;
+                    }
+
                     _selectedItem = value;
                     RaisePropertyChanged();
+
+                    if (_selectedItem != null)
+                    {
+                        // Select the new item.
+                        _selectedItem.IsSelected = true;
+                    }
                 }
                 DeleteItemCommand.RaiseCanExecuteChanged();
             }
@@ -217,7 +229,7 @@ namespace RemoteConnectionManager.ViewModels
 
             var oldSelectedItem = SelectedItem;
             SelectedItem = null;
-
+            
             if (oldSelectedItem.Parent != null)
             {
                 oldSelectedItem.Parent.CategoryItem.Items.Remove(oldSelectedItem.CategoryItem);

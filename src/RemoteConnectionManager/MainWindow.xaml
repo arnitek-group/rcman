@@ -10,7 +10,8 @@
         WindowState="Maximized">
 
     <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
-                         DocumentClosed="DockingManager_OnDocumentClosed">
+                         DocumentClosed="DockingManager_OnDocumentClosed"
+                         ActiveContent="{Binding Dock.ActiveContent, Source={StaticResource Locator}, Mode=TwoWay}">
 
         <xcad:DockingManager.Theme>
             <xcad:AeroTheme />
