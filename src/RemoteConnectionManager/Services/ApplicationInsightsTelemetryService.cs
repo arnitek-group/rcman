@@ -32,14 +32,14 @@ namespace RemoteConnectionManager.Core
 #if DEBUG
                 tc.Context.Properties.Add("Configuration", "DEBUG");
 #else
-            tc.Context.Properties.Add("Configuration", "RELEASE");
+                tc.Context.Properties.Add("Configuration", "RELEASE");
 #endif
                 // Hide sensitive user data.
                 tc.Context.Cloud.RoleInstance = "PC";
 
                 track(tc);
-
-#if RELEASE
+#if Debug
+#else
                 tc.Flush();
 #endif
             });

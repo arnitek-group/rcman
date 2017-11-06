@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Collections.Generic;
 
 namespace RemoteConnectionManager.Rdp
 {
@@ -237,7 +238,11 @@ namespace RemoteConnectionManager.Rdp
                 { }
             }
 
-            _telemetryService.TrackEvent("Fullscreen", null);
+            _telemetryService.TrackEvent("Command", new Dictionary<string, string>
+            {
+                { "Protocol", "RPD" },
+                {"Type", "Fullscreen" }
+            });
         }
 
         private Size GetClientSize()
@@ -265,7 +270,11 @@ namespace RemoteConnectionManager.Rdp
                 );
             }
 
-            _telemetryService.TrackEvent("CtrlAltDel", null);
+            _telemetryService.TrackEvent("Command", new Dictionary<string, string>
+            {
+                { "Protocol", "RPD" },
+                {"Type", "CtrlAltDel" }
+            });
         }
 
         #endregion
