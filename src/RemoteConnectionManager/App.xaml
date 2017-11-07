@@ -16,7 +16,7 @@
             <converters:CredentialsFilterConverter x:Key="CredentialsFilterConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
-            <GridLength x:Key="PropertiesHeight">250</GridLength>
+            <GridLength x:Key="PropertiesHeight">270</GridLength>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
