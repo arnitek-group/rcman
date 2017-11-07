@@ -55,7 +55,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Rectangle x:Name="HorLn"
-                                           Height="1" Margin="9,1,0,0"
+                                           Height="1" Margin="9,0,0,0"
                                            SnapsToDevicePixels="True"
                                            Stroke="#DCDCDC" />
                                 <Rectangle x:Name="VerLn" Grid.RowSpan="2"
