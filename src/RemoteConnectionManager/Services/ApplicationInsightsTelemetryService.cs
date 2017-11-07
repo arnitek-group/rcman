@@ -38,7 +38,7 @@ namespace RemoteConnectionManager.Core
                 tc.Context.Cloud.RoleInstance = "PC";
 
                 track(tc);
-#if Debug
+#if DEBUG
 #else
                 tc.Flush();
 #endif
