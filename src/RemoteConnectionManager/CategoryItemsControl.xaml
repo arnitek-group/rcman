@@ -73,7 +73,7 @@
             </controls:CategoryTreeView.InputBindings>
 
             <controls:CategoryTreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
+                <Style TargetType="controls:CategoryTreeViewItem" BasedOn="{StaticResource CategoryTreeViewItemStyle}">
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <EventSetter Event="MouseDoubleClick" Handler="OnMouseDoubleClick" />

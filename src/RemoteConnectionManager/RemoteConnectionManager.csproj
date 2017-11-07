@@ -141,6 +141,7 @@
     <Compile Include="Controls\CategoryTreeView.cs" />
     <Compile Include="Controls\CategoryTreeViewItem.cs" />
     <Compile Include="Converters\CategoryItemToImageConverter.cs" />
+    <Compile Include="Converters\CategoryTreeViewLineConverter.cs" />
     <Compile Include="Converters\CrazyDisplayNameConverter.cs" />
     <Compile Include="Converters\CredentialsFilterConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
