@@ -122,5 +122,8 @@
   <ItemGroup>
     <Resource Include="Resources\VSO_FullScreen_16x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Refresh_grey_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

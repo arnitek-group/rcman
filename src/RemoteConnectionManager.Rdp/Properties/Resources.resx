@@ -129,4 +129,7 @@
   <data name="Fullscreen" xml:space="preserve">
     <value>Toggle Fullscreen</value>
   </data>
+  <data name="Reconnect" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
 </root>

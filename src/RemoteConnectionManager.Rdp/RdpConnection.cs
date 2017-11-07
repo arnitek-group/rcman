@@ -10,6 +10,7 @@ using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Collections.Generic;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace RemoteConnectionManager.Rdp
 {
@@ -32,8 +33,16 @@ namespace RemoteConnectionManager.Rdp
             menuCtrlAltDel.Header = Resources.CtrlAltDel;
             menuCtrlAltDel.Click += (sender, e) => SendCtrlAltDel();
 
+            _menuReconnect = new System.Windows.Controls.MenuItem();
+            _menuReconnect.Header = Resources.Reconnect;
+            _menuReconnect.Icon = new Image { Source = new BitmapImage(new Uri("/RemoteConnectionManager.Rdp;component/Resources/Refresh_grey_16x.png", UriKind.Relative)) };
+            _menuReconnect.Click += (sender, e) => Reconnect();
+
             ContextMenu.Items.Add(menuFullscreen);
             ContextMenu.Items.Add(menuCtrlAltDel);
+            ContextMenu.Items.Add(_menuReconnect);
+
+            IsConnected = false;
         }
 
         public ConnectionSettings ConnectionSettings { get; }
@@ -43,10 +52,21 @@ namespace RemoteConnectionManager.Rdp
 
         public event EventHandler<DisconnectReason> Disconnected;
 
+        private readonly MenuItem _menuReconnect;
         private RdpHost _hostRdp;
         private Grid _hostGrid;
 
-        public bool IsConnected { get; private set; }
+        private bool _isConnected;
+        public bool IsConnected
+        {
+            get { return _isConnected; }
+            private set
+            {
+                _isConnected = value;
+                _menuReconnect.IsEnabled = !_isConnected;
+            }
+        }
+
         public void Connect()
         {
             if (!IsConnected)
@@ -179,6 +199,7 @@ namespace RemoteConnectionManager.Rdp
                     reason = DisconnectReason.ConnectionTimedOut;
                     break;
             }
+            IsConnected = false;
             Disconnected?.Invoke(this, reason);
         }
 
@@ -187,7 +208,14 @@ namespace RemoteConnectionManager.Rdp
             var size = GetClientSize();
             _hostRdp.AxMsRdpClient.DesktopWidth = (int)size.Width;
             _hostRdp.AxMsRdpClient.DesktopHeight = (int)size.Height;
-            _hostRdp.AxMsRdpClient.Connect();
+            try
+            {
+                _hostRdp.AxMsRdpClient.Connect();
+            }
+            catch
+            {
+                IsConnected = false;
+            }
         }
 
         private void UpdateSessionDisplaySettings()
@@ -219,6 +247,12 @@ namespace RemoteConnectionManager.Rdp
         #endregion RDP
 
         #region Commands
+
+        private void Reconnect()
+        {
+            Disconnect();
+            Connect();
+        }
 
         private void ToggleFullscreen()
         {

@@ -95,5 +95,14 @@ namespace RemoteConnectionManager.Rdp.Properties {
                 return ResourceManager.GetString("Fullscreen", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reconnect.
+        /// </summary>
+        internal static string Reconnect {
+            get {
+                return ResourceManager.GetString("Reconnect", resourceCulture);
+            }
+        }
     }
 }
