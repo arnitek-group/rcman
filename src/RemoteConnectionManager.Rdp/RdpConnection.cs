@@ -80,7 +80,7 @@ namespace RemoteConnectionManager.Rdp
                 }
 
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
-                _hostRdp.AxMsRdpClient.AdvancedSettings4.ConnectionBarShowMinimizeButton = false;
+                //_hostRdp.AxMsRdpClient.AdvancedSettings4.ConnectionBarShowMinimizeButton = false;
                 _hostRdp.AxMsRdpClient.AdvancedSettings9.BandwidthDetection = true;
                 // Keyboard redirection settings.
                 // https://msdn.microsoft.com/en-us/library/aa381095(v=vs.85).aspx
