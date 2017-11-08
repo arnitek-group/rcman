@@ -25,14 +25,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://raw.githubusercontent.com/nikolayarhangelov/rcman.github.io/master/publish/</InstallUrl>
-    <SupportUrl>https://github.com/nikolayarhangelov/rcman.github.io</SupportUrl>
+    <InstallUrl>https://raw.githubusercontent.com/nikolayarhangelov/rcman/master/publish/</InstallUrl>
+    <SupportUrl>https://github.com/nikolayarhangelov/rcman</SupportUrl>
     <ProductName>Remote Connection Manager</ProductName>
     <PublisherName>Nikolay Arhangelov</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.1.15.0</ApplicationVersion>
+    <ApplicationVersion>0.1.16.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
