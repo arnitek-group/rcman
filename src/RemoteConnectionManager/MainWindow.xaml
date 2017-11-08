@@ -9,29 +9,9 @@
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
         WindowState="Maximized">
 
-    <Window.Resources>
-        <DataTemplate x:Key="ConnectionTemplate">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <xcad:DropDownButton DropDownContextMenu="{Binding Content.ContextMenu}"
-                                     Visibility="{Binding Content.ContextMenu, Converter={StaticResource NullToVisibilityConverter}}"
-                                     Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                     Focusable="False" VerticalAlignment="Center"
-                                     Padding="-1" Margin="0,0,5,0">
-                    <Image Source="/Xceed.Wpf.AvalonDock.Themes.Aero;component/Images/PinMenu_Dark.png" Width="13" />
-                </xcad:DropDownButton>
-                <Image Source="Resources/RemoteDesktop_16x.png" />
-                <TextBlock x:Name="TextBlock_DisplayName"  Text="{
-                        Binding ElementName=TextBlock_DisplayName,
-                        Converter={StaticResource CrazyDisplayNameConverter}}" />
-            </StackPanel>
-        </DataTemplate>
-    </Window.Resources>
-
     <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
                          DocumentClosed="DockingManager_OnDocumentClosed"
                          ActiveContent="{Binding Dock.ActiveContent, Source={StaticResource Locator}, Mode=TwoWay}"
-                         DocumentTitleTemplate="{StaticResource ConnectionTemplate}"
-                         DocumentHeaderTemplate="{StaticResource ConnectionTemplate}"
                          AllowMixedOrientation="True">
 
         <xcad:DockingManager.Theme>
@@ -52,6 +32,35 @@
                         Converter={StaticResource CrazyDisplayNameConverter}}" />
             </DataTemplate>
         </xcad:DockingManager.DocumentPaneMenuItemHeaderTemplate>
+
+        <xcad:DockingManager.DocumentHeaderTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <xcad:DropDownButton DropDownContextMenu="{Binding Content.ContextMenu}"
+                                     Visibility="{Binding Content.ContextMenu, Converter={StaticResource NullToVisibilityConverter}}"
+                                     Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                                     Focusable="False" VerticalAlignment="Center"
+                                     Padding="-1" Margin="0,0,5,0">
+                        <Image Source="/Xceed.Wpf.AvalonDock.Themes.Aero;component/Images/PinMenu_Dark.png" Width="13" />
+                    </xcad:DropDownButton>
+                    <Image Source="Resources/RemoteDesktop_16x.png" />
+                    <TextBlock x:Name="TextBlock_DisplayName"  Text="{
+                        Binding ElementName=TextBlock_DisplayName,
+                        Converter={StaticResource CrazyDisplayNameConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+        </xcad:DockingManager.DocumentHeaderTemplate>
+
+        <xcad:DockingManager.DocumentTitleTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Source="Resources/RemoteDesktop_16x.png" />
+                    <TextBlock x:Name="TextBlock_DisplayName"  Text="{
+                        Binding ElementName=TextBlock_DisplayName,
+                        Converter={StaticResource CrazyDisplayNameConverter}}" />
+                </StackPanel>
+            </DataTemplate>
+        </xcad:DockingManager.DocumentTitleTemplate>
 
         <xcad:DockingManager.LayoutItemTemplateSelector>
             <rcman:ItemTemplateSelector>
