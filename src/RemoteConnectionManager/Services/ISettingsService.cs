@@ -1,5 +1,7 @@
 ﻿
-namespace RemoteConnectionManager.Core
+using RemoteConnectionManager.Core;
+
+namespace RemoteConnectionManager.Services
 {
     public interface ISettingsService
     {

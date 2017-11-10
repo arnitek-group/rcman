@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using RemoteConnectionManager.Services;
+using Settings = RemoteConnectionManager.Services.Settings;
 
 namespace RemoteConnectionManager.ViewModels
 {
@@ -299,7 +301,7 @@ namespace RemoteConnectionManager.ViewModels
                 return;
             }
 
-            _settingsService.SaveConnections(new Core.Settings
+            _settingsService.SaveConnections(new Settings
             {
                 Items = Items.Select(x => x.CategoryItem).ToArray()
             });
