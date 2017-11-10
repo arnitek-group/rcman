@@ -1,4 +1,5 @@
-﻿using RemoteConnectionManager.Core.Connections;
+﻿using MSTSCLib;
+using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Core.Interop;
 using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Rdp.Properties;
@@ -79,8 +80,7 @@ namespace RemoteConnectionManager.Rdp
                     _hostRdp = new RdpHost();
                     _hostRdp.AxMsRdpClient.Server = ConnectionSettings.Server;
 
-                    int port;
-                    if (int.TryParse(ConnectionSettings.Port, out port))
+                    if (int.TryParse(ConnectionSettings.Port, out var port))
                     {
                         _hostRdp.AxMsRdpClient.AdvancedSettings2.RDPPort = port;
                     }
@@ -104,14 +104,13 @@ namespace RemoteConnectionManager.Rdp
 
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
                 //_hostRdp.AxMsRdpClient.AdvancedSettings4.ConnectionBarShowMinimizeButton = false;
-                _hostRdp.AxMsRdpClient.AdvancedSettings9.BandwidthDetection = true;
                 // Keyboard redirection settings.
                 // https://msdn.microsoft.com/en-us/library/aa381095(v=vs.85).aspx
                 // https://msdn.microsoft.com/en-us/library/aa381299(v=vs.85).aspx
                 _hostRdp.AxMsRdpClient.SecuredSettings2.KeyboardHookMode = 1;
                 _hostRdp.AxMsRdpClient.AdvancedSettings.allowBackgroundInput = 1;
                 _hostRdp.AxMsRdpClient.AdvancedSettings2.EnableWindowsKey = 1;
-                _hostRdp.AxMsRdpClient.AdvancedSettings7.EnableCredSspSupport = true;
+                CastAndExecute<IMsRdpClient7>(x => x.AdvancedSettings7.EnableCredSspSupport = true);
                 // Connection settings.
                 _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
                 _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
@@ -175,6 +174,14 @@ namespace RemoteConnectionManager.Rdp
 
         #region RDP
 
+        private void CastAndExecute<T>(Action<T> action) where T : IMsRdpClient
+        {
+            if (_hostRdp.AxMsRdpClient.GetOcx() is T ocx)
+            {
+                action(ocx);
+            }
+        }
+
         private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
         {
             PrepareSessionDisplaSettingsAndConnect();
@@ -233,10 +240,10 @@ namespace RemoteConnectionManager.Rdp
                     try
                     {
                         var size = GetClientSize();
-                        _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
+                        CastAndExecute<IMsRdpClient9>(x => x.UpdateSessionDisplaySettings(
                             (uint)size.Width, (uint)size.Height,
                             (uint)size.Width, (uint)size.Height,
-                            0, 1, 1);
+                            0, 1, 1));
                     }
                     catch
                     { }
@@ -272,10 +279,10 @@ namespace RemoteConnectionManager.Rdp
                 try
                 {
                     var size = GetClientSize();
-                    _hostRdp.AxMsRdpClient.UpdateSessionDisplaySettings(
+                    CastAndExecute<IMsRdpClient9>(x => x.UpdateSessionDisplaySettings(
                         (uint)size.Width, (uint)size.Height,
                         (uint)size.Width, (uint)size.Height,
-                        0, 1, 1);
+                        0, 1, 1));
                 }
                 catch
                 { }

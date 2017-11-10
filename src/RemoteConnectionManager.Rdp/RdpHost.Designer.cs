@@ -30,7 +30,7 @@ namespace RemoteConnectionManager.Rdp
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RdpHost));
-            this.AxMsRdpClient = new AxMSTSCLib.AxMsRdpClient9NotSafeForScripting();
+            this.AxMsRdpClient = new AxMSTSCLib.AxMsRdpClient5NotSafeForScripting();
             ((System.ComponentModel.ISupportInitialize)(this.AxMsRdpClient)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +57,6 @@ namespace RemoteConnectionManager.Rdp
 
         #endregion
 
-        public AxMSTSCLib.AxMsRdpClient9NotSafeForScripting AxMsRdpClient;
+        public AxMSTSCLib.AxMsRdpClient5NotSafeForScripting AxMsRdpClient;
     }
 }
