@@ -14,7 +14,7 @@ namespace RemoteConnectionManager
         private void PasswordBox_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var passwordBox = (PasswordBox)sender;
-            var credentialsViewModel = ViewModelLocator.Locator.Settings.SelectedItem?.Credentials;
+            var credentialsViewModel = ViewModelLocator.Locator.Main.SelectedItem?.Credentials;
             if (credentialsViewModel != null)
             {
                 passwordBox.Password = credentialsViewModel.Password;
@@ -24,7 +24,7 @@ namespace RemoteConnectionManager
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             var passwordBox = (PasswordBox)sender;
-            var credentialsViewModel = ViewModelLocator.Locator.Settings.SelectedItem?.Credentials;
+            var credentialsViewModel = ViewModelLocator.Locator.Main.SelectedItem?.Credentials;
             if (credentialsViewModel != null)
             {
                 credentialsViewModel.Password = passwordBox.Password;

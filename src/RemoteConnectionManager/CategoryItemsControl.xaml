@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:RemoteConnectionManager.Controls"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="480">
 
-    <Grid DataContext="{Binding Settings, Source={StaticResource Locator}}">
+    <Grid DataContext="{Binding Main, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -23,7 +23,7 @@
                 <MenuItem.Icon>
                     <Image Source="Resources/NewFile_16x.png" />
                 </MenuItem.Icon>
-                <MenuItem Command="{Binding Settings.CreateConnectionSettingsCommand, Source={StaticResource Locator}}">
+                <MenuItem Command="{Binding Main.CreateConnectionSettingsCommand, Source={StaticResource Locator}}">
                     <MenuItem.Header>
                         <TextBlock Text="{x:Static prop:Resources.ConnectionSettings}"
                                    HorizontalAlignment="Left"
@@ -33,7 +33,7 @@
                         <Image Source="Resources/RemoteDesktop_16x.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Command="{Binding Settings.CreateCredentialsCommand, Source={StaticResource Locator}}">
+                <MenuItem Command="{Binding Main.CreateCredentialsCommand, Source={StaticResource Locator}}">
                     <MenuItem.Header>
                         <TextBlock Text="{x:Static prop:Resources.Credentials}"
                                    HorizontalAlignment="Left"
@@ -43,7 +43,7 @@
                         <Image Source="Resources/User_16x.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Command="{Binding Settings.CreateCategoryCommand, Source={StaticResource Locator}}">
+                <MenuItem Command="{Binding Main.CreateCategoryCommand, Source={StaticResource Locator}}">
                     <MenuItem.Header>
                         <TextBlock Text="{x:Static prop:Resources.Category}"
                                    HorizontalAlignment="Left"
@@ -54,7 +54,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Command="{Binding Settings.DeleteItemCommand, Source={StaticResource Locator}}">
+            <MenuItem Command="{Binding Main.DeleteItemCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
                     <TextBlock Text="{x:Static prop:Resources.Delete}"
                                HorizontalAlignment="Left"
@@ -68,7 +68,7 @@
 
         <controls:CategoryTreeView Grid.Row="1" ItemsSource="{Binding Items}">
             <controls:CategoryTreeView.InputBindings>
-                <KeyBinding Command="{Binding Settings.DeleteItemCommand, Source={StaticResource Locator}}"
+                <KeyBinding Command="{Binding Main.DeleteItemCommand, Source={StaticResource Locator}}"
                             Key="Delete" />
             </controls:CategoryTreeView.InputBindings>
 

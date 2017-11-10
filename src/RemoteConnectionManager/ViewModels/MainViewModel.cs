@@ -15,13 +15,13 @@ using System.Linq;
 
 namespace RemoteConnectionManager.ViewModels
 {
-    public class SettingsViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private readonly ITelemetryService _telemetryService;
         private readonly ISettingsService _settingsService;
         private readonly IDialogService _dialogService;
 
-        public SettingsViewModel(
+        public MainViewModel(
             ITelemetryService telemetryService,
             ISettingsService settingsService,
             IDialogService dialogService)

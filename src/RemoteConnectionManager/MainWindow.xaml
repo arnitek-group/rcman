@@ -10,9 +10,10 @@
         WindowState="Maximized">
 
     <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
-                         DocumentClosed="DockingManager_OnDocumentClosed"
                          ActiveContent="{Binding Dock.ActiveContent, Source={StaticResource Locator}, Mode=TwoWay}"
-                         AllowMixedOrientation="True">
+                         AllowMixedOrientation="True"
+                         Loaded="DockingManager_Loaded"
+                         DocumentClosed="DockingManager_OnDocumentClosed">
 
         <xcad:DockingManager.Theme>
             <xcad:AeroTheme />
@@ -77,8 +78,8 @@
                 <xcad:LayoutAnchorablePaneGroup DockWidth="{StaticResource SidePanelWidth}">
                     <xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Connections}"
-                                               CanHide="False" CanClose="False"
-                                               CanFloat="False">
+                                               CanHide="False" CanClose="False" CanFloat="False"
+                                               AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
                             <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>

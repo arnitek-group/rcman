@@ -1,6 +1,6 @@
-﻿using RemoteConnectionManager.Core;
-using RemoteConnectionManager.Core.Connections;
+﻿using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Core.Services;
+using System;
 
 namespace RemoteConnectionManager.Rdp
 {
@@ -15,9 +15,9 @@ namespace RemoteConnectionManager.Rdp
 
         public Protocol[] Protocols => new[] {Protocol.Rdp};
 
-        public IConnection CreateConnection(ConnectionSettings connectionSettings)
+        public IConnection CreateConnection(ConnectionSettings connectionSettings, IntPtr topWindowHandle)
         {
-            return new RdpConnection(_telemetryService, connectionSettings);
+            return new RdpConnection(_telemetryService, connectionSettings, topWindowHandle);
         }
     }
 }

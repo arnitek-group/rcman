@@ -20,7 +20,7 @@ namespace RemoteConnectionManager.Converters
             }
 
             return ViewModelLocator.Locator
-                .Settings.Items
+                .Main.Items
                 .GetFlatList(x => x.Items, x => x.Credentials != null)
                 .Select(x => x.Credentials)
                 .FirstOrDefault(x => x == value);

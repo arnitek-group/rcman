@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="250">
 
     <Grid>
-        <xctk:PropertyGrid DataContext="{Binding Settings, Source={StaticResource Locator}}"
+        <xctk:PropertyGrid DataContext="{Binding Main, Source={StaticResource Locator}}"
                            SelectedObject="{Binding SelectedItem.Properties}"
                            SelectedObjectTypeName="{Binding SelectedItem, Converter={StaticResource ObjectTypeNameConverter}}"
                            SelectedObjectName="{Binding SelectedItem.DisplayName}"
@@ -71,7 +71,7 @@
                                     <CompositeCollection>
                                         <ComboBoxItem Content="{x:Static prop:Resources.Clear}" />
                                         <CollectionContainer Collection="{
-                                            Binding Settings.Items, Mode=OneWay,
+                                            Binding Main.Items, Mode=OneWay,
                                             Source={StaticResource Locator},
                                             Converter={StaticResource CredentialsFilterConverter}}" />
                                     </CompositeCollection>

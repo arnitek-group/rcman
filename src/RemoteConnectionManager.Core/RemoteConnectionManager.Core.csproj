@@ -50,6 +50,7 @@
     <Compile Include="Connections\DisconnectReason.cs" />
     <Compile Include="Connections\IConnection.cs" />
     <Compile Include="Connections\IConnectionFactory.cs" />
+    <Compile Include="Interop\WindowsInterop.cs" />
     <Compile Include="Services\ITelemetryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Connections\Protocol.cs" />

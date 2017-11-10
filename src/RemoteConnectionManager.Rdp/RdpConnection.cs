@@ -1,7 +1,9 @@
 ﻿using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Core.Interop;
 using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Rdp.Properties;
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,17 +11,18 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Collections.Generic;
-using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace RemoteConnectionManager.Rdp
 {
     public class RdpConnection : IConnection
     {
         private readonly ITelemetryService _telemetryService;
-        public RdpConnection(ITelemetryService telemetryService, ConnectionSettings connectionSettings)
+        private readonly IntPtr _topWindowHandle;
+
+        public RdpConnection(ITelemetryService telemetryService, ConnectionSettings connectionSettings, IntPtr topWindowHandle)
         {
             _telemetryService = telemetryService;
+            _topWindowHandle = topWindowHandle;
 
             ConnectionSettings = connectionSettings;
             ContextMenu = new System.Windows.Controls.ContextMenu();
@@ -52,7 +55,7 @@ namespace RemoteConnectionManager.Rdp
 
         public event EventHandler<DisconnectReason> Disconnected;
 
-        private readonly MenuItem _menuReconnect;
+        private readonly System.Windows.Controls.MenuItem _menuReconnect;
         private RdpHost _hostRdp;
         private Grid _hostGrid;
 
@@ -216,6 +219,9 @@ namespace RemoteConnectionManager.Rdp
             {
                 IsConnected = false;
             }
+            WindowsInterop.SetWindowPos(
+                _topWindowHandle, IntPtr.Zero,
+                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
         }
 
         private void UpdateSessionDisplaySettings()
@@ -236,6 +242,9 @@ namespace RemoteConnectionManager.Rdp
                     { }
                 }
             }
+            WindowsInterop.SetWindowPos(
+                _topWindowHandle, IntPtr.Zero,
+                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
         }
 
         private const int Reason_ClientDisconnect = 0x1;

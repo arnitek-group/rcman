@@ -1,8 +1,8 @@
 ﻿using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Core.Interop;
 using System;
 using System.Diagnostics;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -13,9 +13,13 @@ namespace RemoteConnectionManager.ExternalProcess
 {
     public abstract class HostedProcessConnection : IConnection
     {
-        protected HostedProcessConnection(ConnectionSettings connectionSettings)
+        private readonly IntPtr _topWindowHandle;
+
+        protected HostedProcessConnection(ConnectionSettings connectionSettings, IntPtr topWindowHandle)
         {
             ConnectionSettings = connectionSettings;
+
+            _topWindowHandle = topWindowHandle;
         }
 
         public ConnectionSettings ConnectionSettings { get; }
@@ -74,13 +78,13 @@ namespace RemoteConnectionManager.ExternalProcess
             _process.Disposed += Process_Disposed;
             _process.WaitForInputIdle();
 
-            SetParent(_process.MainWindowHandle, _hostPanel.Handle);
-            SetWindowPos(
+            WindowsInterop.SetParent(_process.MainWindowHandle, _hostPanel.Handle);
+            WindowsInterop.SetWindowPos(
                 _process.MainWindowHandle, IntPtr.Zero,
                 -FrameSides, -FrameTop,
                 _hostPanel.Width + 2 * FrameSides,
                 _hostPanel.Height + FrameSides + FrameTop,
-                SWP);
+                WindowsInterop.SWP_NOACTIVATE | WindowsInterop.SWP_SHOWWINDOW);
 
             _hostGrid = new Grid();
             _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostPanel });
@@ -106,12 +110,15 @@ namespace RemoteConnectionManager.ExternalProcess
 
         private void Host_SizeChanged()
         {
-            SetWindowPos(
+            WindowsInterop.SetWindowPos(
                 _process.MainWindowHandle, IntPtr.Zero,
                 -FrameSides, -FrameTop,
                 _hostPanel.Width + 2 * FrameSides,
                 _hostPanel.Height + FrameSides + FrameTop,
-                SWP);
+                WindowsInterop.SWP_NOACTIVATE | WindowsInterop.SWP_SHOWWINDOW);
+            WindowsInterop.SetWindowPos(
+                _topWindowHandle, IntPtr.Zero,
+                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
         }
 
         private void DestroyHostedProcess()
@@ -138,31 +145,8 @@ namespace RemoteConnectionManager.ExternalProcess
             }
         }
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern long SetParent(
-            IntPtr hWndChild,
-            IntPtr hWndNewParent);
-
-        [DllImport("user32.dll")]
-        static extern int SetWindowLong(
-            IntPtr hWnd,
-            int nIndex,
-            int dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SetWindowPos(
-            IntPtr hWnd,
-            IntPtr hWndInsertAfter,
-            int x, int y,
-            int cx, int cy,
-            uint uFlags);
-
         private const int FrameTop = 32;
         private const int FrameSides = 8;
-        
-        private const uint SWP_NOACTIVATE = 0x0010U;
-        private const uint SWP_SHOWWINDOW = 0x0040U;
-        private const uint SWP = SWP_NOACTIVATE | SWP_SHOWWINDOW;
 
         #endregion
     }

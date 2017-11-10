@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock;
+using Xceed.Wpf.AvalonDock.Controls;
 
 namespace RemoteConnectionManager
 {
@@ -24,6 +25,18 @@ namespace RemoteConnectionManager
             {
                 ViewModelLocator.Locator.TelemetryService.TrackPage("Application");
             };
+        }
+
+        private void DockingManager_Loaded(object sender, RoutedEventArgs e)
+        {
+            var dock = (DockingManager)sender;
+            dock.AutoHideWindow.Loaded += AutoHideWindow_Loaded;
+        }
+
+        private void AutoHideWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var control = (LayoutAutoHideWindowControl)sender;
+            ViewModelLocator.Locator.Dock.AutoHideHandle = control.Handle;
         }
 
         private void DockingManager_OnDocumentClosed(object sender, DocumentClosedEventArgs e)

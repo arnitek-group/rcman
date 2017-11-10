@@ -8,7 +8,7 @@ namespace RemoteConnectionManager.ViewModels
     {
         public void Drop(CategoryItemViewModel dragSource, CategoryItemViewModel dropTarget)
         {
-            ViewModelLocator.Locator.Settings.SuspendSave = true;
+            ViewModelLocator.Locator.Main.SuspendSave = true;
 
             // Prevent dropping a parent on its child.
             if (dropTarget != null)
@@ -27,7 +27,7 @@ namespace RemoteConnectionManager.ViewModels
             }
             else
             {
-                ViewModelLocator.Locator.Settings.Items.Remove(dragSource);
+                ViewModelLocator.Locator.Main.Items.Remove(dragSource);
             }
 
             if (dropTarget != null)
@@ -38,13 +38,13 @@ namespace RemoteConnectionManager.ViewModels
             }
             else
             {
-                ViewModelLocator.Locator.Settings.Items.Add(dragSource);
+                ViewModelLocator.Locator.Main.Items.Add(dragSource);
             }
 
-            ViewModelLocator.Locator.Settings.SuspendSave = false;
-            ViewModelLocator.Locator.Settings.SaveConnections();
+            ViewModelLocator.Locator.Main.SuspendSave = false;
+            ViewModelLocator.Locator.Main.SaveConnections();
 
-            ViewModelLocator.Locator.Settings.SelectedItem = dragSource;
+            ViewModelLocator.Locator.Main.SelectedItem = dragSource;
         }
     }
 }

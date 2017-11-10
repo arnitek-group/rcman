@@ -167,7 +167,7 @@
     <Compile Include="ViewModels\Properties\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\Properties\GenericPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Properties\ProtocolViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Page Include="CategoryItemsControl.xaml">
       <SubType>Designer</SubType>

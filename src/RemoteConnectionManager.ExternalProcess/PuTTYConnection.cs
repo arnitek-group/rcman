@@ -1,13 +1,12 @@
-﻿using RemoteConnectionManager.Core;
-using RemoteConnectionManager.Core.Connections;
+﻿using RemoteConnectionManager.Core.Connections;
 using System;
 
 namespace RemoteConnectionManager.ExternalProcess
 {
     public class PuTTYConnection : HostedProcessConnection
     {
-        internal PuTTYConnection(ConnectionSettings connectionSettings)
-            : base(connectionSettings)
+        internal PuTTYConnection(ConnectionSettings connectionSettings, IntPtr topWindowHandle)
+            : base(connectionSettings, topWindowHandle)
         {
         }
 

@@ -29,13 +29,13 @@ namespace RemoteConnectionManager.ViewModels
                 // Register view models.
                 SimpleIoc.Default.Register<ViewModelLocator>(() => this);
                 SimpleIoc.Default.Register<ConnectionsViewModel>();
-                SimpleIoc.Default.Register<SettingsViewModel>();
+                SimpleIoc.Default.Register<MainViewModel>();
                 SimpleIoc.Default.Register<DragDropViewModel>();
                 SimpleIoc.Default.Register<DockViewModel>();
 
                 TelemetryService = ServiceLocator.Current.GetInstance<ITelemetryService>();
                 Connections = ServiceLocator.Current.GetInstance<ConnectionsViewModel>();
-                Settings = ServiceLocator.Current.GetInstance<SettingsViewModel>();
+                Main = ServiceLocator.Current.GetInstance<MainViewModel>();
                 DragDrop = ServiceLocator.Current.GetInstance<DragDropViewModel>();
                 Dock = ServiceLocator.Current.GetInstance<DockViewModel>();
                 Locator = ServiceLocator.Current.GetInstance<ViewModelLocator>();
@@ -45,7 +45,7 @@ namespace RemoteConnectionManager.ViewModels
         public ITelemetryService TelemetryService { get; }
 
         public ConnectionsViewModel Connections { get; }
-        public SettingsViewModel Settings { get; }
+        public MainViewModel Main { get; }
         public DragDropViewModel DragDrop { get; }
         public DockViewModel Dock { get; }
 

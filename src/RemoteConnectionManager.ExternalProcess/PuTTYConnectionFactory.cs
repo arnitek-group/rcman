@@ -1,5 +1,5 @@
-﻿using RemoteConnectionManager.Core;
-using RemoteConnectionManager.Core.Connections;
+﻿using RemoteConnectionManager.Core.Connections;
+using System;
 
 namespace RemoteConnectionManager.ExternalProcess
 {
@@ -7,9 +7,9 @@ namespace RemoteConnectionManager.ExternalProcess
     {
         public Protocol[] Protocols => new[] { Protocol.Ssh };
 
-        public IConnection CreateConnection(ConnectionSettings connectionSettings)
+        public IConnection CreateConnection(ConnectionSettings connectionSettings, IntPtr topWindowHandle)
         {
-            return new PuTTYConnection(connectionSettings);
+            return new PuTTYConnection(connectionSettings, topWindowHandle);
         }
     }
 }

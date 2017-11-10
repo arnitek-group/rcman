@@ -57,9 +57,9 @@ namespace RemoteConnectionManager.ViewModels
 
             return true;
         }
-        
+
         public ObservableCollection<IConnection> Connections { get; }
-        
+
         public RelayCommand<ConnectionSettings> ConnectCommand { get; }
         public void ExecuteConnectCommand(ConnectionSettings connectionSettings)
         {
@@ -74,7 +74,7 @@ namespace RemoteConnectionManager.ViewModels
             {
                 connection = _connectionFactories
                     .First(x => x.Protocols.Contains(connectionSettings.Protocol))
-                    .CreateConnection(connectionSettings);
+                    .CreateConnection(connectionSettings, ViewModelLocator.Locator.Dock.AutoHideHandle);
                 Connections.Add(connection);
             }
             if (!connection.IsConnected)

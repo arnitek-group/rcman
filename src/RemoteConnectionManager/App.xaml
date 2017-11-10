@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:RemoteConnectionManager.ViewModels"
              xmlns:converters="clr-namespace:RemoteConnectionManager.Converters"
              xmlns:controls="clr-namespace:RemoteConnectionManager.Controls"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -18,6 +19,7 @@
             <converters:CategoryTreeViewLineConverter x:Key="CategoryTreeViewLineConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
+            <system:Double x:Key="SidePanelAutoHideWidth">150</system:Double>
             <GridLength x:Key="PropertiesHeight">270</GridLength>
 
             <!-- Source: https://www.codeproject.com/Tips/673071/WPF-TreeView-with-WinForms-Style-Fomat -->

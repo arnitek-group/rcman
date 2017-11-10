@@ -17,7 +17,7 @@ namespace RemoteConnectionManager.Converters
             var textBlock = (TextBlock) value;
             var connectionSettings = ((IConnection)((LayoutDocument)textBlock.DataContext).Content).ConnectionSettings;
             var civm = ViewModelLocator.Locator
-                .Settings.Items
+                .Main.Items
                 .GetFlatList(x => x.Items, x => x.ConnectionSettings != null)
                 .Single(x => x.CategoryItem.ConnectionSettings == connectionSettings);
 
