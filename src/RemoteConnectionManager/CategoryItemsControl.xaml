@@ -21,7 +21,7 @@
                                VerticalAlignment="Center" />
                 </MenuItem.Header>
                 <MenuItem.Icon>
-                    <Image Source="Resources/NewFile_16x.png" />
+                    <Image Source="Resources/NewFile_16x.png" Width="16" />
                 </MenuItem.Icon>
                 <MenuItem Command="{Binding Main.CreateConnectionSettingsCommand, Source={StaticResource Locator}}">
                     <MenuItem.Header>
@@ -61,7 +61,7 @@
                                VerticalAlignment="Center" />
                 </MenuItem.Header>
                 <MenuItem.Icon>
-                    <Image Source="Resources/VSO_RecycleBin_16x.png" />
+                    <Image Source="Resources/VSO_RecycleBin_16x.png" Width="16" />
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>

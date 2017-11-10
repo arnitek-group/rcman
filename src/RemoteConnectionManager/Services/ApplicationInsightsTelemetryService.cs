@@ -1,23 +1,35 @@
 ﻿using Microsoft.ApplicationInsights;
+using Microsoft.VisualBasic.Devices;
+using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Management;
 using System.Threading.Tasks;
 
-namespace RemoteConnectionManager.Core
+namespace RemoteConnectionManager.Services
 {
     public class ApplicationInsightsTelemetryService: ITelemetryService
     {
+        private readonly string _os;
         private readonly string _userId;
         private readonly string _sessionId;
 
         public ApplicationInsightsTelemetryService()
         {
-            var os = new ManagementObject("Win32_OperatingSystem=@");
-            var serial = (string) os["SerialNumber"];
+            _os = new ComputerInfo().OSFullName;
 
-            _userId = Security.EncryptText(serial);
+            try
+            {
+                var os = new ManagementObject("Win32_OperatingSystem=@");
+                var serial = (string)os["SerialNumber"];
+                _userId = Security.EncryptText(serial);
+            }
+            catch
+            {
+                _userId = "Generic";
+            }
+
             _sessionId = Guid.NewGuid().ToString();
         }
 
@@ -26,6 +38,7 @@ namespace RemoteConnectionManager.Core
             Task.Factory.StartNew(() =>
             {
                 var tc = new TelemetryClient();
+                tc.Context.Device.OperatingSystem = _os;
                 tc.Context.User.Id = _userId;
                 tc.Context.Session.Id = _sessionId;
                 tc.Context.Component.Version = AssemblyInfo.Version;

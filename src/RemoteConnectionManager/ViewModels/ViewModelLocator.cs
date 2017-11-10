@@ -6,6 +6,7 @@ using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.ExternalProcess;
 using RemoteConnectionManager.Rdp;
+using RemoteConnectionManager.Services;
 
 namespace RemoteConnectionManager.ViewModels
 {
