@@ -29,7 +29,7 @@ namespace RemoteConnectionManager.ExternalProcess
                 }
                 if (!string.IsNullOrEmpty(credentials.KeyFile))
                 {
-                    command += " -i " + credentials.KeyFile;
+                    command += " -i '" + credentials.KeyFile + "'";
                 }
             }
             if (!string.IsNullOrEmpty(ConnectionSettings.Port))
