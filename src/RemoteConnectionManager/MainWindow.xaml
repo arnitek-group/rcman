@@ -6,8 +6,7 @@
         xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
         xmlns:rcman="clr-namespace:RemoteConnectionManager"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
-        WindowState="Maximized">
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
 
     <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
                          ActiveContent="{Binding Dock.ActiveContent, Source={StaticResource Locator}, Mode=TwoWay}"

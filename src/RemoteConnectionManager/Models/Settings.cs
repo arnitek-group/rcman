@@ -1,8 +1,8 @@
 ﻿using RemoteConnectionManager.Models;
 
-namespace RemoteConnectionManager.Services
+namespace RemoteConnectionManager.Models
 {
-    public class Settings
+    public class UserConnections
     {
         public CategoryItem[] Items { get; set; }
     }

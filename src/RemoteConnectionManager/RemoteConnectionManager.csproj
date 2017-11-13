@@ -150,6 +150,7 @@
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RecursiveExtensions.cs" />
+    <Compile Include="Models\ApplicationSettings.cs" />
     <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
@@ -164,7 +165,7 @@
     <Compile Include="ViewModels\DragDropViewModel.cs" />
     <Compile Include="ViewModels\Properties\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
-    <Compile Include="Services\Settings.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="ViewModels\Properties\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\Properties\GenericPropertiesViewModel.cs" />
     <Compile Include="ViewModels\Properties\ProtocolViewModel.cs" />

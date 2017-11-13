@@ -1,4 +1,5 @@
 ﻿using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Models;
 using RemoteConnectionManager.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,10 +16,19 @@ namespace RemoteConnectionManager
         public MainWindow()
         {
             InitializeComponent();
-
-            var assembly = Assembly.GetExecutingAssembly();
-            var vi = FileVersionInfo.GetVersionInfo(assembly.Location);
-
+            
+            var settings = ViewModelLocator.Locator.SettingsService.LoadSettings();
+            if (settings != null)
+            {
+                Width = settings.Width;
+                Height = settings.Height;
+                if (settings.IsMaximized)
+                {
+                    WindowState = WindowState.Maximized;
+                }
+            }
+            
+            var vi = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
             Title = $"{Properties.Resources.Application} v{vi.ProductMajorPart}.{vi.ProductMinorPart}.{vi.ProductBuildPart}";
 
             Loaded += (sender, e) =>
@@ -56,6 +66,12 @@ namespace RemoteConnectionManager
             else
             {
                 ViewModelLocator.Locator.TelemetryService.TrackPage("Exit");
+                ViewModelLocator.Locator.SettingsService.SaveSettings(new ApplicationSettings
+                {
+                    Width = Width,
+                    Height = Height,
+                    IsMaximized = WindowState == WindowState.Maximized
+                });
             }
         }
     }

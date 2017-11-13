@@ -1,11 +1,13 @@
-﻿
-using RemoteConnectionManager.Core;
+﻿using RemoteConnectionManager.Models;
 
 namespace RemoteConnectionManager.Services
 {
     public interface ISettingsService
     {
-        Settings LoadConnections();
-        void SaveConnections(Settings settings);
+        ApplicationSettings LoadSettings();
+        void SaveSettings(ApplicationSettings applicationSettings);
+
+        UserConnections LoadConnections();
+        void SaveConnections(UserConnections userConnections);
     }
 }
