@@ -2,6 +2,7 @@
 using RemoteConnectionManager.ViewModels.Properties;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace RemoteConnectionManager.Controls
@@ -12,6 +13,42 @@ namespace RemoteConnectionManager.Controls
         {
             IsHitTestVisible = true;
             AllowDrop = true;
+
+            Loaded += CategoryTreeViewItem_Loaded;
+        }
+
+        private void CategoryTreeViewItem_Loaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= CategoryTreeViewItem_Loaded;
+
+            var itemsControl = ItemsControlFromItemContainer(this);
+
+            WeakEventManager<ItemContainerGenerator, ItemsChangedEventArgs>.AddHandler(
+                itemsControl.ItemContainerGenerator,
+                "ItemsChanged",
+                (sender1, e1) => SetExtender());
+
+            SetExtender();
+        }
+
+        public bool UseExtender
+        {
+            get { return (bool)GetValue(UseExtenderProperty); }
+            set { SetValue(UseExtenderProperty, value); }
+        }
+
+        public static readonly DependencyProperty UseExtenderProperty = DependencyProperty.Register(
+            "UseExtender", typeof(bool),
+            typeof(CategoryTreeViewItem),
+            new PropertyMetadata(false));
+
+        private void SetExtender()
+        {
+            var itemsControl = ItemsControlFromItemContainer(this);
+            if (itemsControl != null)
+            {
+                SetValue(UseExtenderProperty, itemsControl.ItemContainerGenerator.IndexFromContainer(this) == itemsControl.Items.Count - 1);
+            }
         }
 
         protected override DependencyObject GetContainerForItemOverride()

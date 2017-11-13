@@ -16,7 +16,6 @@
             <converters:ObjectTypeNameConverter x:Key="ObjectTypeNameConverter" />
             <converters:CrazyDisplayNameConverter x:Key="CrazyDisplayNameConverter" />
             <converters:CredentialsFilterConverter x:Key="CredentialsFilterConverter" />
-            <converters:CategoryTreeViewLineConverter x:Key="CategoryTreeViewLineConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
             <system:Double x:Key="SidePanelAutoHideWidth">150</system:Double>
@@ -137,11 +136,10 @@
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                                 </Trigger>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={StaticResource CategoryTreeViewLineConverter}}"
-                                             Value="True">
+                                <Trigger Property="UseExtender" Value="True">
                                     <Setter TargetName="VerLn" Property="Height" Value="9"/>
                                     <Setter TargetName="VerLn" Property="VerticalAlignment" Value="Top"/>
-                                </DataTrigger>
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
