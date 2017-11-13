@@ -227,6 +227,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Rdp_16x.png" />
     <Resource Include="Resources\PuTTY_16x.png" />
     <Resource Include="Resources\Import_16x.png" />
     <EmbeddedResource Include="Properties\Resources.resx">

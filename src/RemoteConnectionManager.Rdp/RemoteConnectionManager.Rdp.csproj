@@ -80,6 +80,7 @@
     <Compile Include="RdpHost.Designer.cs">
       <DependentUpon>RdpHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="RdpImport.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RemoteConnectionManager.Core\RemoteConnectionManager.Core.csproj">

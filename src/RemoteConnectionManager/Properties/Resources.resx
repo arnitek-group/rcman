@@ -225,4 +225,7 @@
   <data name="InfoImport" xml:space="preserve">
     <value>Imported {0} items.</value>
   </data>
+  <data name="RdpFile" xml:space="preserve">
+    <value>Remote Desktop</value>
+  </data>
 </root>

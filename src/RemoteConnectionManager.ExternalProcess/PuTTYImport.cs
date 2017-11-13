@@ -33,6 +33,7 @@ namespace RemoteConnectionManager.ExternalProcess
                     continue;
                 }
 
+                var portNumber = sk.GetValue("PortNumber", null)?.ToString() as string;
                 var userName = sk.GetValue("UserName", null) as string;
                 var publicKeyFile = sk.GetValue("PublicKeyFile", null) as string;
 
@@ -42,6 +43,7 @@ namespace RemoteConnectionManager.ExternalProcess
                     ConnectionSettings = new ConnectionSettings
                     {
                         Server = hostName,
+                        Port = portNumber,
                         Protocol = Protocol.Ssh,
                         Username = userName,
                         KeyFile = publicKeyFile

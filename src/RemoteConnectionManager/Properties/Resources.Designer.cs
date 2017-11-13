@@ -340,6 +340,15 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remote Desktop.
+        /// </summary>
+        public static string RdpFile {
+            get {
+                return ResourceManager.GetString("RdpFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server.
         /// </summary>
         public static string Server {
