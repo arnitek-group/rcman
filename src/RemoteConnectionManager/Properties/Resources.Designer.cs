@@ -207,18 +207,45 @@ namespace RemoteConnectionManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please specify a server for this connection..
         /// </summary>
-        public static string Error_Server {
+        public static string ErrorServer {
             get {
-                return ResourceManager.GetString("Error_Server", resourceCulture);
+                return ResourceManager.GetString("ErrorServer", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mandatory Settings.
+        ///   Looks up a localized string similar to Import.
         /// </summary>
-        public static string Mandatory {
+        public static string Import {
             get {
-                return ResourceManager.GetString("Mandatory", resourceCulture);
+                return ResourceManager.GetString("Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imported {0} items..
+        /// </summary>
+        public static string InfoImport {
+            get {
+                return ResourceManager.GetString("InfoImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private key used for authentication..
+        /// </summary>
+        public static string KeyDescription {
+            get {
+                return ResourceManager.GetString("KeyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key File.
+        /// </summary>
+        public static string KeyFile {
+            get {
+                return ResourceManager.GetString("KeyFile", resourceCulture);
             }
         }
         
@@ -300,6 +327,15 @@ namespace RemoteConnectionManager.Properties {
         public static string ProtocolDescription {
             get {
                 return ResourceManager.GetString("ProtocolDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PuTTY Sessions.
+        /// </summary>
+        public static string PuttySessions {
+            get {
+                return ResourceManager.GetString("PuttySessions", resourceCulture);
             }
         }
         

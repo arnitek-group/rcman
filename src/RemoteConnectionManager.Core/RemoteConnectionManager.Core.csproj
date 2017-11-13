@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connections\CategoryItem.cs" />
     <Compile Include="Connections\ConnectionSettings.cs" />
     <Compile Include="Connections\Credentials.cs" />
     <Compile Include="Connections\DisconnectReason.cs" />

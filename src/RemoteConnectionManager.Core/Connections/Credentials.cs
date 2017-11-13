@@ -6,6 +6,7 @@ namespace RemoteConnectionManager.Core.Connections
         public string Domain { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string KeyFile { get; set; }
 
         public void SetPassword(string plainText)
         {

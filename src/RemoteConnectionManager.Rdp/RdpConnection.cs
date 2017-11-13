@@ -88,7 +88,7 @@ namespace RemoteConnectionManager.Rdp
                     _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
                 }
 
-                var credentials = ConnectionSettings.Credentials;
+                var credentials = ConnectionSettings.GetCredentials();
                 if (credentials != null)
                 {
                     if (!string.IsNullOrEmpty(credentials.Domain))

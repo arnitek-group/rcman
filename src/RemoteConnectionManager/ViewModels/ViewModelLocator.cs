@@ -1,7 +1,6 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using RemoteConnectionManager.Core;
 using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.ExternalProcess;
@@ -33,6 +32,7 @@ namespace RemoteConnectionManager.ViewModels
                 SimpleIoc.Default.Register<MainViewModel>();
                 SimpleIoc.Default.Register<DragDropViewModel>();
                 SimpleIoc.Default.Register<DockViewModel>();
+                SimpleIoc.Default.Register<ImportViewModel>();
 
                 TelemetryService = ServiceLocator.Current.GetInstance<ITelemetryService>();
                 SettingsService = ServiceLocator.Current.GetInstance<ISettingsService>();
@@ -41,6 +41,8 @@ namespace RemoteConnectionManager.ViewModels
                 Main = ServiceLocator.Current.GetInstance<MainViewModel>();
                 DragDrop = ServiceLocator.Current.GetInstance<DragDropViewModel>();
                 Dock = ServiceLocator.Current.GetInstance<DockViewModel>();
+                Import = ServiceLocator.Current.GetInstance<ImportViewModel>();
+
                 Locator = ServiceLocator.Current.GetInstance<ViewModelLocator>();
             }
         }
@@ -52,6 +54,7 @@ namespace RemoteConnectionManager.ViewModels
         public MainViewModel Main { get; }
         public DragDropViewModel DragDrop { get; }
         public DockViewModel Dock { get; }
+        public ImportViewModel Import { get; }
 
         public static ViewModelLocator Locator { get; private set; }
     }

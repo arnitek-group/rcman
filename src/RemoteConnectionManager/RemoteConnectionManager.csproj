@@ -150,8 +150,10 @@
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RecursiveExtensions.cs" />
+    <Compile Include="MainMenuControl.xaml.cs">
+      <DependentUpon>MainMenuControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ApplicationSettings.cs" />
-    <Compile Include="Models\CategoryItem.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
@@ -160,9 +162,16 @@
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
+    <Compile Include="UserControls\PropertyFile.xaml.cs">
+      <DependentUpon>PropertyFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PropertyPassword.xaml.cs">
+      <DependentUpon>PropertyPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\DockViewModel.cs" />
     <Compile Include="ViewModels\DragDropViewModel.cs" />
+    <Compile Include="ViewModels\ImportViewModel.cs" />
     <Compile Include="ViewModels\Properties\ConnectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="Models\Settings.cs" />
@@ -172,6 +181,10 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Page Include="CategoryItemsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,6 +204,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\PropertyFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PropertyPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -206,6 +227,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\PuTTY_16x.png" />
+    <Resource Include="Resources\Import_16x.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

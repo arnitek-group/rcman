@@ -66,7 +66,7 @@ namespace RemoteConnectionManager.ViewModels
         {
             if (string.IsNullOrEmpty(connectionSettings.Server))
             {
-                _dialogService.ShowWarningDialog(Resources.Error_Server);
+                _dialogService.ShowWarningDialog(Resources.ErrorServer);
                 return;
             }
 

@@ -137,8 +137,8 @@
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                                 </Trigger>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={StaticResource CategoryTreeViewLineConverter}}"
-                                                 Value="true">
+                                <DataTrigger x:Name="CategoryTrigger" Binding="{Binding RelativeSource={RelativeSource Self}, Converter={StaticResource CategoryTreeViewLineConverter}}"
+                                             Value="True">
                                     <Setter TargetName="VerLn" Property="Height" Value="9"/>
                                     <Setter TargetName="VerLn" Property="VerticalAlignment" Value="Top"/>
                                 </DataTrigger>

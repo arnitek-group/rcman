@@ -1,4 +1,4 @@
-﻿using RemoteConnectionManager.Models;
+﻿using RemoteConnectionManager.Core.Connections;
 
 namespace RemoteConnectionManager.Models
 {

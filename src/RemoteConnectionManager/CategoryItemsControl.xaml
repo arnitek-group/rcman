@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
+             xmlns:local="clr-namespace:RemoteConnectionManager"
              xmlns:controls="clr-namespace:RemoteConnectionManager.Controls"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="480">
 
@@ -13,58 +13,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
-            <MenuItem>
-                <MenuItem.Header>
-                    <TextBlock Text="{x:Static prop:Resources.Create}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center" />
-                </MenuItem.Header>
-                <MenuItem.Icon>
-                    <Image Source="Resources/NewFile_16x.png" Width="16" />
-                </MenuItem.Icon>
-                <MenuItem Command="{Binding Main.CreateConnectionSettingsCommand, Source={StaticResource Locator}}">
-                    <MenuItem.Header>
-                        <TextBlock Text="{x:Static prop:Resources.ConnectionSettings}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center" />
-                    </MenuItem.Header>
-                    <MenuItem.Icon>
-                        <Image Source="Resources/RemoteDesktop_16x.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Command="{Binding Main.CreateCredentialsCommand, Source={StaticResource Locator}}">
-                    <MenuItem.Header>
-                        <TextBlock Text="{x:Static prop:Resources.Credentials}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center" />
-                    </MenuItem.Header>
-                    <MenuItem.Icon>
-                        <Image Source="Resources/User_16x.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Command="{Binding Main.CreateCategoryCommand, Source={StaticResource Locator}}">
-                    <MenuItem.Header>
-                        <TextBlock Text="{x:Static prop:Resources.Category}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center" />
-                    </MenuItem.Header>
-                    <MenuItem.Icon>
-                        <Image Source="Resources/Tag_16x.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Command="{Binding Main.DeleteItemCommand, Source={StaticResource Locator}}">
-                <MenuItem.Header>
-                    <TextBlock Text="{x:Static prop:Resources.Delete}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center" />
-                </MenuItem.Header>
-                <MenuItem.Icon>
-                    <Image Source="Resources/VSO_RecycleBin_16x.png" Width="16" />
-                </MenuItem.Icon>
-            </MenuItem>
-        </Menu>
+        <local:MainMenuControl Grid.Row="0" />
 
         <controls:CategoryTreeView Grid.Row="1" ItemsSource="{Binding Items}">
             <controls:CategoryTreeView.InputBindings>

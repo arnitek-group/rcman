@@ -1,7 +1,6 @@
-﻿using RemoteConnectionManager.Core.Connections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace RemoteConnectionManager.Models
+namespace RemoteConnectionManager.Core.Connections
 {
     public class CategoryItem
     {

@@ -204,13 +204,25 @@
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="Mandatory" xml:space="preserve">
-    <value>Mandatory Settings</value>
-  </data>
   <data name="Optional" xml:space="preserve">
     <value>Optional Settings</value>
   </data>
-  <data name="Error_Server" xml:space="preserve">
+  <data name="ErrorServer" xml:space="preserve">
     <value>Please specify a server for this connection.</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="PuttySessions" xml:space="preserve">
+    <value>PuTTY Sessions</value>
+  </data>
+  <data name="KeyFile" xml:space="preserve">
+    <value>Key File</value>
+  </data>
+  <data name="KeyDescription" xml:space="preserve">
+    <value>Private key used for authentication.</value>
+  </data>
+  <data name="InfoImport" xml:space="preserve">
+    <value>Imported {0} items.</value>
   </data>
 </root>

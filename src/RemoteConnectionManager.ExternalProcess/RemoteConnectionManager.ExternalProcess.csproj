@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuTTYConnection.cs" />
     <Compile Include="PuTTYConnectionFactory.cs" />
+    <Compile Include="PuTTYImport.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RemoteConnectionManager.Core\RemoteConnectionManager.Core.csproj">

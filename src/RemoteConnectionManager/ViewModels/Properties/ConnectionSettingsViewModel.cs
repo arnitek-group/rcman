@@ -1,28 +1,11 @@
-﻿using GalaSoft.MvvmLight;
-using RemoteConnectionManager.Core.Connections;
+﻿using RemoteConnectionManager.Core.Connections;
 
 namespace RemoteConnectionManager.ViewModels.Properties
 {
-    public class ConnectionSettingsViewModel: ViewModelBase
+    public class ConnectionSettingsViewModel: CredentialsViewModel
     {
-        public ConnectionSettingsViewModel(CategoryItemViewModel parent)
+        public ConnectionSettingsViewModel(CategoryItemViewModel parent): base(parent)
         {
-            Parent = parent;
-        }
-
-        public CategoryItemViewModel Parent { get; }
-
-        public string DisplayName
-        {
-            get { return Parent.DisplayName; }
-            set
-            {
-                if (Parent.DisplayName != value)
-                {
-                    Parent.DisplayName = value;
-                    RaisePropertyChanged();
-                }
-            }
         }
 
         public Protocol Protocol
@@ -59,6 +42,57 @@ namespace RemoteConnectionManager.ViewModels.Properties
                 if (Parent.CategoryItem.ConnectionSettings.Port != value)
                 {
                     Parent.CategoryItem.ConnectionSettings.Port = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        public new string Domain
+        {
+            get { return Parent.CategoryItem.ConnectionSettings.Domain; }
+            set
+            {
+                if (Parent.CategoryItem.ConnectionSettings.Domain != value)
+                {
+                    Parent.CategoryItem.ConnectionSettings.Domain = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public new string Username
+        {
+            get { return Parent.CategoryItem.ConnectionSettings.Username; }
+            set
+            {
+                if (Parent.CategoryItem.ConnectionSettings.Username != value)
+                {
+                    Parent.CategoryItem.ConnectionSettings.Username = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public new string Password
+        {
+            get { return Parent.CategoryItem.ConnectionSettings.Password; }
+            set
+            {
+                if (Parent.CategoryItem.ConnectionSettings.Password != value)
+                {
+                    Parent.CategoryItem.ConnectionSettings.SetPassword(value);
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public new string KeyFile
+        {
+            get { return Parent.CategoryItem.ConnectionSettings.KeyFile; }
+            set
+            {
+                if (Parent.CategoryItem.ConnectionSettings.KeyFile != value)
+                {
+                    Parent.CategoryItem.ConnectionSettings.KeyFile = value;
                     RaisePropertyChanged();
                 }
             }

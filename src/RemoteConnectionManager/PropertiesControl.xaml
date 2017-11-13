@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
+             xmlns:userControls="clr-namespace:RemoteConnectionManager.UserControls"
              mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="250">
 
-    <Grid>
         <xctk:PropertyGrid DataContext="{Binding Main, Source={StaticResource Locator}}"
                            SelectedObject="{Binding SelectedItem.Properties}"
                            SelectedObjectTypeName="{Binding SelectedItem, Converter={StaticResource ObjectTypeNameConverter}}"
@@ -19,35 +19,47 @@
                 <xctk:PropertyDefinition DisplayOrder="1" TargetProperties="DisplayName"
                                          DisplayName="{x:Static prop:Resources.DisplayName}"
                                          Description="{x:Static prop:Resources.DisplayNameDescription}"
-                                         Category="{x:Static prop:Resources.Mandatory}" />
+                                         Category="{x:Static prop:Resources.ConnectionSettings}" />
+                
                 <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Protocol"
                                          DisplayName="{x:Static prop:Resources.Protocol}"
                                          Description="{x:Static prop:Resources.ProtocolDescription}"
-                                         Category="{x:Static prop:Resources.Mandatory}" />
+                                         Category="{x:Static prop:Resources.ConnectionSettings}" />
+                
                 <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Server"
                                          DisplayName="{x:Static prop:Resources.Server}"
                                          Description="{x:Static prop:Resources.PortDescription}"
-                                         Category="{x:Static prop:Resources.Mandatory}" />
+                                         Category="{x:Static prop:Resources.ConnectionSettings}" />
+                
                 <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Port"
                                          DisplayName="{x:Static prop:Resources.Port}"
                                          Description="{x:Static prop:Resources.PortDescription}"
-                                         Category="{x:Static prop:Resources.Optional}" />
-                <xctk:PropertyDefinition DisplayOrder="5" TargetProperties="Credentials"
+                                         Category="{x:Static prop:Resources.ConnectionSettings}" />
+
+                <xctk:PropertyDefinition DisplayOrder="5" TargetProperties="Domain"
+                                         DisplayName="{x:Static prop:Resources.Domain}"
+                                         Description="{x:Static prop:Resources.DomainDescription}"
+                                         Category="{x:Static prop:Resources.Credentials}" />
+
+                <xctk:PropertyDefinition DisplayOrder="6" TargetProperties="Username"
+                                         DisplayName="{x:Static prop:Resources.Username}"
+                                         Description="{x:Static prop:Resources.UsernameDescription}"
+                                         Category="{x:Static prop:Resources.Credentials}" />
+
+                <xctk:PropertyDefinition DisplayOrder="7" TargetProperties="Password"
+                                         DisplayName="{x:Static prop:Resources.Password}"
+                                         Description="{x:Static prop:Resources.PasswordDescription}"
+                                         Category="{x:Static prop:Resources.Credentials}" />
+
+                <xctk:PropertyDefinition DisplayOrder="8" TargetProperties="KeyFile"
+                                         DisplayName="{x:Static prop:Resources.KeyFile}"
+                                         Description="{x:Static prop:Resources.KeyDescription}"
+                                         Category="{x:Static prop:Resources.Credentials}" />
+
+                <xctk:PropertyDefinition DisplayOrder="9" TargetProperties="Credentials"
                                          DisplayName="{x:Static prop:Resources.Credentials}"
                                          Description="{x:Static prop:Resources.CredentialsDescription}"
                                          Category="{x:Static prop:Resources.Optional}" />
-                <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="Domain"
-                                         DisplayName="{x:Static prop:Resources.Domain}"
-                                         Description="{x:Static prop:Resources.DomainDescription}"
-                                         Category="{x:Static prop:Resources.Mandatory}" />
-                <xctk:PropertyDefinition DisplayOrder="3" TargetProperties="Username"
-                                         DisplayName="{x:Static prop:Resources.Username}"
-                                         Description="{x:Static prop:Resources.UsernameDescription}"
-                                         Category="{x:Static prop:Resources.Mandatory}" />
-                <xctk:PropertyDefinition DisplayOrder="4" TargetProperties="Password"
-                                         DisplayName="{x:Static prop:Resources.Password}"
-                                         Description="{x:Static prop:Resources.PasswordDescription}"
-                                         Category="{x:Static prop:Resources.Mandatory}" />
             </xctk:PropertyGrid.PropertyDefinitions>
 
             <xctk:PropertyGrid.EditorDefinitions>
@@ -84,13 +96,18 @@
                 <xctk:EditorTemplateDefinition TargetProperties="Password">
                     <xctk:EditorTemplateDefinition.EditingTemplate>
                         <DataTemplate>
-                            <PasswordBox DataContext="{Binding Value}"
-                                         DataContextChanged="PasswordBox_DataContextChanged"
-                                         PasswordChanged="PasswordBox_PasswordChanged" />
+                            <userControls:PropertyPassword DataContext="{Binding}" />
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+                <xctk:EditorTemplateDefinition TargetProperties="KeyFile">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <userControls:PropertyFile DataContext="{Binding}" />
                         </DataTemplate>
                     </xctk:EditorTemplateDefinition.EditingTemplate>
                 </xctk:EditorTemplateDefinition>
             </xctk:PropertyGrid.EditorDefinitions>
         </xctk:PropertyGrid>
-    </Grid>
 </UserControl>

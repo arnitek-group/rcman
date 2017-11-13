@@ -62,5 +62,18 @@ namespace RemoteConnectionManager.ViewModels.Properties
                 }
             }
         }
+
+        public string KeyFile
+        {
+            get { return Parent.CategoryItem.Credentials.KeyFile; }
+            set
+            {
+                if (Parent.CategoryItem.Credentials.KeyFile != value)
+                {
+                    Parent.CategoryItem.Credentials.KeyFile = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

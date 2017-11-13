@@ -1,4 +1,4 @@
-﻿using RemoteConnectionManager.Models;
+﻿using RemoteConnectionManager.Core.Connections;
 using System;
 using System.Globalization;
 using System.Windows.Data;

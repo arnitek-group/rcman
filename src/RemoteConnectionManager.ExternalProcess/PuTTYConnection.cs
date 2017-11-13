@@ -18,14 +18,18 @@ namespace RemoteConnectionManager.ExternalProcess
         protected override string GetArguments()
         {
             var command = "-" + Enum.GetName(typeof(Protocol), ConnectionSettings.Protocol).ToLower();
-
-            var credentials = ConnectionSettings.Credentials;
+            
+            var credentials = ConnectionSettings.GetCredentials();
             if (credentials != null)
             {
                 command += " -l " + credentials.Username; 
                 if (!string.IsNullOrEmpty(credentials.Password))
                 {
                     command += " -pw " + credentials.GetPassword();
+                }
+                if (!string.IsNullOrEmpty(credentials.KeyFile))
+                {
+                    command += " -i " + credentials.KeyFile;
                 }
             }
             if (!string.IsNullOrEmpty(ConnectionSettings.Port))
