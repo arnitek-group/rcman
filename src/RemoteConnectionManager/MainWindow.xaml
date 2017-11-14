@@ -77,11 +77,11 @@
         <xcad:LayoutRoot>
             <xcad:LayoutPanel>
                 <xcad:LayoutAnchorablePaneGroup DockWidth="{StaticResource SidePanelWidth}"
-                                                Orientation="Vertical">
-                    <xcad:LayoutAnchorablePane>
+                                                Orientation="Vertical" CanRepositionItems="True">
+                    <xcad:LayoutAnchorablePane CanRepositionItems="True">
                         <xcad:LayoutAnchorable ContentId="Connections"
                                                Title="{x:Static prop:Resources.Connections}"
-                                               CanHide="False" CanClose="False" CanFloat="False"
+                                               CanHide="False" CanClose="False"
                                                AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
                             <DataTemplate>
                                 <rcman:CategoryItemsControl />
@@ -91,7 +91,7 @@
                     <xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorable ContentId="Properties"
                                                Title="{x:Static prop:Resources.Properties}"
-                                               CanHide="False" CanClose="False" CanFloat="False"
+                                               CanHide="False" CanClose="False"
                                                AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
                             <DataTemplate>
                                 <rcman:PropertiesControl />
