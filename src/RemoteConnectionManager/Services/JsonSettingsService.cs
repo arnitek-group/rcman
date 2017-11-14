@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Models;
 using System;
 using System.IO;
@@ -14,51 +15,58 @@ namespace RemoteConnectionManager.Services
 #else
         private const string AppFolder = "RCManager";
 #endif
-        private const string SettingsFileName = "settings.json";
-        private const string LayoutFileName = "layout.xml";
-        private const string ConnectionsFileName = "connections.json";
 
         private readonly string _settingsFilePath;
-        private readonly string _layoutFilePath;
-        private readonly string _connectionsFilePath;
+        private readonly ApplicationSettings _applicationSettings;
 
         public JsonSettingsService()
         {
             _settingsFilePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 AppFolder,
-                SettingsFileName);
-            _layoutFilePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                AppFolder,
-                LayoutFileName);
-            _connectionsFilePath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                AppFolder,
-                ConnectionsFileName);
+                "settings.json");
+
+            _applicationSettings = LoadObjectFromFile<ApplicationSettings>(_settingsFilePath)
+                ?? new ApplicationSettings
+                {
+                    Width = double.NaN,
+                    Height = double.NaN,
+                    WindowState = System.Windows.WindowState.Maximized,
+                    Theme = Theme.Aero
+                };
+
+            // Upgrading from older version is updated.
+            if (string.IsNullOrEmpty(_applicationSettings.LayoutFile))
+            {
+                _applicationSettings.LayoutFile = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        AppFolder, "layout.xml");
+            }
+            if (string.IsNullOrEmpty(_applicationSettings.ConnectionsFile))
+            {
+                _applicationSettings.ConnectionsFile = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        AppFolder, "connections.json");
+            }
         }
 
-        public ApplicationSettings LoadSettings()
-        {
-            return LoadObjectFromFile<ApplicationSettings>(_settingsFilePath);
-        }
+        public ApplicationSettings ApplicationSettings => _applicationSettings;
 
-        public void SaveSettings(ApplicationSettings applicationSettings)
+        public void SaveSettings()
         {
-            SaveObjectToFile(applicationSettings, _settingsFilePath);
+            SaveObjectToFile(_applicationSettings, _settingsFilePath);
         }
 
         public UserConnections LoadConnections()
         {
-            return LoadObjectFromFile<UserConnections>(_connectionsFilePath);
+            return LoadObjectFromFile<UserConnections>(_applicationSettings.ConnectionsFile)
+                ?? new UserConnections() { Items = new CategoryItem[] { } };
         }
 
         public void SaveConnections(UserConnections userConnections)
         {
-            SaveObjectToFile(userConnections, _connectionsFilePath);
+            SaveObjectToFile(userConnections, _applicationSettings.ConnectionsFile);
         }
-
-        public string LayoutFilePath => _layoutFilePath;
 
         private T LoadObjectFromFile<T>(string file) where T : class
         {
