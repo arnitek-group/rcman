@@ -25,7 +25,7 @@ namespace RemoteConnectionManager
             };
             DockingManager.Loaded += (sender, e) =>
             {
-                DockingManager.LoadLayout(ViewModelLocator.Locator.Settings.LayoutFilePath);
+                DockingManager.LoadLayout(ViewModelLocator.Locator.Settings.LayoutFile);
                 DockingManager.AutoHideWindow.Loaded += (sender1, e1) =>
                 {
                     ViewModelLocator.Locator.Dock.AutoHideHandle = DockingManager.AutoHideWindow.Handle;
@@ -52,7 +52,8 @@ namespace RemoteConnectionManager
             {
                 ViewModelLocator.Locator.TelemetryService.TrackPage("Exit");
                 ViewModelLocator.Locator.Settings.SaveSettings();
-                DockingManager.SaveLayout(ViewModelLocator.Locator.Settings.LayoutFilePath);
+                // TODO: Update to the WPF toolkit v3.3
+                // DockingManager.SaveLayout(ViewModelLocator.Locator.Settings.LayoutFile);
             }
         }
     }

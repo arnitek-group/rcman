@@ -46,12 +46,7 @@ namespace RemoteConnectionManager.ViewModels
         private void LoadConnections()
         {
             SuspendSave = true;
-            var connections = _settingsService.LoadConnections();
-            if (connections != null)
-            {
-                var rootCivms = LoadSettingsRecursive(connections.Items, null);
-                rootCivms.ForEach(x => Items.Add(x));
-            }
+            LoadSettingsRecursive(_settingsService.LoadConnections().Items, null).ForEach(x => Items.Add(x));
 
             // Map credentials.
             var connectionSettingsList = Items.GetFlatList(x => x.Items, x => x.ConnectionSettings != null);

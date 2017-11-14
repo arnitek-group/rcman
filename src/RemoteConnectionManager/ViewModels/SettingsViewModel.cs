@@ -1,7 +1,7 @@
-﻿using System;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Services;
+using System;
 using System.Windows;
 
 namespace RemoteConnectionManager.ViewModels
@@ -9,27 +9,20 @@ namespace RemoteConnectionManager.ViewModels
     public class SettingsViewModel: ViewModelBase
     {
         private readonly ISettingsService _settingsService;
-        private readonly ApplicationSettings _settings;
 
         public SettingsViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _settings = _settingsService.LoadSettings() ?? new ApplicationSettings
-            {
-                Width = double.NaN,
-                Height = double.NaN,
-                WindowState = WindowState.Maximized
-            };
         }
 
         public double Width
         {
-            get { return _settings.Width; }
+            get { return _settingsService.ApplicationSettings.Width; }
             set
             {
-                if (Math.Abs(_settings.Width - value) > 1)
+                if (_settingsService.ApplicationSettings.Width != value)
                 {
-                    _settings.Width = value;
+                    _settingsService.ApplicationSettings.Width = value;
                     RaisePropertyChanged();
                 }
             }
@@ -37,12 +30,12 @@ namespace RemoteConnectionManager.ViewModels
 
         public double Height
         {
-            get { return _settings.Height; }
+            get { return _settingsService.ApplicationSettings.Height; }
             set
             {
-                if (Math.Abs(_settings.Height - value) > 1)
+                if (_settingsService.ApplicationSettings.Height != value)
                 {
-                    _settings.Height = value;
+                    _settingsService.ApplicationSettings.Height = value;
                     RaisePropertyChanged();
                 }
             }
@@ -50,22 +43,36 @@ namespace RemoteConnectionManager.ViewModels
 
         public WindowState WindowState
         {
-            get { return _settings.WindowState; }
+            get { return _settingsService.ApplicationSettings.WindowState; }
             set
             {
-                if (_settings.WindowState != value)
+                if (_settingsService.ApplicationSettings.WindowState != value)
                 {
-                    _settings.WindowState = value;
+                    _settingsService.ApplicationSettings.WindowState = value;
                     RaisePropertyChanged();
+                }
+            }
+        }
+
+        public Theme Theme
+        {
+            get { return _settingsService.ApplicationSettings.Theme; }
+            set
+            {
+                if (_settingsService.ApplicationSettings.Theme != value)
+                {
+                    _settingsService.ApplicationSettings.Theme = value;
+                    RaisePropertyChanged();
+                    SaveSettings();
                 }
             }
         }
 
         public void SaveSettings()
         {
-            _settingsService.SaveSettings(_settings);
+            _settingsService.SaveSettings();
         }
 
-        public string LayoutFilePath => _settingsService.LayoutFilePath;
+        public string LayoutFile => _settingsService.ApplicationSettings.LayoutFile;
     }
 }

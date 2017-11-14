@@ -4,12 +4,11 @@ namespace RemoteConnectionManager.Services
 {
     public interface ISettingsService
     {
-        ApplicationSettings LoadSettings();
-        void SaveSettings(ApplicationSettings applicationSettings);
+        ApplicationSettings ApplicationSettings { get; }
+        void SaveSettings();
 
         UserConnections LoadConnections();
         void SaveConnections(UserConnections userConnections);
 
-        string LayoutFilePath { get; }
     }
 }

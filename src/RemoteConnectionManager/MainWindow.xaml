@@ -14,11 +14,8 @@
     <xcad:DockingManager x:Name="DockingManager"
                          DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
                          ActiveContent="{Binding Dock.ActiveContent, Source={StaticResource Locator}, Mode=TwoWay}"
+                         Theme="{Binding Settings.Theme, Source={StaticResource Locator}, Converter={StaticResource ThemeConverter}}"
                          AllowMixedOrientation="True">
-
-        <xcad:DockingManager.Theme>
-            <xcad:AeroTheme />
-        </xcad:DockingManager.Theme>
 
         <xcad:DockingManager.AnchorableContextMenu>
             <ContextMenu>
@@ -88,6 +85,7 @@
                             </DataTemplate>
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
+                    
                     <xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorable ContentId="Properties"
                                                Title="{x:Static prop:Resources.Properties}"
@@ -95,6 +93,14 @@
                                                AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
                             <DataTemplate>
                                 <rcman:PropertiesControl />
+                            </DataTemplate>
+                        </xcad:LayoutAnchorable>
+                        <xcad:LayoutAnchorable ContentId="Settings"
+                                               Title="{x:Static prop:Resources.Settings}"
+                                               CanHide="False" CanClose="False"
+                                               AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
+                            <DataTemplate>
+                                <rcman:SettingsControl />
                             </DataTemplate>
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>

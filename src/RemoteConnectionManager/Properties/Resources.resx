@@ -228,4 +228,13 @@
   <data name="RdpFile" xml:space="preserve">
     <value>Remote Desktop</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="ThemeDescription" xml:space="preserve">
+    <value>Visual theme for the application.</value>
+  </data>
 </root>

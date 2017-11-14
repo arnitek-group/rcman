@@ -129,6 +129,7 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
+    <Compile Include="Converters\ThemeConverter.cs" />
     <Compile Include="Extensions\DockingManagerExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RecursiveExtensions.cs" />
@@ -136,6 +137,7 @@
       <DependentUpon>MainMenuControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicationSettings.cs" />
+    <Compile Include="Models\Theme.cs" />
     <Compile Include="PropertiesControl.xaml.cs">
       <DependentUpon>PropertiesControl.xaml</DependentUpon>
     </Compile>
@@ -144,6 +146,9 @@
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\JsonSettingsService.cs" />
+    <Compile Include="SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PropertyFile.xaml.cs">
       <DependentUpon>PropertyFile.xaml</DependentUpon>
     </Compile>
@@ -187,6 +192,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\PropertyFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,11 +214,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Resource Include="Resources\Rdp_16x.png" />
     <Resource Include="Resources\PuTTY_16x.png" />
     <Resource Include="Resources\Import_16x.png" />
@@ -226,10 +230,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

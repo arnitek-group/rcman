@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="RemoteConnectionManager.SettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
+             mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="250">
+
+    <xctk:PropertyGrid SelectedObject="{Binding Settings, Source={StaticResource Locator}}"
+                       SelectedObjectTypeName="{x:Static prop:Resources.Settings}"
+                       SelectedObjectName=""
+                       ShowSearchBox="False" ShowSortOptions="False"
+                       AutoGenerateProperties="False" NameColumnWidth="100">
+
+        <xctk:PropertyGrid.PropertyDefinitions>
+            <xctk:PropertyDefinition DisplayOrder="1" TargetProperties="Theme"
+                                     DisplayName="{x:Static prop:Resources.Theme}"
+                                     Description="{x:Static prop:Resources.ThemeDescription}" />
+        </xctk:PropertyGrid.PropertyDefinitions>
+    </xctk:PropertyGrid>
+</UserControl>
