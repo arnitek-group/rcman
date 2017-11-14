@@ -7,5 +7,6 @@ namespace RemoteConnectionManager.Models
         public double Width { get; set; }
         public double Height { get; set; }
         public WindowState WindowState { get; set; }
+        public Theme Theme { get; set; }
     }
 }

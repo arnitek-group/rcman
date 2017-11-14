@@ -16,6 +16,7 @@
             <converters:ObjectTypeNameConverter x:Key="ObjectTypeNameConverter" />
             <converters:CrazyDisplayNameConverter x:Key="CrazyDisplayNameConverter" />
             <converters:CredentialsFilterConverter x:Key="CredentialsFilterConverter" />
+            <converters:ThemeConverter x:Key="ThemeConverter" />
 
             <GridLength x:Key="SidePanelWidth">250</GridLength>
             <system:Double x:Key="SidePanelAutoHideWidth">150</system:Double>

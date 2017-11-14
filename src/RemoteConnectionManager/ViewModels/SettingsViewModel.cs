@@ -1,7 +1,7 @@
-﻿using System;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Services;
+using System;
 using System.Windows;
 
 namespace RemoteConnectionManager.ViewModels
@@ -18,7 +18,8 @@ namespace RemoteConnectionManager.ViewModels
             {
                 Width = double.NaN,
                 Height = double.NaN,
-                WindowState = WindowState.Maximized
+                WindowState = WindowState.Maximized,
+                Theme = Theme.Aero
             };
         }
 
@@ -57,6 +58,20 @@ namespace RemoteConnectionManager.ViewModels
                 {
                     _settings.WindowState = value;
                     RaisePropertyChanged();
+                }
+            }
+        }
+
+        public Theme Theme
+        {
+            get { return _settings.Theme; }
+            set
+            {
+                if (_settings.Theme != value)
+                {
+                    _settings.Theme = value;
+                    RaisePropertyChanged();
+                    SaveSettings();
                 }
             }
         }
