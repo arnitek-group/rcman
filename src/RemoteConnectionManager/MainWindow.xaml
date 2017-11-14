@@ -11,11 +11,10 @@
         WindowState="{Binding Settings.Settings.WindowState, Source={StaticResource Locator}}"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
 
-    <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
+    <xcad:DockingManager x:Name="DockingManager"
+                         DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
                          ActiveContent="{Binding Dock.ActiveContent, Source={StaticResource Locator}, Mode=TwoWay}"
-                         AllowMixedOrientation="True"
-                         Loaded="DockingManager_Loaded"
-                         DocumentClosed="DockingManager_OnDocumentClosed">
+                         AllowMixedOrientation="True">
 
         <xcad:DockingManager.Theme>
             <xcad:AeroTheme />
