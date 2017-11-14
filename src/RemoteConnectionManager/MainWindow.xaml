@@ -6,6 +6,9 @@
         xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
         xmlns:rcman="clr-namespace:RemoteConnectionManager"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        Width="{Binding Settings.Settings.Width, Source={StaticResource Locator}}"
+        Height="{Binding Settings.Settings.Height, Source={StaticResource Locator}}"
+        WindowState="{Binding Settings.Settings.WindowState, Source={StaticResource Locator}}"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
 
     <xcad:DockingManager DocumentsSource="{Binding Connections.Connections, Source={StaticResource Locator}}"
