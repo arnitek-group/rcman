@@ -1,4 +1,5 @@
 ﻿using RemoteConnectionManager.Core.Connections;
+using RemoteConnectionManager.Extensions;
 using RemoteConnectionManager.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -24,6 +25,7 @@ namespace RemoteConnectionManager
             };
             DockingManager.Loaded += (sender, e) =>
             {
+                DockingManager.LoadLayout(ViewModelLocator.Locator.Settings.LayoutFilePath);
                 DockingManager.AutoHideWindow.Loaded += (sender1, e1) =>
                 {
                     ViewModelLocator.Locator.Dock.AutoHideHandle = DockingManager.AutoHideWindow.Handle;
@@ -49,11 +51,8 @@ namespace RemoteConnectionManager
             else
             {
                 ViewModelLocator.Locator.TelemetryService.TrackPage("Exit");
-
-                ViewModelLocator.Locator.Settings.Settings.Width = Width;
-                ViewModelLocator.Locator.Settings.Settings.Height = Height;
-                ViewModelLocator.Locator.Settings.Settings.WindowState = WindowState;
                 ViewModelLocator.Locator.Settings.SaveSettings();
+                DockingManager.SaveLayout(ViewModelLocator.Locator.Settings.LayoutFilePath);
             }
         }
     }

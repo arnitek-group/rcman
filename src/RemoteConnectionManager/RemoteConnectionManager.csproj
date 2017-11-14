@@ -147,6 +147,7 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
+    <Compile Include="Extensions\DockingManagerExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\RecursiveExtensions.cs" />
     <Compile Include="MainMenuControl.xaml.cs">

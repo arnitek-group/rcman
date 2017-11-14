@@ -9,5 +9,7 @@ namespace RemoteConnectionManager.Services
 
         UserConnections LoadConnections();
         void SaveConnections(UserConnections userConnections);
+
+        string LayoutFilePath { get; }
     }
 }

@@ -6,9 +6,9 @@
         xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
         xmlns:rcman="clr-namespace:RemoteConnectionManager"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        Width="{Binding Settings.Settings.Width, Source={StaticResource Locator}}"
-        Height="{Binding Settings.Settings.Height, Source={StaticResource Locator}}"
-        WindowState="{Binding Settings.Settings.WindowState, Source={StaticResource Locator}}"
+        Width="{Binding Settings.Width, Source={StaticResource Locator}, Mode=TwoWay}"
+        Height="{Binding Settings.Height, Source={StaticResource Locator}, Mode=TwoWay}"
+        WindowState="{Binding Settings.WindowState, Source={StaticResource Locator}, Mode=TwoWay}"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
 
     <xcad:DockingManager x:Name="DockingManager"
@@ -39,10 +39,10 @@
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                     <xcad:DropDownButton DropDownContextMenu="{Binding Content.ContextMenu}"
-                                     Visibility="{Binding Content.ContextMenu, Converter={StaticResource NullToVisibilityConverter}}"
-                                     Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                     Focusable="False" VerticalAlignment="Center"
-                                     Padding="-1" Margin="0,0,5,0">
+                                         Visibility="{Binding Content.ContextMenu, Converter={StaticResource NullToVisibilityConverter}}"
+                                         Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+                                         Focusable="False" VerticalAlignment="Center"
+                                         Padding="-1" Margin="0,0,5,0">
                         <Image Source="/Xceed.Wpf.AvalonDock.Themes.Aero;component/Images/PinMenu_Dark.png" Width="13" />
                     </xcad:DropDownButton>
                     <Image Source="Resources/RemoteDesktop_16x.png" />
@@ -76,22 +76,25 @@
 
         <xcad:LayoutRoot>
             <xcad:LayoutPanel>
-                <xcad:LayoutAnchorablePaneGroup DockWidth="{StaticResource SidePanelWidth}">
+                <xcad:LayoutAnchorablePaneGroup DockWidth="{StaticResource SidePanelWidth}"
+                                                Orientation="Vertical">
                     <xcad:LayoutAnchorablePane>
-                        <xcad:LayoutAnchorable Title="{x:Static prop:Resources.Connections}"
+                        <xcad:LayoutAnchorable ContentId="Connections"
+                                               Title="{x:Static prop:Resources.Connections}"
                                                CanHide="False" CanClose="False" CanFloat="False"
                                                AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="5" />
-                                        <RowDefinition Height="{StaticResource PropertiesHeight}" />
-                                    </Grid.RowDefinitions>
-                                    <rcman:CategoryItemsControl Grid.Row="0" />
-                                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
-                                    <rcman:PropertiesControl Grid.Row="2" />
-                                </Grid>
+                                <rcman:CategoryItemsControl />
+                            </DataTemplate>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                    <xcad:LayoutAnchorablePane>
+                        <xcad:LayoutAnchorable ContentId="Properties"
+                                               Title="{x:Static prop:Resources.Properties}"
+                                               CanHide="False" CanClose="False" CanFloat="False"
+                                               AutoHideWidth="{StaticResource SidePanelAutoHideWidth}">
+                            <DataTemplate>
+                                <rcman:PropertiesControl />
                             </DataTemplate>
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>

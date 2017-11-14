@@ -15,9 +15,11 @@ namespace RemoteConnectionManager.Services
         private const string AppFolder = "RCManager";
 #endif
         private const string SettingsFileName = "settings.json";
+        private const string LayoutFileName = "layout.xml";
         private const string ConnectionsFileName = "connections.json";
 
         private readonly string _settingsFilePath;
+        private readonly string _layoutFilePath;
         private readonly string _connectionsFilePath;
 
         public JsonSettingsService()
@@ -26,6 +28,10 @@ namespace RemoteConnectionManager.Services
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 AppFolder,
                 SettingsFileName);
+            _layoutFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                AppFolder,
+                LayoutFileName);
             _connectionsFilePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 AppFolder,
@@ -51,6 +57,8 @@ namespace RemoteConnectionManager.Services
         {
             SaveObjectToFile(userConnections, _connectionsFilePath);
         }
+
+        public string LayoutFilePath => _layoutFilePath;
 
         private T LoadObjectFromFile<T>(string file) where T : class
         {
