@@ -1,18 +1,23 @@
 ﻿using GalaSoft.MvvmLight;
+using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Services;
-using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace RemoteConnectionManager.ViewModels
 {
-    public class SettingsViewModel: ViewModelBase
+    public class SettingsViewModel : ViewModelBase
     {
         private readonly ISettingsService _settingsService;
+        private readonly ITelemetryService _telemetryService;
 
-        public SettingsViewModel(ISettingsService settingsService)
+        public SettingsViewModel(
+            ISettingsService settingsService,
+            ITelemetryService telemetryService)
         {
             _settingsService = settingsService;
+            _telemetryService = telemetryService;
         }
 
         public double Width
@@ -64,6 +69,11 @@ namespace RemoteConnectionManager.ViewModels
                     _settingsService.ApplicationSettings.Theme = value;
                     RaisePropertyChanged();
                     SaveSettings();
+
+                    _telemetryService.TrackEvent("Theme", new Dictionary<string, string>
+                    {
+                        {"Theme", _settingsService.ApplicationSettings.Theme.ToString() }
+                    });
                 }
             }
         }
