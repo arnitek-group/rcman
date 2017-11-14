@@ -8,7 +8,8 @@
              mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="250">
 
     <xctk:PropertyGrid SelectedObject="{Binding Settings, Source={StaticResource Locator}}"
-                       SelectedObjectName="{x:Static prop:Resources.Settings}"
+                       SelectedObjectTypeName="{x:Static prop:Resources.Settings}"
+                       SelectedObjectName=""
                        ShowSearchBox="False" ShowSortOptions="False"
                        AutoGenerateProperties="False" NameColumnWidth="100">
 

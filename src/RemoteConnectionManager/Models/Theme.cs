@@ -2,9 +2,9 @@
 {
     public enum Theme
     {
-        Generic,
         Aero,
         Metro,
-        VS2010
+        VS2010,
+        Generic
     }
 }
