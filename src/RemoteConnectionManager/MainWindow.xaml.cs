@@ -52,8 +52,7 @@ namespace RemoteConnectionManager
             {
                 ViewModelLocator.Locator.TelemetryService.TrackPage("Exit");
                 ViewModelLocator.Locator.Settings.SaveSettings();
-                // TODO: Update to the WPF toolkit v3.3
-                // DockingManager.SaveLayout(ViewModelLocator.Locator.Settings.LayoutFile);
+                DockingManager.SaveLayout(ViewModelLocator.Locator.Settings.LayoutFile);
             }
         }
     }

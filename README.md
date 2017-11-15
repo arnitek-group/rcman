@@ -15,9 +15,11 @@ Download the *rcman.application* file and execute it.
 * RDP
   * Special key support like Windows, Windows+E, Ctrl+Shift+Esc
   * Smart resizing
+* Connections importing
 * Tabbed interface with docking support powered by AvalonDock
 * Connections, Credentials and Categories are stored in a settings file
 * Password encryption
+* UI themes support
 
 ## Technologies and Tools
 * Windows Presentation Foundation (WPF)
