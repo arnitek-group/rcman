@@ -21,6 +21,9 @@ Download the *rcman.application* file and execute it.
 * Password encryption
 * UI themes support
 
+## Themes
+![Themes](https://raw.githubusercontent.com/nikolayarhangelov/rcman/master/content/Themes.png)
+
 ## Technologies and Tools
 * Windows Presentation Foundation (WPF)
 * Visual Studio 2017
