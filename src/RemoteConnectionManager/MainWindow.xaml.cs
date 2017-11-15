@@ -18,7 +18,7 @@ namespace RemoteConnectionManager
             
             var vi = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
             Title = $"{Properties.Resources.Application} v{vi.ProductMajorPart}.{vi.ProductMinorPart}.{vi.ProductBuildPart}";
-
+            
             Loaded += (sender, e) =>
             {
                 ViewModelLocator.Locator.TelemetryService.TrackPage("Application");
