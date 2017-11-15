@@ -9,6 +9,7 @@
         Width="{Binding Settings.Width, Source={StaticResource Locator}, Mode=TwoWay}"
         Height="{Binding Settings.Height, Source={StaticResource Locator}, Mode=TwoWay}"
         WindowState="{Binding Settings.WindowState, Source={StaticResource Locator}, Mode=TwoWay}"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
 
     <xcad:DockingManager x:Name="DockingManager"
