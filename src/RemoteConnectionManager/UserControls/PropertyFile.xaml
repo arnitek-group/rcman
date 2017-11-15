@@ -6,11 +6,11 @@
              mc:Ignorable="d" d:DesignWidth="250">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="TextBox_File" Grid.Column="0" Text="{Binding Value, Mode=TwoWay}" />
-        <Button Grid.Column="1" Content=" ... " Click="Button_Click" />
+        <Button Grid.Column="0" Content=" ... " Click="Button_Click" />
+        <TextBox x:Name="TextBox_File" Grid.Column="1" Text="{Binding Value, Mode=TwoWay}" />
     </Grid>
 </UserControl>
