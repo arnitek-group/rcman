@@ -92,7 +92,6 @@ namespace RemoteConnectionManager.Rdp.Clients
 
         public override void UpdateSessionDisplaySettings(int width, int height)
         {
-            var version = RdpClient.Version;
             RdpClient.UpdateSessionDisplaySettings(
                 (uint)width, (uint)height,
                 (uint)width, (uint)height,
