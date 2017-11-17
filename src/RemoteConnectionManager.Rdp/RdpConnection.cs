@@ -1,5 +1,4 @@
-﻿using MSTSCLib;
-using RemoteConnectionManager.Core.Connections;
+﻿using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Core.Interop;
 using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Rdp.Properties;
@@ -78,14 +77,14 @@ namespace RemoteConnectionManager.Rdp
                 if (_hostRdp == null)
                 {
                     _hostRdp = new RdpHost();
-                    _hostRdp.AxMsRdpClient.Server = ConnectionSettings.Server;
+                    _hostRdp.Rdp.Server = ConnectionSettings.Server;
 
                     if (int.TryParse(ConnectionSettings.Port, out var port))
                     {
-                        _hostRdp.AxMsRdpClient.AdvancedSettings2.RDPPort = port;
+                        _hostRdp.Rdp.Port = port;
                     }
 
-                    _hostRdp.AxMsRdpClient.OnDisconnected += AxMsRdpClient_OnDisconnected;
+                    _hostRdp.Rdp.OnDisconnected += Rdp_OnDisconnected;
                 }
 
                 var credentials = ConnectionSettings.GetCredentials();
@@ -93,27 +92,18 @@ namespace RemoteConnectionManager.Rdp
                 {
                     if (!string.IsNullOrEmpty(credentials.Domain))
                     {
-                        _hostRdp.AxMsRdpClient.Domain = credentials.Domain;
+                        _hostRdp.Rdp.Domain = credentials.Domain;
                     }
                     if (!string.IsNullOrEmpty(credentials.Username) && !string.IsNullOrEmpty(credentials.Password))
                     {
-                        _hostRdp.AxMsRdpClient.UserName = credentials.Username;
-                        _hostRdp.AxMsRdpClient.AdvancedSettings2.ClearTextPassword = credentials.GetPassword();
+                        _hostRdp.Rdp.UserName = credentials.Username;
+                        _hostRdp.Rdp.Password = credentials.GetPassword();
                     }
                 }
-
-                _hostRdp.AxMsRdpClient.AdvancedSettings2.SmartSizing = true;
-                //_hostRdp.AxMsRdpClient.AdvancedSettings4.ConnectionBarShowMinimizeButton = false;
-                // Keyboard redirection settings.
-                // https://msdn.microsoft.com/en-us/library/aa381095(v=vs.85).aspx
-                // https://msdn.microsoft.com/en-us/library/aa381299(v=vs.85).aspx
-                _hostRdp.AxMsRdpClient.SecuredSettings2.KeyboardHookMode = 1;
-                _hostRdp.AxMsRdpClient.AdvancedSettings.allowBackgroundInput = 1;
-                _hostRdp.AxMsRdpClient.AdvancedSettings2.EnableWindowsKey = 1;
-                CastAndExecute<IMsRdpClient7>(x => x.AdvancedSettings7.EnableCredSspSupport = true);
+                
                 // Connection settings.
-                _hostRdp.AxMsRdpClient.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
-                _hostRdp.AxMsRdpClient.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
+                _hostRdp.Rdp.ConnectingText = Resources.Connecting + " " + ConnectionSettings.Server;
+                _hostRdp.Rdp.DisconnectedText = Resources.Disconnected + " " + ConnectionSettings.Server;
 
                 if (_hostGrid == null)
                 {
@@ -141,9 +131,9 @@ namespace RemoteConnectionManager.Rdp
         {
             if (IsConnected)
             {
-                if (_hostRdp.AxMsRdpClient.Connected == 1)
+                if (_hostRdp.Rdp.Connected)
                 {
-                    _hostRdp.AxMsRdpClient.Disconnect();
+                    _hostRdp.Rdp.Disconnect();
                 }
                 IsConnected = false;
             }
@@ -160,10 +150,10 @@ namespace RemoteConnectionManager.Rdp
 
             if (_hostRdp != null)
             {
-                _hostRdp.AxMsRdpClient.OnDisconnected -= AxMsRdpClient_OnDisconnected;
-                if (_hostRdp.AxMsRdpClient.Connected == 1 && IsConnected)
+                _hostRdp.Rdp.OnDisconnected -= Rdp_OnDisconnected;
+                if (_hostRdp.Rdp.Connected && IsConnected)
                 {
-                    _hostRdp.AxMsRdpClient.Disconnect();
+                    _hostRdp.Rdp.Disconnect();
                 }
                 _hostRdp.Invoke((MethodInvoker)delegate { _hostRdp.Dispose(); });
                 _hostRdp = null;
@@ -173,42 +163,15 @@ namespace RemoteConnectionManager.Rdp
         }
 
         #region RDP
-
-        private void CastAndExecute<T>(Action<T> action) where T : IMsRdpClient
-        {
-            if (_hostRdp.AxMsRdpClient.GetOcx() is T ocx)
-            {
-                action(ocx);
-            }
-        }
-
+        
         private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
         {
             PrepareSessionDisplaSettingsAndConnect();
             _hostGrid.SizeChanged -= Host_SizeChanged_Initial;
         }
 
-        private void AxMsRdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        private void Rdp_OnDisconnected(object sender, DisconnectReason reason)
         {
-            var reason = DisconnectReason.ConnectionTerminated;
-            // https://social.technet.microsoft.com/wiki/contents/articles/37870.rds-remote-desktop-client-disconnect-codes-and-reasons.aspx
-            // https://msdn.microsoft.com/en-us/library/aa382170%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
-            switch (e.discReason)
-            {
-                case Reason_ClientDisconnect:
-                case Reason_ServerDisconnect:
-                    reason = DisconnectReason.ConnectionEnded;
-                    break;
-                case Reason_DisconnectedByUser:
-                    reason = DisconnectReason.KickedOut;
-                    break;
-                case Reason_ServerNotFound:
-                    reason = DisconnectReason.ServerNotFound;
-                    break;
-                case Reason_TimedOut:
-                    reason = DisconnectReason.ConnectionTimedOut;
-                    break;
-            }
             IsConnected = false;
             Disconnected?.Invoke(this, reason);
         }
@@ -216,11 +179,11 @@ namespace RemoteConnectionManager.Rdp
         private void PrepareSessionDisplaSettingsAndConnect()
         {
             var size = GetClientSize();
-            _hostRdp.AxMsRdpClient.DesktopWidth = (int)size.Width;
-            _hostRdp.AxMsRdpClient.DesktopHeight = (int)size.Height;
+            _hostRdp.Rdp.DesktopWidth = (int)size.Width;
+            _hostRdp.Rdp.DesktopHeight = (int)size.Height;
             try
             {
-                _hostRdp.AxMsRdpClient.Connect();
+                _hostRdp.Rdp.Connect();
             }
             catch
             {
@@ -235,15 +198,12 @@ namespace RemoteConnectionManager.Rdp
         {
             if (Mouse.LeftButton == MouseButtonState.Released)
             {
-                if (_hostRdp.AxMsRdpClient.Connected == 1)
+                if (_hostRdp.Rdp.Connected)
                 {
                     try
                     {
                         var size = GetClientSize();
-                        CastAndExecute<IMsRdpClient9>(x => x.UpdateSessionDisplaySettings(
-                            (uint)size.Width, (uint)size.Height,
-                            (uint)size.Width, (uint)size.Height,
-                            0, 1, 1));
+                        _hostRdp.Rdp.UpdateSessionDisplaySettings((int)size.Width, (int)size.Height);
                     }
                     catch
                     { }
@@ -253,12 +213,6 @@ namespace RemoteConnectionManager.Rdp
                 _topWindowHandle, IntPtr.Zero,
                 0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
         }
-
-        private const int Reason_ClientDisconnect = 0x1;
-        private const int Reason_DisconnectedByUser = 0x2;
-        private const int Reason_ServerDisconnect = 0x3;
-        private const int Reason_ServerNotFound = 0x104;
-        private const int Reason_TimedOut = 0x108;
 
         #endregion RDP
 
@@ -272,17 +226,13 @@ namespace RemoteConnectionManager.Rdp
 
         private void ToggleFullscreen()
         {
-            _hostRdp.AxMsRdpClient.FullScreenTitle = ConnectionSettings.Server;
-            _hostRdp.AxMsRdpClient.FullScreen = !_hostRdp.AxMsRdpClient.FullScreen;
-            if (_hostRdp.AxMsRdpClient.Connected == 1)
+            _hostRdp.Rdp.FullScreen = !_hostRdp.Rdp.FullScreen;
+            if (_hostRdp.Rdp.Connected)
             {
                 try
                 {
                     var size = GetClientSize();
-                    CastAndExecute<IMsRdpClient9>(x => x.UpdateSessionDisplaySettings(
-                        (uint)size.Width, (uint)size.Height,
-                        (uint)size.Width, (uint)size.Height,
-                        0, 1, 1));
+                    _hostRdp.Rdp.UpdateSessionDisplaySettings((int)size.Width, (int)size.Height);
                 }
                 catch
                 { }
@@ -297,7 +247,7 @@ namespace RemoteConnectionManager.Rdp
 
         private Size GetClientSize()
         {
-            if (_hostRdp.AxMsRdpClient.FullScreen)
+            if (_hostRdp.Rdp.FullScreen)
             {
                 var gridLocation = _hostGrid.PointToScreen(new Point(0, 0));
                 var screen = Screen.FromPoint(new System.Drawing.Point((int)gridLocation.X, (int)gridLocation.Y));
@@ -310,14 +260,9 @@ namespace RemoteConnectionManager.Rdp
 
         private void SendCtrlAltDel()
         {
-            if (_hostRdp.AxMsRdpClient.Connected == 1)
+            if (_hostRdp.Rdp.Connected)
             {
-                // Source: https://github.com/bosima/RDManager/blob/master/RDManager/MainForm.cs
-                _hostRdp.AxMsRdpClient.Focus();
-                new MsRdpClientNonScriptableWrapper(_hostRdp.AxMsRdpClient.GetOcx()).SendKeys(
-                    new int[] { 0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d },
-                    new bool[] { false, false, false, true, true, true, }
-                );
+                _hostRdp.Rdp.SendCtrlAltDel();
             }
 
             _telemetryService.TrackEvent("Command", new Dictionary<string, string>

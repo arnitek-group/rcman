@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace RemoteConnectionManager.Rdp
+namespace RemoteConnectionManager.Rdp.Clients
 {
     // Source: https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/9095625c-4361-4e0b-bfcf-be15550b60a8/imsrdpclientnonscriptablesendkeys?forum=windowsgeneraldevelopmentissues
     internal class MsRdpClientNonScriptableWrapper

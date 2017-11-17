@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using RemoteConnectionManager.Rdp.Clients;
+using System.Windows.Forms;
 
 namespace RemoteConnectionManager.Rdp
 {
@@ -6,7 +7,11 @@ namespace RemoteConnectionManager.Rdp
     {
         public RdpHost()
         {
+            Rdp = RdpClient.Create();
+
             InitializeComponent();
         }
+
+        internal RdpClient Rdp { get; }
     }
 }

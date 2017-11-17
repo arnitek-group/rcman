@@ -1,4 +1,5 @@
-﻿
+﻿using System.Windows.Forms;
+
 namespace RemoteConnectionManager.Rdp
 {
     partial class RdpHost
@@ -30,7 +31,7 @@ namespace RemoteConnectionManager.Rdp
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RdpHost));
-            this.AxMsRdpClient = new AxMSTSCLib.AxMsRdpClient5NotSafeForScripting();
+            this.AxMsRdpClient = Rdp.Client;
             ((System.ComponentModel.ISupportInitialize)(this.AxMsRdpClient)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +58,6 @@ namespace RemoteConnectionManager.Rdp
 
         #endregion
 
-        public AxMSTSCLib.AxMsRdpClient5NotSafeForScripting AxMsRdpClient;
+        private AxHost AxMsRdpClient;
     }
 }
