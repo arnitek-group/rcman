@@ -21,6 +21,9 @@ Download the *rcman.application* file and execute it.
 * Password encryption
 * UI themes support
 
+## Docking
+![Docking](https://raw.githubusercontent.com/nikolayarhangelov/rcman/master/content/Docking.png)
+
 ## Themes
 ![Themes](https://raw.githubusercontent.com/nikolayarhangelov/rcman/master/content/Themes.png)
 
