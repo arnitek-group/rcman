@@ -237,4 +237,13 @@
   <data name="ThemeDescription" xml:space="preserve">
     <value>Visual theme for the application.</value>
   </data>
+  <data name="ConnectionsFile" xml:space="preserve">
+    <value>Connections File</value>
+  </data>
+  <data name="ConnectionsFileDescription" xml:space="preserve">
+    <value>Stores all your connection settings and credentials. You can move it to a convenient location like a cloud-synced folder.</value>
+  </data>
+  <data name="ErrorMoveConnections" xml:space="preserve">
+    <value>Failed to move the connections file to the new location.</value>
+  </data>
 </root>

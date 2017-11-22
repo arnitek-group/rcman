@@ -3,20 +3,25 @@ using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.Models;
 using RemoteConnectionManager.Services;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
+using RemoteConnectionManager.Properties;
 
 namespace RemoteConnectionManager.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
         private readonly ISettingsService _settingsService;
+        private readonly IDialogService _dialogService;
         private readonly ITelemetryService _telemetryService;
 
         public SettingsViewModel(
             ISettingsService settingsService,
+            IDialogService dialogService,
             ITelemetryService telemetryService)
         {
             _settingsService = settingsService;
+            _dialogService = dialogService;
             _telemetryService = telemetryService;
         }
 
@@ -74,6 +79,29 @@ namespace RemoteConnectionManager.ViewModels
                     {
                         {"Theme", _settingsService.ApplicationSettings.Theme.ToString() }
                     });
+                }
+            }
+        }
+
+        public string ConnectionsFile
+        {
+            get { return _settingsService.ApplicationSettings.ConnectionsFile; }
+            set
+            {
+                if (_settingsService.ApplicationSettings.ConnectionsFile != value)
+                {
+                    try
+                    {
+                        File.Move(_settingsService.ApplicationSettings.ConnectionsFile, value);
+
+                        _settingsService.ApplicationSettings.ConnectionsFile = value;
+                        RaisePropertyChanged();
+                        SaveSettings();
+                    }
+                    catch
+                    {
+                        _dialogService.ShowWarningDialog(Resources.ErrorMoveConnections);
+                    }
                 }
             }
         }

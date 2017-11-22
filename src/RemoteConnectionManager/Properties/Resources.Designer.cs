@@ -133,6 +133,24 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connections File.
+        /// </summary>
+        public static string ConnectionsFile {
+            get {
+                return ResourceManager.GetString("ConnectionsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stores all your connection settings and credentials. You can move it to a convenient location like a cloud-synced folder..
+        /// </summary>
+        public static string ConnectionsFileDescription {
+            get {
+                return ResourceManager.GetString("ConnectionsFileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string Create {
@@ -201,6 +219,15 @@ namespace RemoteConnectionManager.Properties {
         public static string DomainDescription {
             get {
                 return ResourceManager.GetString("DomainDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to move the connections file to the new location..
+        /// </summary>
+        public static string ErrorMoveConnections {
+            get {
+                return ResourceManager.GetString("ErrorMoveConnections", resourceCulture);
             }
         }
         

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:prop="clr-namespace:RemoteConnectionManager.Properties"
+             xmlns:userControls="clr-namespace:RemoteConnectionManager.UserControls"
              mc:Ignorable="d" d:DesignHeight="250" d:DesignWidth="250">
 
     <xctk:PropertyGrid SelectedObject="{Binding Settings, Source={StaticResource Locator}}"
@@ -17,6 +18,20 @@
             <xctk:PropertyDefinition DisplayOrder="1" TargetProperties="Theme"
                                      DisplayName="{x:Static prop:Resources.Theme}"
                                      Description="{x:Static prop:Resources.ThemeDescription}" />
+
+            <xctk:PropertyDefinition DisplayOrder="2" TargetProperties="ConnectionsFile"
+                                     DisplayName="{x:Static prop:Resources.ConnectionsFile}"
+                                     Description="{x:Static prop:Resources.ConnectionsFileDescription}" />
         </xctk:PropertyGrid.PropertyDefinitions>
+
+        <xctk:PropertyGrid.EditorDefinitions>
+            <xctk:EditorTemplateDefinition TargetProperties="ConnectionsFile">
+                <xctk:EditorTemplateDefinition.EditingTemplate>
+                    <DataTemplate>
+                        <userControls:PropertyFileSave DataContext="{Binding}" />
+                    </DataTemplate>
+                </xctk:EditorTemplateDefinition.EditingTemplate>
+            </xctk:EditorTemplateDefinition>
+        </xctk:PropertyGrid.EditorDefinitions>
     </xctk:PropertyGrid>
 </UserControl>
