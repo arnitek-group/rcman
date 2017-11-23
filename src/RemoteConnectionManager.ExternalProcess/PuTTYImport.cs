@@ -53,7 +53,7 @@ namespace RemoteConnectionManager.ExternalProcess
                     });
                 }
             }
-            catch()
+            catch
             { }
 
             return importedSessions.ToArray();
