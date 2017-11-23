@@ -14,42 +14,47 @@ namespace RemoteConnectionManager.ExternalProcess
         {
             var importedSessions = new List<CategoryItem>();
 
-            var sessionsKey = Registry.CurrentUser.OpenSubKey(Sessions);
-            if (sessionsKey == null || sessionsKey.SubKeyCount == 0)
+            try
             {
-                importedSessions.ToArray();
-            }
-
-            var sessionsKeys = sessionsKey
-                .GetSubKeyNames()
-                .Select(x => new { Name = x, Key = sessionsKey.OpenSubKey(x) })
-                .ToArray();
-            foreach (var tuple in sessionsKeys)
-            {
-                var sk = tuple.Key;
-                var hostName = sk.GetValue("HostName", null) as string;
-                if (string.IsNullOrEmpty(hostName))
+                var sessionsKey = Registry.CurrentUser.OpenSubKey(Sessions);
+                if (sessionsKey == null || sessionsKey.SubKeyCount == 0)
                 {
-                    continue;
+                    importedSessions.ToArray();
                 }
 
-                var portNumber = sk.GetValue("PortNumber", null)?.ToString() as string;
-                var userName = sk.GetValue("UserName", null) as string;
-                var publicKeyFile = sk.GetValue("PublicKeyFile", null) as string;
-
-                importedSessions.Add(new CategoryItem
+                var sessionsKeys = sessionsKey
+                    .GetSubKeyNames()
+                    .Select(x => new { Name = x, Key = sessionsKey.OpenSubKey(x) })
+                    .ToArray();
+                foreach (var tuple in sessionsKeys)
                 {
-                    DisplayName = Uri.UnescapeDataString(tuple.Name),
-                    ConnectionSettings = new ConnectionSettings
+                    var sk = tuple.Key;
+                    var hostName = sk.GetValue("HostName", null) as string;
+                    if (string.IsNullOrEmpty(hostName))
                     {
-                        Server = hostName,
-                        Port = portNumber,
-                        Protocol = Protocol.Ssh,
-                        Username = userName,
-                        KeyFile = publicKeyFile
+                        continue;
                     }
-                });
+
+                    var portNumber = sk.GetValue("PortNumber", null)?.ToString() as string;
+                    var userName = sk.GetValue("UserName", null) as string;
+                    var publicKeyFile = sk.GetValue("PublicKeyFile", null) as string;
+
+                    importedSessions.Add(new CategoryItem
+                    {
+                        DisplayName = Uri.UnescapeDataString(tuple.Name),
+                        ConnectionSettings = new ConnectionSettings
+                        {
+                            Server = hostName,
+                            Port = portNumber,
+                            Protocol = Protocol.Ssh,
+                            Username = userName,
+                            KeyFile = publicKeyFile
+                        }
+                    });
+                }
             }
+            catch()
+            { }
 
             return importedSessions.ToArray();
         }
