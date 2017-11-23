@@ -33,7 +33,7 @@ namespace RemoteConnectionManager.ViewModels
             Items = new ObservableCollection<CategoryItemViewModel>();
             Items.CollectionChanged += CollectionChanged;
 
-            LoadConnections();
+            LoadConnections(_settingsService.LoadConnections().Items);
 
             CreateConnectionSettingsCommand = new RelayCommand(ExecuteCreateConnectionSettingsCommand);
             CreateCredentialsCommand = new RelayCommand(ExecuteCreateCredentialsCommand);
@@ -43,10 +43,10 @@ namespace RemoteConnectionManager.ViewModels
                 CanExecuteDeleteItemCommand);
         }
 
-        private void LoadConnections()
+        public void LoadConnections(CategoryItem[] items)
         {
             SuspendSave = true;
-            LoadSettingsRecursive(_settingsService.LoadConnections().Items, null).ForEach(x => Items.Add(x));
+            LoadSettingsRecursive(items, null).ForEach(x => Items.Add(x));
 
             // Map credentials.
             var connectionSettingsList = Items.GetFlatList(x => x.Items, x => x.ConnectionSettings != null);

@@ -367,6 +367,15 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remote Connection Manager.
+        /// </summary>
+        public static string RCMan {
+            get {
+                return ResourceManager.GetString("RCMan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remote Desktop.
         /// </summary>
         public static string RdpFile {

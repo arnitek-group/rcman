@@ -8,7 +8,7 @@ namespace RemoteConnectionManager.Services
         void SaveSettings();
 
         UserConnections LoadConnections();
+        UserConnections LoadConnections(string filePath);
         void SaveConnections(UserConnections userConnections);
-
     }
 }

@@ -13,6 +13,7 @@
             <MenuItem.Icon>
                 <Image Source="Resources/NewFile_16x.png" Width="16" />
             </MenuItem.Icon>
+            
             <MenuItem Command="{Binding Main.CreateConnectionSettingsCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
                     <TextBlock Text="{x:Static prop:Resources.ConnectionSettings}" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -21,6 +22,7 @@
                     <Image Source="Resources/RemoteDesktop_16x.png" />
                 </MenuItem.Icon>
             </MenuItem>
+            
             <MenuItem Command="{Binding Main.CreateCredentialsCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
                     <TextBlock Text="{x:Static prop:Resources.Credentials}" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -29,6 +31,7 @@
                     <Image Source="Resources/User_16x.png" />
                 </MenuItem.Icon>
             </MenuItem>
+            
             <MenuItem Command="{Binding Main.CreateCategoryCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
                     <TextBlock Text="{x:Static prop:Resources.Category}" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -38,6 +41,7 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
+        
         <MenuItem>
             <MenuItem.Header>
                 <TextBlock Text="{x:Static prop:Resources.Import}" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -45,6 +49,16 @@
             <MenuItem.Icon>
                 <Image Source="Resources/Import_16x.png" Width="16" />
             </MenuItem.Icon>
+            
+            <MenuItem Command="{Binding Import.ImportRcManCommand, Source={StaticResource Locator}}">
+                <MenuItem.Header>
+                    <TextBlock Text="{x:Static prop:Resources.RCMan}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="Resources/icons8-virtual-16.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            
             <MenuItem Command="{Binding Import.ImportRdpFileCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
                     <TextBlock Text="{x:Static prop:Resources.RdpFile}" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -53,6 +67,7 @@
                     <Image Source="Resources/Rdp_16x.png" />
                 </MenuItem.Icon>
             </MenuItem>
+            
             <MenuItem Command="{Binding Import.ImportPuttySessionsCommand, Source={StaticResource Locator}}">
                 <MenuItem.Header>
                     <TextBlock Text="{x:Static prop:Resources.PuttySessions}" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -62,6 +77,7 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
+        
         <MenuItem Command="{Binding Main.DeleteItemCommand, Source={StaticResource Locator}}">
             <MenuItem.Header>
                 <TextBlock Text="{x:Static prop:Resources.Delete}" HorizontalAlignment="Left" VerticalAlignment="Center" />

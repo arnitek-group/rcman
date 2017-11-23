@@ -59,7 +59,12 @@ namespace RemoteConnectionManager.Services
 
         public UserConnections LoadConnections()
         {
-            return LoadObjectFromFile<UserConnections>(_applicationSettings.ConnectionsFile)
+            return LoadConnections(_applicationSettings.ConnectionsFile);
+        }
+
+        public UserConnections LoadConnections(string filePath)
+        {
+            return LoadObjectFromFile<UserConnections>(filePath)
                 ?? new UserConnections() { Items = new CategoryItem[] { } };
         }
 
@@ -70,13 +75,25 @@ namespace RemoteConnectionManager.Services
 
         private T LoadObjectFromFile<T>(string file) where T : class
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(file));
             if (!File.Exists(file))
             {
+                var directory = Path.GetDirectoryName(file);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
                 File.CreateText(file);
                 return null;
             }
-            return JsonConvert.DeserializeObject<T>(File.ReadAllText(file));
+
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(File.ReadAllText(file));
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void SaveObjectToFile(object @object, string file)
