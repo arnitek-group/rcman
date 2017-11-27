@@ -48,6 +48,13 @@ namespace RemoteConnectionManager.ExternalProcess
         {
         }
 
+        public void ZIndexFix()
+        {
+            WindowsInterop.SetWindowPos(
+                _topWindowHandle, IntPtr.Zero,
+                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
+        }
+
         public FrameworkElement UI { get; private set; }
         public System.Windows.Controls.ContextMenu ContextMenu => null;
 
@@ -85,6 +92,7 @@ namespace RemoteConnectionManager.ExternalProcess
                 _hostPanel.Width + 2 * FrameSides,
                 _hostPanel.Height + FrameSides + FrameTop,
                 WindowsInterop.SWP_NOACTIVATE | WindowsInterop.SWP_SHOWWINDOW);
+            ZIndexFix();
 
             _hostGrid = new Grid();
             _hostGrid.Children.Add(new WindowsFormsHost { Child = _hostPanel });
@@ -116,9 +124,7 @@ namespace RemoteConnectionManager.ExternalProcess
                 _hostPanel.Width + 2 * FrameSides,
                 _hostPanel.Height + FrameSides + FrameTop,
                 WindowsInterop.SWP_NOACTIVATE | WindowsInterop.SWP_SHOWWINDOW);
-            WindowsInterop.SetWindowPos(
-                _topWindowHandle, IntPtr.Zero,
-                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
+            ZIndexFix();
         }
 
         private void DestroyHostedProcess()

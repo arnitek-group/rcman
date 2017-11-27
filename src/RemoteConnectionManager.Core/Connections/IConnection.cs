@@ -13,6 +13,8 @@ namespace RemoteConnectionManager.Core.Connections
         void Destroy();
         bool IsConnected { get; }
 
+        void ZIndexFix();
+
         FrameworkElement UI { get; }
         ContextMenu ContextMenu { get; }
 

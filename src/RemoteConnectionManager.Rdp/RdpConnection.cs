@@ -162,8 +162,15 @@ namespace RemoteConnectionManager.Rdp
             UI = null;
         }
 
+        public void ZIndexFix()
+        {
+            WindowsInterop.SetWindowPos(
+                _topWindowHandle, IntPtr.Zero,
+                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
+        }
+
         #region RDP
-        
+
         private void Host_SizeChanged_Initial(object sender, SizeChangedEventArgs e)
         {
             PrepareSessionDisplaSettingsAndConnect();
@@ -189,9 +196,7 @@ namespace RemoteConnectionManager.Rdp
             {
                 IsConnected = false;
             }
-            WindowsInterop.SetWindowPos(
-                _topWindowHandle, IntPtr.Zero,
-                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
+            ZIndexFix();
         }
 
         private void UpdateSessionDisplaySettings()
@@ -209,9 +214,7 @@ namespace RemoteConnectionManager.Rdp
                     { }
                 }
             }
-            WindowsInterop.SetWindowPos(
-                _topWindowHandle, IntPtr.Zero,
-                0, 0, 0, 0, WindowsInterop.SWP_NOSIZE);
+            ZIndexFix();
         }
 
         #endregion RDP

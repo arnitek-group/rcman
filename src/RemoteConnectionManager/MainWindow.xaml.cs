@@ -30,6 +30,13 @@ namespace RemoteConnectionManager
                 {
                     ViewModelLocator.Locator.Dock.AutoHideHandle = DockingManager.AutoHideWindow.Handle;
                 };
+                DockingManager.AutoHideWindow.IsVisibleChanged += (sender1, e1) =>
+                {
+                    if (DockingManager.AutoHideWindow.IsVisible)
+                    {
+                        ViewModelLocator.Locator.Connections.Connections.ForEach(x => x.ZIndexFix());
+                    }
+                };
             };
             DockingManager.DocumentClosed += DockingManager_OnDocumentClosed;
         }
