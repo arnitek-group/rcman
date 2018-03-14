@@ -1,6 +1,6 @@
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
 using RemoteConnectionManager.Core.Connections;
 using RemoteConnectionManager.Core.Services;
 using RemoteConnectionManager.ExternalProcess;
