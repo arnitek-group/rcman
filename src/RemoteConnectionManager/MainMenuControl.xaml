@@ -77,13 +77,22 @@
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
-        
+
         <MenuItem Command="{Binding Main.DeleteItemCommand, Source={StaticResource Locator}}">
             <MenuItem.Header>
                 <TextBlock Text="{x:Static prop:Resources.Delete}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </MenuItem.Header>
             <MenuItem.Icon>
                 <Image Source="Resources/VSO_RecycleBin_16x.png" Width="16" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Command="{Binding Main.FeedbackCommand, Source={StaticResource Locator}}">
+            <MenuItem.Header>
+                <TextBlock Text="{x:Static prop:Resources.Feedback}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            </MenuItem.Header>
+            <MenuItem.Icon>
+                <Image Source="Resources/FeedbackBubble_16x.png" Width="16" />
             </MenuItem.Icon>
         </MenuItem>
     </Menu>

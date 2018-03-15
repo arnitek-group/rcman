@@ -6,7 +6,7 @@ namespace RemoteConnectionManager.Core.Services
     public interface ITelemetryService
     {
         void TrackPage(string page);
-        void TrackEvent(string @event, IDictionary<string, string> properties);
+        void TrackEvent(string @event, IDictionary<string, string> properties = null);
         void TrackException(Exception exc);
     }
 }

@@ -66,7 +66,7 @@ namespace RemoteConnectionManager.Services
             });
         }
 
-        public void TrackEvent(string @event, IDictionary<string, string> properties)
+        public void TrackEvent(string @event, IDictionary<string, string> properties = null)
         {
             FlushAsync(tc =>
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RemoteConnectionManager.ViewModels
@@ -41,6 +42,8 @@ namespace RemoteConnectionManager.ViewModels
             DeleteItemCommand = new RelayCommand(
                 ExecuteDeleteItemCommand,
                 CanExecuteDeleteItemCommand);
+
+            FeedbackCommand = new RelayCommand(ExecuteFeedbackCommand);
         }
 
         public void LoadConnections(CategoryItem[] items)
@@ -238,6 +241,13 @@ namespace RemoteConnectionManager.ViewModels
 
             SuspendSave = false;
             SaveConnections();
+        }
+
+        public RelayCommand FeedbackCommand { get; }
+        public void ExecuteFeedbackCommand ()
+        {
+            _telemetryService.TrackEvent("Feedback");
+            Process.Start(Resources.FeedbackLink);
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

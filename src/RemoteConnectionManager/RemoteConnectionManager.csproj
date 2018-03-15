@@ -242,6 +242,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\FeedbackBubble_16x.png" />
     <Resource Include="Resources\icons8-virtual-16.png" />
     <Resource Include="Resources\Rdp_16x.png" />
     <Resource Include="Resources\PuTTY_16x.png" />
