@@ -21,6 +21,12 @@ namespace RemoteConnectionManager.Converters
                     return new Themes.MetroTheme();
                 case Theme.VS2010:
                     return new Themes.VS2010Theme();
+                case Theme.VS2013Blue:
+                    return new Themes.Vs2013BlueTheme();
+                case Theme.VS2013Light:
+                    return new Themes.Vs2013LightTheme();
+                case Theme.VS2013Dark:
+                    return new Themes.Vs2013DarkTheme();
             }
 
             return new Themes.AeroTheme();

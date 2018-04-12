@@ -69,6 +69,11 @@
                         <ContentControl Content="{Binding Content.UI}" />
                     </DataTemplate>
                 </rcman:ItemTemplateSelector.ConnectionTemplate>
+                <rcman:ItemTemplateSelector.ConnectionTemplateVS2013>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding UI}" />
+                    </DataTemplate>
+                </rcman:ItemTemplateSelector.ConnectionTemplateVS2013>
             </rcman:ItemTemplateSelector>
         </xcad:DockingManager.LayoutItemTemplateSelector>
 

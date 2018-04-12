@@ -125,6 +125,9 @@
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2013, Version=2.9.0.1, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.VS2013.2.9.0.1\lib\net40-client\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
+    </Reference>
     <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
     </Reference>
@@ -262,7 +265,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RemoteConnectionManager.Core\RemoteConnectionManager.Core.csproj">

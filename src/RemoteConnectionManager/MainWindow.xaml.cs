@@ -68,11 +68,13 @@ namespace RemoteConnectionManager
     {
         public DataTemplate ConnectionTemplate { get; set; }
 
+        public DataTemplate ConnectionTemplateVS2013 { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            return item is DataTemplate template
-                ? template
-                : ConnectionTemplate;
+            if (item is DataTemplate template) return template;
+            if (item is IConnection) return ConnectionTemplateVS2013;
+            return ConnectionTemplate;
         }
     }
 }
