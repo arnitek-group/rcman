@@ -255,4 +255,7 @@
   <data name="FeedbackLink" xml:space="preserve">
     <value>https://docs.google.com/forms/d/1bga9F3jZeHWNde6S9RqxNw4i1o6IyNMqG7-kNU1Q1CY/edit?usp=sharing</value>
   </data>
+  <data name="Releases" xml:space="preserve">
+    <value>https://github.com/nikolayarhangelov/rcman/releases</value>
+  </data>
 </root>

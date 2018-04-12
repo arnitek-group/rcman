@@ -43,7 +43,10 @@ namespace RemoteConnectionManager.ViewModels
                 ExecuteDeleteItemCommand,
                 CanExecuteDeleteItemCommand);
 
+            ReleasesCommand = new RelayCommand(ExecuteReleasesCommand);
             FeedbackCommand = new RelayCommand(ExecuteFeedbackCommand);
+
+            CheckVersion();
         }
 
         public void LoadConnections(CategoryItem[] items)
@@ -84,7 +87,26 @@ namespace RemoteConnectionManager.ViewModels
 
             return civms;
         }
-        
+
+
+        private void CheckVersion()
+        {
+            var settingsVersionText = string.IsNullOrEmpty(_settingsService.ApplicationSettings.Version)
+                ? "0.0.0.0"
+                : _settingsService.ApplicationSettings.Version;
+
+            var settingsVersion = new Version(settingsVersionText);
+            var currentVersion = new Version(Core.AssemblyInfo.Version);
+
+            if (currentVersion > settingsVersion)
+            {
+                _settingsService.ApplicationSettings.Version = Core.AssemblyInfo.Version;
+                _settingsService.SaveSettings();
+
+                ReleasesCommand.Execute(null);
+            }
+        }
+
         public ObservableCollection<CategoryItemViewModel> Items { get; }
 
         private CategoryItemViewModel _selectedItem;
@@ -241,6 +263,12 @@ namespace RemoteConnectionManager.ViewModels
 
             SuspendSave = false;
             SaveConnections();
+        }
+
+        public RelayCommand ReleasesCommand { get; }
+        public void ExecuteReleasesCommand()
+        {
+            Process.Start(Resources.Releases);
         }
 
         public RelayCommand FeedbackCommand { get; }

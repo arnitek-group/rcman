@@ -4,6 +4,7 @@ namespace RemoteConnectionManager.Models
 {
     public class ApplicationSettings
     {
+        public string Version { get; set; }
         public string LayoutFile { get; set; }
         public string ConnectionsFile { get; set; }
 
