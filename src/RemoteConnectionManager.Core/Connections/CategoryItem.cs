@@ -10,6 +10,7 @@ namespace RemoteConnectionManager.Core.Connections
         }
 
         public string DisplayName { get; set; }
+        public string Notes { get; set; }
         public bool IsExpanded { get; set; }  
 
         public ConnectionSettings ConnectionSettings { get; set; }

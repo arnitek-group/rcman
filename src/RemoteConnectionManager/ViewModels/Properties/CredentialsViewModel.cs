@@ -24,6 +24,19 @@ namespace RemoteConnectionManager.ViewModels.Properties
             }
         }
 
+        public string Notes
+        {
+            get { return Parent.Notes; }
+            set
+            {
+                if (Parent.Notes != value)
+                {
+                    Parent.Notes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public string Domain
         {
             get { return Parent.CategoryItem.Credentials.Domain; }

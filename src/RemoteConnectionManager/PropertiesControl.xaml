@@ -60,13 +60,28 @@
                                          DisplayName="{x:Static prop:Resources.Credentials}"
                                          Description="{x:Static prop:Resources.CredentialsDescription}"
                                          Category="{x:Static prop:Resources.Optional}" />
-            </xctk:PropertyGrid.PropertyDefinitions>
+                
+                <xctk:PropertyDefinition DisplayOrder="10" TargetProperties="Notes"
+                                         DisplayName="{x:Static prop:Resources.Notes}"
+                                         Description="{x:Static prop:Resources.NotesDescription}"
+                                         Category="{x:Static prop:Resources.Optional}" />
+        </xctk:PropertyGrid.PropertyDefinitions>
 
             <xctk:PropertyGrid.EditorDefinitions>
+                <xctk:EditorTemplateDefinition TargetProperties="Notes">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Value, Mode=TwoWay}" Style="{StaticResource PropertyGridTextBox}"
+                                     AcceptsReturn="True" AcceptsTab="True" />
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+                
                 <xctk:EditorTemplateDefinition TargetProperties="Protocol">
                     <xctk:EditorTemplateDefinition.EditingTemplate>
                         <DataTemplate>
                             <ComboBox ItemsSource="{Binding Connections.Protocols, Source={StaticResource Locator}}"
+                                      Height="{StaticResource PropertyGridRowHeight}"
                                       SelectedValue="{Binding Value, Mode=TwoWay}"
                                       SelectedValuePath="Protocol"
                                       DisplayMemberPath="DisplayName" />
@@ -78,6 +93,7 @@
                     <xctk:EditorTemplateDefinition.EditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedItem="{Binding Value, Mode=TwoWay, Converter={StaticResource PropertyGridCredentialsConverter}}"
+                                      Height="{StaticResource PropertyGridRowHeight}"
                                       DisplayMemberPath="DisplayName">
                                 <ComboBox.ItemsSource>
                                     <CompositeCollection>

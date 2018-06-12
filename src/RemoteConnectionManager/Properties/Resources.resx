@@ -258,4 +258,10 @@
   <data name="Releases" xml:space="preserve">
     <value>https://github.com/nikolayarhangelov/rcman/releases</value>
   </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NotesDescription" xml:space="preserve">
+    <value>Add notes to this item.</value>
+  </data>
 </root>

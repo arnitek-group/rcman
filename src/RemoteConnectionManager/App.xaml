@@ -3,6 +3,7 @@
         <ResourceDictionary>
             <vm:ViewModelLocator x:Key="Locator" />
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converters:StringNullToVisibilityConverter x:Key="StringNullToVisibilityConverter" />
             <converters:CategoryItemToImageConverter x:Key="CategoryItemToImageConverter" />
             <converters:PropertyGridCredentialsConverter x:Key="PropertyGridCredentialsConverter" />
             <converters:ObjectTypeNameConverter x:Key="ObjectTypeNameConverter" />
@@ -12,6 +13,17 @@
             <GridLength x:Key="SidePanelWidth">250</GridLength>
             <system:Double x:Key="SidePanelAutoHideWidth">150</system:Double>
             <GridLength x:Key="PropertiesHeight">270</GridLength>
+            <system:Double x:Key="PropertyGridRowHeight">23</system:Double>
+            <Style x:Key="PropertyGridTextBox" TargetType="TextBox">
+                <Setter Property="MinHeight" Value="{StaticResource PropertyGridRowHeight}" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+            </Style>
+            <Style x:Key="PropertyGridPasswordBox" TargetType="PasswordBox">
+                <Setter Property="Height" Value="{StaticResource PropertyGridRowHeight}" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+            </Style>
             <!-- Source: https://www.codeproject.com/Tips/673071/WPF-TreeView-with-WinForms-Style-Fomat -->
             <Style x:Key="CategoryTreeViewItemStyle" TargetType="controls:CategoryTreeViewItem">
                 <Setter Property="Background" Value="Transparent" />

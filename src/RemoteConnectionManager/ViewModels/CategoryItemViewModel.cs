@@ -61,6 +61,19 @@ namespace RemoteConnectionManager.ViewModels
             }
         }
 
+        public string Notes
+        {
+            get { return CategoryItem.Notes; }
+            set
+            {
+                if (CategoryItem.Notes != value)
+                {
+                    CategoryItem.Notes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public bool IsExpanded
         {
             get { return CategoryItem.IsExpanded; }

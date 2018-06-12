@@ -148,6 +148,7 @@
     <Compile Include="Converters\CategoryItemToImageConverter.cs" />
     <Compile Include="Converters\CrazyDisplayNameConverter.cs" />
     <Compile Include="Converters\CredentialsFilterConverter.cs" />
+    <Compile Include="Converters\StringNullToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectTypeNameConverter.cs" />
     <Compile Include="Converters\PropertyGridCredentialsConverter.cs" />
@@ -243,6 +244,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Resource Include="Resources\Message_16x.png" />
     <Resource Include="Resources\FeedbackBubble_16x.png" />
     <Resource Include="Resources\icons8-virtual-16.png" />
     <Resource Include="Resources\Rdp_16x.png" />

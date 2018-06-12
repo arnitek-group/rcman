@@ -304,6 +304,24 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add notes to this item..
+        /// </summary>
+        public static string NotesDescription {
+            get {
+                return ResourceManager.GetString("NotesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Optional Settings.
         /// </summary>
         public static string Optional {

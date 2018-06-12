@@ -34,6 +34,9 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Margin="3,2,2,2" Source="{Binding CategoryItem, Converter={StaticResource CategoryItemToImageConverter}}" />
                         <TextBlock Margin="2,2,5,2" Text="{Binding DisplayName}" />
+                        <Image Margin="3,2,2,2" Source="Resources/Message_16x.png"
+                               ToolTip="{Binding Notes}"
+                               Visibility="{Binding Notes, Converter={StaticResource StringNullToVisibilityConverter}}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </controls:CategoryTreeView.ItemTemplate>
