@@ -3,6 +3,7 @@
     public enum Protocol
     {
         Rdp,
-        Ssh
+        Ssh,
+        Telnet
     }
 }

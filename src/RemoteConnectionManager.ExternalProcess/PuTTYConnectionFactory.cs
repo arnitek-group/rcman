@@ -5,7 +5,7 @@ namespace RemoteConnectionManager.ExternalProcess
 {
     public class PuTTYConnectionFactory : IConnectionFactory
     {
-        public Protocol[] Protocols => new[] { Protocol.Ssh };
+        public Protocol[] Protocols => new[] { Protocol.Ssh, Protocol.Telnet };
 
         public IConnection CreateConnection(ConnectionSettings connectionSettings, IntPtr topWindowHandle)
         {
