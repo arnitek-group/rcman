@@ -31,6 +31,8 @@ namespace RemoteConnectionManager.Controls
             SetExtender();
         }
 
+        #region UseExtender
+
         public bool UseExtender
         {
             get { return (bool)GetValue(UseExtenderProperty); }
@@ -51,9 +53,24 @@ namespace RemoteConnectionManager.Controls
             }
         }
 
-        protected override DependencyObject GetContainerForItemOverride()
+        #endregion
+
+        #region Drag and Drop
+
+        private bool IsValidDropTarget(DragEventArgs e, out CategoryItemViewModel dragSource, out CategoryItemViewModel dropTarget)
         {
-            return new CategoryTreeViewItem();
+            dragSource = null;
+            dropTarget = DataContext as CategoryItemViewModel;
+            if (e.Data.GetDataPresent(typeof(CategoryItemViewModel)))
+            {
+                dragSource = (CategoryItemViewModel)e.Data.GetData(typeof(CategoryItemViewModel));
+                if (dragSource != dropTarget)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -66,19 +83,60 @@ namespace RemoteConnectionManager.Controls
             }
         }
 
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            CategoryItemViewModel dragSource;
+            CategoryItemViewModel dropTarget;
+            if (IsValidDropTarget(e, out dragSource, out dropTarget))
+            {
+                // TODO: Visual Indicator
+            }
+
+            base.OnDragEnter(e);
+        }
+
+        protected override void OnDragLeave(DragEventArgs e)
+        {
+            CategoryItemViewModel dragSource;
+            CategoryItemViewModel dropTarget;
+            if (IsValidDropTarget(e, out dragSource, out dropTarget))
+            {
+                // TODO: Visual Indicator
+            }
+
+            base.OnDragLeave(e);
+        }
+
         protected override void OnDrop(DragEventArgs e)
         {
-            var dropTarget = DataContext as CategoryItemViewModel;
-            if (e.Data.GetDataPresent(typeof(CategoryItemViewModel)))
+            CategoryItemViewModel dragSource;
+            CategoryItemViewModel dropTarget;
+            if (IsValidDropTarget(e, out dragSource, out dropTarget))
             {
-                var dragSource = (CategoryItemViewModel)e.Data.GetData(typeof(CategoryItemViewModel));
-                if (dragSource != dropTarget && dropTarget.Properties is GenericPropertiesViewModel)
+                if (dropTarget.Properties is GenericPropertiesViewModel)
                 {
-                    ViewModelLocator.Locator.DragDrop.Drop(dragSource, dropTarget);
+                    ViewModelLocator.Locator.DragDrop.Add(dragSource, dropTarget);
+                }
+                else
+                {
+                    // TODO
+                    // ViewModelLocator.Locator.DragDrop.InsertAfter
+                    // ViewModelLocator.Locator.DragDrop.InsertBefore
                 }
             }
 
             e.Handled = true;
         }
+
+        #endregion
+
+        #region Overrides
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new CategoryTreeViewItem();
+        }
+
+        #endregion
     }
 }

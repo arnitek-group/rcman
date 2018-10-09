@@ -27,7 +27,7 @@ namespace RemoteConnectionManager.Controls
             if (e.Data.GetDataPresent(typeof(CategoryItemViewModel)))
             {
                 var dragSource = (CategoryItemViewModel)e.Data.GetData(typeof(CategoryItemViewModel));
-                ViewModelLocator.Locator.DragDrop.Drop(dragSource, null);
+                ViewModelLocator.Locator.DragDrop.Add(dragSource, null);
             }
 
             e.Handled = true;
