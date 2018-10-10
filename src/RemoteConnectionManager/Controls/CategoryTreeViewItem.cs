@@ -39,6 +39,18 @@ namespace RemoteConnectionManager.Controls
             SetExtender();
         }
 
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new CategoryTreeViewItem();
+        }
+
+        private FrameworkElement _headerElement;
+
+        public override void OnApplyTemplate()
+        {
+            _headerElement = (FrameworkElement)Template.FindName("PART_Header", this);
+        }
+
         #region UseExtender
 
         public bool UseExtender
@@ -152,7 +164,7 @@ namespace RemoteConnectionManager.Controls
 
         private DropActionEnum GetDropAction(DragEventArgs e, CategoryItemViewModel dropTarget)
         {
-            var delta = e.GetPosition(this).Y / ActualHeight * 100;
+            var delta = e.GetPosition(this).Y / _headerElement.ActualHeight * 100;
 
             if (dropTarget.Properties is GenericPropertiesViewModel)
             {
@@ -164,15 +176,6 @@ namespace RemoteConnectionManager.Controls
             if (delta < 50) return DropActionEnum.InsertBefore;
 
             return DropActionEnum.InsertAfter;
-        }
-
-        #endregion
-
-        #region Overrides
-
-        protected override DependencyObject GetContainerForItemOverride()
-        {
-            return new CategoryTreeViewItem();
         }
 
         #endregion
