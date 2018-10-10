@@ -1,6 +1,5 @@
 ﻿using RemoteConnectionManager.ViewModels;
 using RemoteConnectionManager.ViewModels.Properties;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;

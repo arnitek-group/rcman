@@ -15,8 +15,6 @@ namespace RemoteConnectionManager.ViewModels
                 {
                     dropTarget.CategoryItem.Items.Add(dragSource.CategoryItem);
                     dropTarget.Items.Add(dragSource);
-
-                    dragSource.Parent = dropTarget;
                 }
                 else
                 {
@@ -39,23 +37,41 @@ namespace RemoteConnectionManager.ViewModels
         {
             DoDrop(dragSource, dropTarget, () =>
             {
-                if (dropTarget != null && dropTarget.Parent != null)
+                if (dropTarget != null)
                 {
-                    var parent = dropTarget.Parent;
-                    var index = parent.CategoryItem.Items.IndexOf(dropTarget.CategoryItem) + indexModifier;
-                    if (index < 0)
+                    if (dropTarget.Parent != null)
                     {
-                        index = 0;
+                        var parent = dropTarget.Parent;
+                        var index = parent.CategoryItem.Items.IndexOf(dropTarget.CategoryItem) + indexModifier;
+                        if (index < 0)
+                        {
+                            index = 0;
+                        }
+                        else if (index > parent.CategoryItem.Items.Count)
+                        {
+                            index = parent.CategoryItem.Items.Count;
+                        }
+
+                        parent.CategoryItem.Items.Insert(index, dragSource.CategoryItem);
+                        parent.Items.Insert(index, dragSource);
+
+                        dragSource.Parent = parent;
                     }
-                    else if (index > parent.CategoryItem.Items.Count)
+                    else
                     {
-                        index = parent.CategoryItem.Items.Count;
+                        var items = ViewModelLocator.Locator.Main.Items;
+                        var index = items.IndexOf(dropTarget) + indexModifier;
+                        if (index < 0)
+                        {
+                            index = 0;
+                        }
+                        else if (index > items.Count)
+                        {
+                            index = items.Count;
+                        }
+
+                        items.Insert(index, dragSource);
                     }
-
-                    parent.CategoryItem.Items.Insert(index, dragSource.CategoryItem);
-                    parent.Items.Insert(index, dragSource);
-
-                    dragSource.Parent = parent;
                 }
                 else
                 {
