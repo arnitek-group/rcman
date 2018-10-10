@@ -9,7 +9,7 @@ namespace RemoteConnectionManager.ViewModels
     {
         public void Add(CategoryItemViewModel dragSource, CategoryItemViewModel dropTarget)
         {
-            HandleDrop(dragSource, dropTarget, () =>
+            DoDrop(dragSource, dropTarget, () =>
             {
                 if (dropTarget != null)
                 {
@@ -27,7 +27,7 @@ namespace RemoteConnectionManager.ViewModels
 
         public void InsertBefore(CategoryItemViewModel dragSource, CategoryItemViewModel dropTarget)
         {
-            Insert(dragSource, dropTarget, -1);
+            Insert(dragSource, dropTarget, 0);
         }
 
         public void InsertAfter(CategoryItemViewModel dragSource, CategoryItemViewModel dropTarget)
@@ -37,7 +37,7 @@ namespace RemoteConnectionManager.ViewModels
 
         private void Insert(CategoryItemViewModel dragSource, CategoryItemViewModel dropTarget, int indexModifier)
         {
-            HandleDrop(dragSource, dropTarget, () =>
+            DoDrop(dragSource, dropTarget, () =>
             {
                 if (dropTarget != null && dropTarget.Parent != null)
                 {
@@ -64,7 +64,7 @@ namespace RemoteConnectionManager.ViewModels
             });
         }
 
-        private void HandleDrop(
+        private void DoDrop(
             CategoryItemViewModel dragSource,
             CategoryItemViewModel dropTarget,
             Action doDrop)

@@ -1,5 +1,6 @@
 ﻿using RemoteConnectionManager.ViewModels;
 using RemoteConnectionManager.ViewModels.Properties;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -9,6 +10,14 @@ namespace RemoteConnectionManager.Controls
 {
     public class CategoryTreeViewItem : TreeViewItem
     {
+        public enum DropActionEnum
+        {
+            None,
+            InsertBefore,
+            Add,
+            InsertAfter
+        }
+
         public CategoryTreeViewItem() : base()
         {
             IsHitTestVisible = true;
@@ -55,7 +64,76 @@ namespace RemoteConnectionManager.Controls
 
         #endregion
 
+        #region DropAction
+
+        public DropActionEnum DropAction
+        {
+            get { return (DropActionEnum)GetValue(DropActionProperty); }
+            set { SetValue(DropActionProperty, value); }
+        }
+
+        public static readonly DependencyProperty DropActionProperty = DependencyProperty.Register(
+            "DropAction", typeof(DropActionEnum),
+            typeof(CategoryTreeViewItem),
+            null);
+
+        #endregion
+
         #region Drag and Drop
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (Mouse.LeftButton == MouseButtonState.Pressed && DataContext != null)
+            {
+                DragDrop.DoDragDrop(this, DataContext, DragDropEffects.Move);
+            }
+        }
+
+        protected override void OnDragOver(DragEventArgs e)
+        {
+            CategoryItemViewModel dragSource;
+            CategoryItemViewModel dropTarget;
+            if (IsValidDropTarget(e, out dragSource, out dropTarget))
+            {
+                DropAction = GetDropAction(e, dropTarget);
+            }
+
+            e.Handled = true;
+        }
+
+        protected override void OnDragLeave(DragEventArgs e)
+        {
+            DropAction = DropActionEnum.None;
+
+            e.Handled = true;
+        }
+
+        protected override void OnDrop(DragEventArgs e)
+        {
+            CategoryItemViewModel dragSource;
+            CategoryItemViewModel dropTarget;
+            if (IsValidDropTarget(e, out dragSource, out dropTarget))
+            {
+                switch (GetDropAction(e, dropTarget))
+                {
+                    case DropActionEnum.InsertBefore:
+                        ViewModelLocator.Locator.DragDrop.InsertBefore(dragSource, dropTarget);
+                        break;
+                    case DropActionEnum.Add:
+                        ViewModelLocator.Locator.DragDrop.Add(dragSource, dropTarget);
+                        break;
+                    case DropActionEnum.InsertAfter:
+                        ViewModelLocator.Locator.DragDrop.InsertAfter(dragSource, dropTarget);
+                        break;
+                }
+            }
+
+            DropAction = DropActionEnum.None;
+
+            e.Handled = true;
+        }
 
         private bool IsValidDropTarget(DragEventArgs e, out CategoryItemViewModel dragSource, out CategoryItemViewModel dropTarget)
         {
@@ -73,59 +151,20 @@ namespace RemoteConnectionManager.Controls
             return false;
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        private DropActionEnum GetDropAction(DragEventArgs e, CategoryItemViewModel dropTarget)
         {
-            base.OnMouseMove(e);
+            var delta = e.GetPosition(this).Y / ActualHeight * 100;
 
-            if (Mouse.LeftButton == MouseButtonState.Pressed && DataContext != null)
+            if (dropTarget.Properties is GenericPropertiesViewModel)
             {
-                DragDrop.DoDragDrop(this, DataContext, DragDropEffects.Move);
-            }
-        }
-
-        protected override void OnDragEnter(DragEventArgs e)
-        {
-            CategoryItemViewModel dragSource;
-            CategoryItemViewModel dropTarget;
-            if (IsValidDropTarget(e, out dragSource, out dropTarget))
-            {
-                // TODO: Visual Indicator
+                if (delta < 27) return DropActionEnum.InsertBefore;
+                if (delta < 75) return DropActionEnum.Add;
+                return DropActionEnum.InsertAfter;
             }
 
-            base.OnDragEnter(e);
-        }
+            if (delta < 50) return DropActionEnum.InsertBefore;
 
-        protected override void OnDragLeave(DragEventArgs e)
-        {
-            CategoryItemViewModel dragSource;
-            CategoryItemViewModel dropTarget;
-            if (IsValidDropTarget(e, out dragSource, out dropTarget))
-            {
-                // TODO: Visual Indicator
-            }
-
-            base.OnDragLeave(e);
-        }
-
-        protected override void OnDrop(DragEventArgs e)
-        {
-            CategoryItemViewModel dragSource;
-            CategoryItemViewModel dropTarget;
-            if (IsValidDropTarget(e, out dragSource, out dropTarget))
-            {
-                if (dropTarget.Properties is GenericPropertiesViewModel)
-                {
-                    ViewModelLocator.Locator.DragDrop.Add(dragSource, dropTarget);
-                }
-                else
-                {
-                    // TODO
-                    // ViewModelLocator.Locator.DragDrop.InsertAfter
-                    // ViewModelLocator.Locator.DragDrop.InsertBefore
-                }
-            }
-
-            e.Handled = true;
+            return DropActionEnum.InsertAfter;
         }
 
         #endregion
