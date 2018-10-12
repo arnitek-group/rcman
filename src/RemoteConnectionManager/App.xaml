@@ -30,6 +30,7 @@
                 <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" />
                 <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" />
                 <Setter Property="Padding" Value="1,0,0,0" />
+                <Setter Property="Margin" Value="0,1,0,0" />
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
                 <Setter Property="FocusVisualStyle">
                     <Setter.Value>
@@ -58,7 +59,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Rectangle x:Name="HorLn" Height="1" Margin="9,0,0,0" SnapsToDevicePixels="True" Stroke="#DCDCDC" />
-                                <Rectangle x:Name="VerLn" Grid.RowSpan="3" Width="1" Margin="0,0,1,0" SnapsToDevicePixels="true" Fill="White" Stroke="#DCDCDC" />
+                                <Rectangle x:Name="VerLn" Grid.RowSpan="3" Width="1" Margin="0,-1,0,0" SnapsToDevicePixels="true" Fill="White" Stroke="#DCDCDC" />
                                 <ToggleButton x:Name="Expander" ClickMode="Press" IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ToggleButton.Style>
                                         <Style TargetType="{x:Type ToggleButton}">
@@ -107,7 +108,7 @@
                                 <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                                     <Grid>
                                         <ContentPresenter x:Name="PART_Header" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                        <Rectangle x:Name="InsertRect" HorizontalAlignment="Left" Width="75" Height="2" Fill="Transparent" IsHitTestVisible="False" />
+                                        <Rectangle x:Name="InsertRect" HorizontalAlignment="Left" Width="75" Height="2" Fill="Transparent" IsHitTestVisible="False" Margin="0,0,0,0" />
                                     </Grid>
                                 </Border>
                                 <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" />
@@ -141,6 +142,7 @@
                                 <Trigger Property="DropAction" Value="InsertBefore">
                                     <Setter Property="Fill" TargetName="InsertRect" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                                     <Setter Property="VerticalAlignment" TargetName="InsertRect" Value="Top" />
+                                    <Setter Property="Margin" TargetName="InsertRect" Value="0,-1,0,0" />
                                 </Trigger>
                                 <Trigger Property="DropAction" Value="Add">
                                     <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
@@ -149,6 +151,7 @@
                                 <Trigger Property="DropAction" Value="InsertAfter">
                                     <Setter Property="Fill" TargetName="InsertRect" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                                     <Setter Property="VerticalAlignment" TargetName="InsertRect" Value="Bottom" />
+                                    <Setter Property="Margin" TargetName="InsertRect" Value="0,0,0,-1" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
