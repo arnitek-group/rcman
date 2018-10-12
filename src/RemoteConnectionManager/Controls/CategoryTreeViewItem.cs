@@ -94,8 +94,6 @@ namespace RemoteConnectionManager.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             if (Mouse.LeftButton == MouseButtonState.Pressed && DataContext != null)
             {
                 DragDrop.DoDragDrop(this, DataContext, DragDropEffects.Move);
@@ -149,7 +147,7 @@ namespace RemoteConnectionManager.Controls
         private bool IsValidDropTarget(DragEventArgs e, out CategoryItemViewModel dragSource, out CategoryItemViewModel dropTarget)
         {
             dragSource = null;
-            dropTarget = DataContext as CategoryItemViewModel;
+            dropTarget = (CategoryItemViewModel)DataContext;
             if (e.Data.GetDataPresent(typeof(CategoryItemViewModel)))
             {
                 dragSource = (CategoryItemViewModel)e.Data.GetData(typeof(CategoryItemViewModel));

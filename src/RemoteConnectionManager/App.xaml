@@ -107,7 +107,7 @@
                                 <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                                     <Grid>
                                         <ContentPresenter x:Name="PART_Header" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                        <Rectangle x:Name="InsertRect" HorizontalAlignment="Stretch" Height="2" Fill="Transparent" />
+                                        <Rectangle x:Name="InsertRect" HorizontalAlignment="Left" Width="75" Height="2" Fill="Transparent" IsHitTestVisible="False" />
                                     </Grid>
                                 </Border>
                                 <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" />
