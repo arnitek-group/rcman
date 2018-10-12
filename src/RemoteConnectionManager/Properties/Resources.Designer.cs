@@ -250,7 +250,7 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/nikolayarhangelov/rcman/issues.
+        ///   Looks up a localized string similar to https://docs.google.com/forms/d/1bga9F3jZeHWNde6S9RqxNw4i1o6IyNMqG7-kNU1Q1CY/edit?usp=sharing.
         /// </summary>
         public static string FeedbackLink {
             get {
@@ -421,7 +421,7 @@ namespace RemoteConnectionManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://docs.google.com/forms/d/1bga9F3jZeHWNde6S9RqxNw4i1o6IyNMqG7-kNU1Q1CY/edit?usp=sharing.
+        ///   Looks up a localized string similar to https://github.com/nikolayarhangelov/rcman/releases.
         /// </summary>
         public static string Releases {
             get {

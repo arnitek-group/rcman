@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationInsights xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" schemaVersion="2014-05-30">
+  
+  <TelemetryChannel>
+    <DeveloperMode>false</DeveloperMode>
+  </TelemetryChannel>
+  
+  <TelemetryModules>
+  </TelemetryModules>
+  
+  <InstrumentationKey>c6c927a3-e843-4d8d-bd1f-c4c6c2615731</InstrumentationKey>
+  
+</ApplicationInsights>
