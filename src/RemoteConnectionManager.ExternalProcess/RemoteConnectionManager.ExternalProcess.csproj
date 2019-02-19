@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HostedProcessConnection.cs" />
+    <Compile Include="PowerShellConnection.cs" />
+    <Compile Include="PowerShellConnectionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuTTYConnection.cs" />
     <Compile Include="PuTTYConnectionFactory.cs" />

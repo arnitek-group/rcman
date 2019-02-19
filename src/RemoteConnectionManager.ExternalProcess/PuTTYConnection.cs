@@ -1,5 +1,6 @@
 ﻿using RemoteConnectionManager.Core.Connections;
 using System;
+using System.Diagnostics;
 
 namespace RemoteConnectionManager.ExternalProcess
 {
@@ -10,19 +11,23 @@ namespace RemoteConnectionManager.ExternalProcess
         {
         }
 
-        protected override string GetFileName()
+        protected override void PrepareProcess(ProcessStartInfo psi)
+        {
+        }
+
+        protected override string GetProcessName()
         {
             return @"dist\putty.exe";
         }
 
-        protected override string GetArguments()
+        protected override string GetProcessArguments()
         {
             var command = "-" + Enum.GetName(typeof(Protocol), ConnectionSettings.Protocol).ToLower();
-            
+
             var credentials = ConnectionSettings.GetCredentials();
             if (credentials != null)
             {
-                command += " -l " + credentials.Username; 
+                command += " -l " + credentials.Username;
                 if (!string.IsNullOrEmpty(credentials.Password))
                 {
                     command += " -pw " + credentials.GetPassword();

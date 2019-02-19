@@ -61,9 +61,14 @@ namespace RemoteConnectionManager.ExternalProcess
         public event EventHandler<DisconnectReason> Disconnected;
 
         #region Process
+        protected abstract void PrepareProcess(ProcessStartInfo psi);
+        protected abstract string GetProcessName();
+        protected abstract string GetProcessArguments();
 
-        protected abstract string GetFileName();
-        protected abstract string GetArguments();
+        protected virtual void WaitForProcess(Process process)
+        {
+            process.WaitForInputIdle();
+        }
 
         private Forms.Panel _hostPanel;
         private Grid _hostGrid;
@@ -74,8 +79,10 @@ namespace RemoteConnectionManager.ExternalProcess
             _hostPanel = new Forms.Panel();
 
             var psi = new ProcessStartInfo();
-            psi.FileName = GetFileName();
-            psi.Arguments = GetArguments();
+            PrepareProcess(psi);
+
+            psi.FileName = GetProcessName();
+            psi.Arguments = GetProcessArguments();
             psi.WindowStyle = ProcessWindowStyle.Maximized;
             psi.CreateNoWindow = false;
 
@@ -83,7 +90,8 @@ namespace RemoteConnectionManager.ExternalProcess
             _process.EnableRaisingEvents = true;
             _process.Exited += Process_Exited;
             _process.Disposed += Process_Disposed;
-            _process.WaitForInputIdle();
+
+            WaitForProcess(_process);
 
             WindowsInterop.SetParent(_process.MainWindowHandle, _hostPanel.Handle);
             WindowsInterop.SetWindowPos(
@@ -151,7 +159,7 @@ namespace RemoteConnectionManager.ExternalProcess
             }
         }
 
-        private const int FrameTop = 32;
+        private const int FrameTop = 30;
         private const int FrameSides = 8;
 
         #endregion

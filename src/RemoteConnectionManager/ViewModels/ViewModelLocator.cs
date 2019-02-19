@@ -9,7 +9,7 @@ using RemoteConnectionManager.Services;
 
 namespace RemoteConnectionManager.ViewModels
 {
-    public class ViewModelLocator: ViewModelBase
+    public class ViewModelLocator : ViewModelBase
     {
         public ViewModelLocator()
         {
@@ -23,8 +23,9 @@ namespace RemoteConnectionManager.ViewModels
                 // Register factories.
                 SimpleIoc.Default.Register(() => new IConnectionFactory[]
                 {
-                new RdpConnectionFactory(ServiceLocator.Current.GetInstance<ITelemetryService>()),
-                new PuTTYConnectionFactory()
+                    new RdpConnectionFactory(ServiceLocator.Current.GetInstance<ITelemetryService>()),
+                    new PuTTYConnectionFactory(),
+                    new PowerShellConnectionFactory()
                 });
                 // Register view models.
                 SimpleIoc.Default.Register<ViewModelLocator>(() => this);
@@ -47,7 +48,7 @@ namespace RemoteConnectionManager.ViewModels
                 Locator = ServiceLocator.Current.GetInstance<ViewModelLocator>();
             }
         }
-        
+
         public ITelemetryService TelemetryService { get; }
 
         public SettingsViewModel Settings { get; }

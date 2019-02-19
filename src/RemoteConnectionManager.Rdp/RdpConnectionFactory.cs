@@ -10,7 +10,7 @@ namespace RemoteConnectionManager.Rdp
 
         public RdpConnectionFactory(ITelemetryService telemetryService)
         {
-            this._telemetryService = telemetryService;
+            _telemetryService = telemetryService;
         }
 
         public Protocol[] Protocols => new[] {Protocol.Rdp};

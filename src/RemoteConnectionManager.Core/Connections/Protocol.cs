@@ -4,6 +4,7 @@
     {
         Rdp,
         Ssh,
-        Telnet
+        Telnet,
+        PowerShell
     }
 }
