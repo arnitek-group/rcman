@@ -270,7 +270,7 @@ namespace RemoteConnectionManager.Rdp
 
             _telemetryService.TrackEvent("Command", new Dictionary<string, string>
             {
-                { "Protocol", "RPD" },
+                { "Protocol", "RDP" },
                 {"Type", "CtrlAltDel" }
             });
         }
