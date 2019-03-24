@@ -16,6 +16,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dist", "dist", "{6EF5D07A-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteConnectionManager.Rdp", "RemoteConnectionManager.Rdp\RemoteConnectionManager.Rdp.csproj", "{E59D3D35-4CBE-4D35-BEE1-4DD515AAB21F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dlls", "dlls", "{60DB38D5-EFA2-453F-88E0-96F2A7BD1963}"
+	ProjectSection(SolutionItems) = preProject
+		dlls\Xceed.Wpf.AvalonDock.dll = dlls\Xceed.Wpf.AvalonDock.dll
+		dlls\Xceed.Wpf.AvalonDock.Themes.Aero.dll = dlls\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+		dlls\Xceed.Wpf.AvalonDock.Themes.Metro.dll = dlls\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+		dlls\Xceed.Wpf.AvalonDock.Themes.VS2010.dll = dlls\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+		dlls\Xceed.Wpf.AvalonDock.Themes.VS2013.dll = dlls\Xceed.Wpf.AvalonDock.Themes.VS2013.dll
+		dlls\Xceed.Wpf.DataGrid.dll = dlls\Xceed.Wpf.DataGrid.dll
+		dlls\Xceed.Wpf.Toolkit.dll = dlls\Xceed.Wpf.Toolkit.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
