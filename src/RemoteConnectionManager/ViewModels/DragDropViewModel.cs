@@ -15,6 +15,7 @@ namespace RemoteConnectionManager.ViewModels
                 {
                     dropTarget.CategoryItem.Items.Add(dragSource.CategoryItem);
                     dropTarget.Items.Add(dragSource);
+                    dragSource.Parent = dropTarget;
                 }
                 else
                 {
