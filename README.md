@@ -2,7 +2,7 @@
 Remote Connection Manager is a Windows application, which features remote client connectivity supporting different protocols. All this is packed using a handy dockable UI.
 
 ## Project Website
-Checkout the project website at [Arnitek.com](https://www.arnitek.com/projects/rcman/).
+Checkout the project website at [Arnitek.com](https://www.arnitek.com/portfolio/rcman/).
 
 ## Installation
 Pick the latest release from the [Releases](https://github.com/nikolayarhangelov/rcman/releases) page.
