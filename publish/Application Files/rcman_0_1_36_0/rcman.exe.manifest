@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0dvA+2gppfa3jDFJBx9fSXZHi6PXoMIs2uR8OSYew1E=</dsig:DigestValue>
+        <dsig:DigestValue>ImcgozEKikB7tX+S254dYdY3DvQp1ozbyF4dZoVTCYM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -110,7 +110,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iyEczTMnLUeTNOiRExiaTeOP02YvSpFt/cWfU7zr4cc=</dsig:DigestValue>
+        <dsig:DigestValue>LHIbbhs9xvZrcKFTanpwH3R6KbespxWF18hGWr3LW8M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -163,50 +163,50 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="rcman.exe" size="314368">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="rcman.exe" size="303616">
       <assemblyIdentity name="rcman" version="0.1.36.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5O2RcO1e0uikD1r/Dc++oCdWM/hYgyNo9Q9yA/te9mU=</dsig:DigestValue>
+        <dsig:DigestValue>nSfZiNziE8Tnmx9XbiCAq8L2AfI+sRpL7th4jCkQDnY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RemoteConnectionManager.Core.dll" size="11264">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RemoteConnectionManager.Core.dll" size="10752">
       <assemblyIdentity name="RemoteConnectionManager.Core" version="0.1.36.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>eojo8uXIktVXTbNWdNslLVvS3qvL509TBuOZ+9HsrNY=</dsig:DigestValue>
+        <dsig:DigestValue>P6SedGpRXlgtCt9mZW2lt2ewHC7iCMXYTaayTKtbWyk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RemoteConnectionManager.ExternalProcess.dll" size="14848">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RemoteConnectionManager.ExternalProcess.dll" size="14336">
       <assemblyIdentity name="RemoteConnectionManager.ExternalProcess" version="0.1.36.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>OwkqAqNNxS+2d+N9hGPAlkW6R31n384hJrOUMijvDwU=</dsig:DigestValue>
+        <dsig:DigestValue>R5VjKi13l2E9WBDFZQjGkzN3hT+gT5jyDloiqaFRx3c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RemoteConnectionManager.Rdp.dll" size="29696">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RemoteConnectionManager.Rdp.dll" size="28160">
       <assemblyIdentity name="RemoteConnectionManager.Rdp" version="0.1.36.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bBbx1oIr9Ehu650N4X6Lua5ystCPZQulwsNv2xtpsvM=</dsig:DigestValue>
+        <dsig:DigestValue>BmRWJ6qyEKnRqwrdyQDi7vxOeMFvuawWXQU83FiIxMw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
